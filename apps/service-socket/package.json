@@ -1,0 +1,22 @@
+{
+    "name": "service-socket",
+    "type": "module",
+    "scripts": {
+        "start": "bun run ./src/main.ts",
+        "dev": "bun run ./src/main.ts",
+        "lint": "bunx eslint",
+        "format": "prettier --write .",
+        "typecheck": "tsc"
+    },
+    "devDependencies": {
+        "@repo/shared-types": "*",
+        "@repo/config-eslint": "*",
+        "@repo/config-prettier": "*",
+        "@repo/config-typescript": "*",
+        "@types/bun": "1",
+        "typescript": "5"
+    },
+    "dependencies": {
+        "socket.io": "^4.8.1"
+    }
+}

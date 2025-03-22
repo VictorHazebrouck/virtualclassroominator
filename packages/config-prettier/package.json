@@ -1,0 +1,16 @@
+{
+  "name": "@repo/config-prettier",
+  "version": "0.0.0",
+  "type": "module",
+  "private": true,
+  "exports": {
+    ".": "./base.js"
+  },
+  "devDependencies": {
+    "prettier": "^3.5.0",
+    "prettier-plugin-brace-style": "^0.7.2",
+    "globals": "^15.15.0",
+    "typescript": "^5.7.3",
+    "typescript-eslint": "^8.24.0"
+  }
+}
