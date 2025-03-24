@@ -18,7 +18,7 @@ export const $players_other_persisted = persistentAtom<Record<string, SocketData
  * Goal here is to on first launch of the app, "reset" the status of other players,
  * and whenever they do connect, then we will replace it with the actual status.
  */
-function set_players_other_persisted_to_disconnected()
+(() =>
 {
     const players_persisted = $players_other_persisted.get();
     const players_disconnected: Record<string, SocketDataPersisted> = {};
@@ -30,8 +30,7 @@ function set_players_other_persisted_to_disconnected()
     }
 
     $players_other_persisted.set(players_disconnected);
-}
-set_players_other_persisted_to_disconnected();
+})();
 
 /** Here we store currently connected players data */
 export const $players_other = deepMap<Record<string, SocketData>>({});
@@ -39,31 +38,31 @@ export const $players_other = deepMap<Record<string, SocketData>>({});
 /**
  * And then keep the 2 in sync so that on next connection all works as expected
  */
-$players_other.listen((e, a, diff) =>
+$players_other.listen((new_data, prev_data, diff) =>
 {
     const [player_id, key] = diff?.split(".") || [];
     if (!player_id) return;
 
     const is_new_player = player_id && !key;
     const is_new_info = player_id && key == "info";
-    const has_player_left = !e[player_id];
+    const has_player_left = !new_data[player_id];
 
     if (has_player_left)
     {
-        $players_other_persisted.set({
+        return $players_other_persisted.set({
             ...$players_other_persisted.get(),
             [player_id]: {
-                _id: e[player_id]!._id,
-                info: { ...e[player_id]!.info, status: "disconnected" },
+                _id: prev_data[player_id]!._id,
+                info: { ...prev_data[player_id]!.info, status: "disconnected" },
             },
         });
     }
 
     if (is_new_player || is_new_info)
     {
-        $players_other_persisted.set({
+        return $players_other_persisted.set({
             ...$players_other_persisted.get(),
-            [player_id]: { _id: e[player_id]!._id, info: e[player_id]!.info },
+            [player_id]: { _id: new_data[player_id]!._id, info: new_data[player_id]!.info },
         });
     }
 });
