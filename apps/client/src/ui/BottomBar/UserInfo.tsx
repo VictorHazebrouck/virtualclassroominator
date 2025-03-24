@@ -1,6 +1,6 @@
 import { useStore } from "@nanostores/react";
 import { useState } from "react";
-import { $player_self } from "~/store/player_self";
+import { $player_self, player_self_change_name } from "~/store/player_self";
 
 export default function UserInfo()
 {
@@ -20,7 +20,7 @@ function ChangeUserInfo()
 
     function handleClick()
     {
-        $player_self.setKey("info.name", value);
+        player_self_change_name(value);
     }
 
     return (

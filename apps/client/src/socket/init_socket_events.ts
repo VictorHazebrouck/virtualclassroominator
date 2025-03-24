@@ -1,6 +1,11 @@
 import { $player_self } from "../store/player_self";
 import Socket from "../socket/SocketIO";
-import { $players_other } from "~/store/players_other";
+import {
+    create_player_other,
+    remove_player_other,
+    set_player_other_info,
+    set_player_other_spacial,
+} from "~/store/players_other";
 
 Socket.on("connect", () =>
 {
@@ -10,27 +15,27 @@ Socket.on("connect", () =>
     {
         for (const socket_data of e)
         {
-            $players_other.setKey(socket_data._id, socket_data);
+            create_player_other(socket_data);
         }
     });
 
     Socket.on("server:player-leave", (e) =>
     {
-        $players_other.setKey(e.player_id, undefined!);
+        remove_player_other(e.player_id);
     });
 
     Socket.on("server:player-join", (e) =>
     {
-        $players_other.setKey(e._id, e);
+        create_player_other(e);
     });
 
     Socket.on("server:game:broadcast-player-info", ({ player_id, info }) =>
     {
-        $players_other.setKey(`${player_id}.info`, info);
+        set_player_other_info(player_id, info);
     });
 
     Socket.on("server:game:broadcast-player-movement", ({ player_id, spacial }) =>
     {
-        $players_other.setKey(`${player_id}.spacial`, spacial);
+        set_player_other_spacial(player_id, spacial);
     });
 });

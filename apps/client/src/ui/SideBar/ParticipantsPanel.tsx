@@ -1,4 +1,5 @@
 import { useStore } from "@nanostores/react";
+import type { SocketData } from "@repo/shared-types/socket";
 import { useRef } from "react";
 import { show_player_card } from "~/store/player_card";
 import { $players_other_persisted } from "~/store/players_other";
@@ -10,7 +11,13 @@ export default function ParticipantsPanel()
     return (
         <div className="flex flex-col w-full gap-3">
             {Object.values(user_data_persisted).map(({ _id, info }) => (
-                <ParticipantCard key={_id} username={info.name} skin={info.skin} _id={_id} />
+                <ParticipantCard
+                    key={_id}
+                    username={info.name}
+                    skin={info.skin}
+                    status={info.status}
+                    _id={_id}
+                />
             ))}
         </div>
     );
@@ -20,9 +27,10 @@ type ParticipantCardProps = {
     _id: string;
     username: string;
     skin: string;
+    status: SocketData["info"]["status"];
 };
 
-function ParticipantCard({ _id, username, skin }: ParticipantCardProps)
+function ParticipantCard({ _id, username, skin, status }: ParticipantCardProps)
 {
     const ref = useRef<null | HTMLButtonElement>(null);
 
@@ -45,7 +53,7 @@ function ParticipantCard({ _id, username, skin }: ParticipantCardProps)
             ref={ref}
         >
             <h5 className="text-stone-100">{username}</h5>
-            <p className="text-stone-400">online</p>
+            <p className="text-stone-400">{status}</p>
             <p className="text-stone-400">{skin}</p>
         </button>
     );

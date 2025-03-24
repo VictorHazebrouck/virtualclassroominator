@@ -61,4 +61,4 @@ export type Postion = {
     y: number;
 };
 
-export type PlayerStatus = "on" | "off" | "away";
+export type PlayerStatus = "on" | "off" | "away" | "disconnected";
