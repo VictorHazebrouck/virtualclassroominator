@@ -1,14 +1,14 @@
-import type { SocketData } from "@repo/shared-types/socket";
+import type { AvailableSkins, Direction, SocketData } from "@repo/shared-types/socket";
 import { AnimatedSprite, Container, Ticker } from "pixi.js";
 import type { TickerCallback } from "pixi.js";
 import { create_username_label } from "./utils";
-import { load_character_spritesheet } from "../assets/AssetsLoader";
+import { load_character_spritesheet, type SpriteSheetType } from "../assets/AssetsLoader";
 
 export class Player extends Container
 {
     player_data: SocketData;
 
-    animated_sprite!: AnimatedSprite;
+    player_sprite!: PlayerSprite;
     username_label!: Container;
 
     _animate_fn: TickerCallback<Player>;
@@ -30,6 +30,9 @@ export class Player extends Container
         const is_new_username = this.player_data.info.name !== new_data.info.name;
         const is_new_status = this.player_data.info.status !== new_data.info.status;
         const is_new_skin = this.player_data.info.skin !== new_data.info.skin;
+        const is_new_direction = this.player_data.spacial.direction !== new_data.spacial.direction;
+        const is_new_is_moving = this.player_data.spacial.is_moving !== new_data.spacial.is_moving;
+
         this.player_data = new_data;
         this.x = this.player_data.spacial.postition.x;
         this.y = this.player_data.spacial.postition.y;
@@ -42,6 +45,11 @@ export class Player extends Container
         if (is_new_skin)
         {
             this.set_skin();
+        }
+
+        if (is_new_direction || is_new_is_moving)
+        {
+            this.set_animation();
         }
 
         // new spacial is being handled by the gameloop directly
@@ -70,17 +78,56 @@ export class Player extends Container
 
     private async set_skin()
     {
-        if (this.animated_sprite)
+        if (this.player_sprite)
         {
-            this.animated_sprite.destroy();
-            this.removeChild(this.animated_sprite);
+            this.player_sprite.destroy();
+            this.removeChild(this.player_sprite);
         }
 
-        const spritesheet = await load_character_spritesheet(this.player_data.info.skin);
+        this.player_sprite = await PlayerSprite.create(this.player_data.info.skin);
+        this.addChild(this.player_sprite);
+    }
 
-        this.animated_sprite = new AnimatedSprite(spritesheet.animations["idle"]);
-        this.animated_sprite.scale = 1.5;
-        this.animated_sprite.x += 2;
-        this.addChild(this.animated_sprite);
+    private set_animation()
+    {
+        const spacial = this.player_data.spacial;
+        this.player_sprite?.set_animation(spacial.is_moving, spacial.direction);
+    }
+}
+
+class PlayerSprite extends AnimatedSprite
+{
+    spritesheet: SpriteSheetType;
+
+    private constructor(spritesheet: SpriteSheetType)
+    {
+        super(spritesheet.animations["idle"]);
+        this.animationSpeed = 0.1;
+        this.scale = 1.5;
+        this.x += 2;
+        this.spritesheet = spritesheet;
+    }
+
+    public set_animation(is_moving: boolean, direction: Direction)
+    {
+        if (!is_moving)
+        {
+            return this.gotoAndStop(0);
+        }
+
+        const dir_actions_map = {
+            top: () => (this.textures = this.spritesheet.animations["move_back"]),
+            down: () => (this.textures = this.spritesheet.animations["move_front"]),
+            left: () => (this.textures = this.spritesheet.animations["move_left"]),
+            right: () => (this.textures = this.spritesheet.animations["move_right"]),
+        };
+        dir_actions_map[direction]?.();
+        this.play();
+    }
+
+    static async create(skin: AvailableSkins)
+    {
+        const spritesheet = await load_character_spritesheet(skin);
+        return new PlayerSprite(spritesheet);
     }
 }

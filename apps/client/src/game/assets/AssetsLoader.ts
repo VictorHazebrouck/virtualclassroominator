@@ -5,6 +5,8 @@ import type { AvailableSkins } from "@repo/shared-types/socket";
 
 await Assets.init({ manifest: manifest, basePath: "/assets" });
 
+export type SpriteSheetType = Awaited<ReturnType<typeof load_character_spritesheet>>;
+
 export async function load_character_spritesheet(character: AvailableSkins)
 {
     const assets = await Assets.loadBundle("characters");
