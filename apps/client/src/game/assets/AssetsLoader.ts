@@ -2,7 +2,7 @@ import animation_atlas from "./character_atlas_animated.json";
 import manifest from "./manifest.json";
 import { Assets, Spritesheet } from "pixi.js";
 
-await Assets.init({ manifest: manifest });
+await Assets.init({ manifest: manifest, basePath: "/assets" });
 
 type AvailableCharacters = "alex" | "anna" | "ardley" | "colt" | "ester" | "tom";
 
