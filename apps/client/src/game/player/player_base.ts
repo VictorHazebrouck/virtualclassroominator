@@ -2,6 +2,7 @@ import type { SocketData } from "@repo/shared-types/socket";
 import { AnimatedSprite, Assets, Container, Ticker } from "pixi.js";
 import type { TickerCallback } from "pixi.js";
 import { create_username_label } from "./utils";
+import { load_character_spritesheet } from "../assets/AssetsLoader";
 
 export class Player extends Container
 {
@@ -75,9 +76,9 @@ export class Player extends Container
             this.removeChild(this.animated_sprite);
         }
 
-        const texture = await Assets.load("https://pixijs.com/assets/bunny.png");
+        const spritesheet = await load_character_spritesheet("alex");
 
-        this.animated_sprite = new AnimatedSprite([texture]);
+        this.animated_sprite = new AnimatedSprite(spritesheet.animations["idle"]);
         this.addChild(this.animated_sprite);
     }
 }

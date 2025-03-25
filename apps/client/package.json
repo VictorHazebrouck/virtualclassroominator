@@ -4,6 +4,7 @@
     "version": "0.0.0",
     "type": "module",
     "scripts": {
+        "build-assets": "assetpack",
         "dev": "vite",
         "build": "tsc -b && vite build",
         "lint": "eslint .",
@@ -22,6 +23,7 @@
         "uuid": "^11.1.0"
     },
     "devDependencies": {
+        "@assetpack/core": "^1.4.0",
         "@repo/shared-types": "*",
         "@repo/config-eslint": "*",
         "@repo/config-typescript": "*",
