@@ -1,2 +1,4 @@
-export default class WallsLayer
+import { Container } from "pixi.js";
+
+export default class WallsLayer extends Container
 {}

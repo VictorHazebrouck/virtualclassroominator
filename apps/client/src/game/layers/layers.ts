@@ -1,40 +1,26 @@
-import { Postion } from "@repo/shared-types/socket";
+import { Container } from "pixi.js";
 import DecorationsLayer from "./decorations";
 import GroundsLayer from "./grounds";
 import PlayersLayer from "./players";
 import WallsLayer from "./walls";
 
-interface TileData
+export class Layers extends Container
 {
-    position: Postion;
-    size: Postion;
-}
+    grounds_layer: GroundsLayer;
+    decorations_layer: DecorationsLayer;
+    walls_layer: WallsLayer;
+    players_layer: PlayersLayer;
 
-// interface MapData
-// {
-//     grounds_layer: [];
-//     decorations_layer: [];
-//     walls_layer: [];
-// }
-
-export class Layers
-{
-    constructor(
-        private grounds_layer: GroundsLayer,
-        private decorations_layer: DecorationsLayer,
-        private walls_layer: WallsLayer,
-        private players_layer: PlayersLayer,
-    )
-    {}
-}
-
-export async function init_layers(tile_data: TileData)
-{
-    const grounds_layer = new GroundsLayer();
-    const decorations_layer = new DecorationsLayer();
-    const walls_layer = new GroundsLayer();
-    const players_layer = new PlayersLayer();
-
-    const layers = new Layers(grounds_layer, decorations_layer, walls_layer, players_layer);
-    return layers;
+    constructor()
+    {
+        super();
+        this.grounds_layer = new GroundsLayer();
+        this.addChild(this.grounds_layer);
+        this.decorations_layer = new DecorationsLayer();
+        this.addChild(this.decorations_layer);
+        this.walls_layer = new WallsLayer();
+        this.addChild(this.walls_layer);
+        this.players_layer = new PlayersLayer();
+        this.addChild(this.players_layer);
+    }
 }
