@@ -38,7 +38,7 @@ export interface SocketData extends Record<string, unknown>
     _id: string;
     info: {
         name: string;
-        skin: string;
+        skin: AvailableSkins;
         status: PlayerStatus;
     };
     chat: {
@@ -60,5 +60,7 @@ export type Postion = {
     x: number;
     y: number;
 };
+
+export type AvailableSkins = "alex" | "anna" | "ardley" | "colt" | "ester" | "tom";
 
 export type PlayerStatus = "on" | "off" | "away" | "disconnected";

@@ -1,5 +1,11 @@
 import { persistentAtom } from "@nanostores/persistent";
-import type { Direction, PlayerStatus, Postion, SocketData } from "@repo/shared-types/socket";
+import type {
+    AvailableSkins,
+    Direction,
+    PlayerStatus,
+    Postion,
+    SocketData,
+} from "@repo/shared-types/socket";
 import { listenKeys, map } from "nanostores";
 import { v4 as uuidv4 } from "uuid";
 import type { SocketDataPersisted } from "./persist_config";
@@ -17,7 +23,7 @@ export const $player_self_persisted = persistentAtom<SocketDataPersisted>(
         info: {
             status: "on",
             name: "This is myself",
-            skin: "default",
+            skin: "alex",
         },
     },
     persist_config,
@@ -78,10 +84,10 @@ export function player_self_change_name(new_name: string)
     $player_self.setKey("info", { ...curr_info, name: new_name });
 }
 
-export function player_self_change_skin(new_skin: string)
+export function player_self_change_skin(new_skin: AvailableSkins)
 {
     const curr_info = $player_self.get().info;
-    $player_self.setKey("info", { ...curr_info, name: new_skin });
+    $player_self.setKey("info", { ...curr_info, skin: new_skin });
 }
 
 export function player_self_change_status(new_status: PlayerStatus)

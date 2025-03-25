@@ -1,6 +1,11 @@
 import { useStore } from "@nanostores/react";
+import type { AvailableSkins } from "@repo/shared-types/socket";
 import { useState } from "react";
-import { $player_self, player_self_change_name } from "~/store/player_self";
+import {
+    $player_self,
+    player_self_change_name,
+    player_self_change_skin,
+} from "~/store/player_self";
 
 export default function UserInfo()
 {
@@ -16,22 +21,39 @@ export default function UserInfo()
 
 function ChangeUserInfo()
 {
-    const [value, setValue] = useState("");
+    const available_skins: AvailableSkins[] = ["alex", "anna", "ardley", "colt", "ester", "tom"];
+    const [username, set_username] = useState("");
 
-    function handleClick()
+    function handle_change_name()
     {
-        player_self_change_name(value);
+        player_self_change_name(username);
+    }
+
+    function handle_change_skin(skin: AvailableSkins)
+    {
+        player_self_change_skin(skin);
     }
 
     return (
-        <div className="absolute bg-gray-800 -top-28 text-white rounded-md">
+        <div className="absolute bg-gray-800 bottom-12 text-white rounded-md px-6 py-2 flex flex-col gap-2">
+            <div className="flex flex-col gap-2">
+                {available_skins.map((e) => (
+                    <button
+                        className="px-6 py-2 cursor-pointer"
+                        key={e}
+                        onClick={() => handle_change_skin(e)}
+                    >
+                        {e}
+                    </button>
+                ))}
+            </div>
             <input
                 className="px-3 py-1 rounded-md"
-                value={value}
-                onChange={(e) => setValue(e.target.value)}
+                value={username}
+                onChange={(e) => set_username(e.target.value)}
                 placeholder="new username..."
             />
-            <button onClick={() => handleClick()}>change</button>
+            <button onClick={() => handle_change_name()}>change</button>
         </div>
     );
 }

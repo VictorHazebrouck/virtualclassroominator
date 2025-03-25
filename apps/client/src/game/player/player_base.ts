@@ -1,5 +1,5 @@
 import type { SocketData } from "@repo/shared-types/socket";
-import { AnimatedSprite, Assets, Container, Ticker } from "pixi.js";
+import { AnimatedSprite, Container, Ticker } from "pixi.js";
 import type { TickerCallback } from "pixi.js";
 import { create_username_label } from "./utils";
 import { load_character_spritesheet } from "../assets/AssetsLoader";
@@ -76,9 +76,11 @@ export class Player extends Container
             this.removeChild(this.animated_sprite);
         }
 
-        const spritesheet = await load_character_spritesheet("alex");
+        const spritesheet = await load_character_spritesheet(this.player_data.info.skin);
 
         this.animated_sprite = new AnimatedSprite(spritesheet.animations["idle"]);
+        this.animated_sprite.scale = 1.5;
+        this.animated_sprite.x += 2;
         this.addChild(this.animated_sprite);
     }
 }

@@ -1,12 +1,11 @@
 import animation_atlas from "./character_atlas_animated.json";
 import manifest from "./manifest.json";
 import { Assets, Spritesheet } from "pixi.js";
+import type { AvailableSkins } from "@repo/shared-types/socket";
 
 await Assets.init({ manifest: manifest, basePath: "/assets" });
 
-type AvailableCharacters = "alex" | "anna" | "ardley" | "colt" | "ester" | "tom";
-
-export async function load_character_spritesheet(character: AvailableCharacters)
+export async function load_character_spritesheet(character: AvailableSkins)
 {
     const assets = await Assets.loadBundle("characters");
     const raw_frames = assets[`${character}.png`];
