@@ -8,8 +8,8 @@ export class Player extends Container
 {
     player_data: SocketData;
 
-    player_sprite!: PlayerSprite;
-    username_label!: Container;
+    player_sprite?: PlayerSprite;
+    username_label?: Container;
 
     _animate_fn: TickerCallback<Player>;
 
