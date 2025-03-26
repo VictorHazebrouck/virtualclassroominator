@@ -2,7 +2,7 @@ import { useStore } from "@nanostores/react";
 import type { SocketData } from "@repo/shared-types/socket";
 import { useRef } from "react";
 import { show_player_card } from "~/store/player_card";
-import { $players_other_persisted } from "~/store/players_other";
+import { $players_other_persisted } from "~/store/players_other_persisted";
 
 export default function ParticipantsPanel()
 {

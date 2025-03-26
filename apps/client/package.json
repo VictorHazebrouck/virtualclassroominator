@@ -11,9 +11,13 @@
         "preview": "vite preview"
     },
     "dependencies": {
+        "@livekit/components-react": "^2.8.1",
+        "@livekit/components-styles": "^1.1.4",
         "@nanostores/persistent": "^0.10.2",
         "@nanostores/react": "nanostores/react",
+        "livekit-client": "^2.9.8",
         "nanostores": "^0.11.4",
+        "peerjs": "^1.5.4",
         "pixi.js": "^8.8.1",
         "react": "^19.0.0",
         "react-dom": "^19.0.0",

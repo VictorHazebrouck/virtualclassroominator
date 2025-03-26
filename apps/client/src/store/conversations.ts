@@ -1,7 +1,7 @@
 import { computed } from "nanostores";
-import { $players_other_persisted } from "./players_other";
 import { persistentAtom } from "@nanostores/persistent";
 import { persist_config } from "./persist_config";
+import { $players_other_persisted } from "./players_other_persisted";
 
 type Message = {
     sender: string;

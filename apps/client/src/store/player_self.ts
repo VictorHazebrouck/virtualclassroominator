@@ -1,4 +1,3 @@
-import { persistentAtom } from "@nanostores/persistent";
 import type {
     AvailableSkins,
     Direction,
@@ -6,28 +5,8 @@ import type {
     Postion,
     SocketData,
 } from "@repo/shared-types/socket";
-import { listenKeys, map } from "nanostores";
-import { v4 as uuidv4 } from "uuid";
-import type { SocketDataPersisted } from "./persist_config";
-import { persist_config } from "./persist_config";
-
-/**
- * We store in local storage part of our own player state, which enables us to
- * have persistent and eventially consistent state across all players without having
- * to rely on any external db.
- */
-export const $player_self_persisted = persistentAtom<SocketDataPersisted>(
-    "player_self",
-    {
-        _id: uuidv4(),
-        info: {
-            status: "on",
-            name: "This is myself",
-            skin: "alex",
-        },
-    },
-    persist_config,
-);
+import { map } from "nanostores";
+import { $player_self_persisted, sync_persisted_self_data } from "./player_self_persisted";
 
 /** We init data form our localstorage */
 export const $player_self = map<SocketData>({
@@ -49,16 +28,9 @@ export const $player_self = map<SocketData>({
     },
 });
 
-/**
- * And then keep the 2 in sync so that on next connection all works as expected
- */
-listenKeys($player_self, ["info"], (new_info_state) =>
-{
-    $player_self_persisted.set({
-        _id: new_info_state._id,
-        info: new_info_state.info,
-    });
-});
+sync_persisted_self_data($player_self);
+
+// Movement Stuff
 
 export function player_self_move(new_dir: Direction, position: Postion)
 {
@@ -78,6 +50,8 @@ export function player_self_stop(position: Postion)
     });
 }
 
+// Info stuff
+
 export function player_self_change_name(new_name: string)
 {
     const curr_info = $player_self.get().info;
@@ -94,4 +68,24 @@ export function player_self_change_status(new_status: PlayerStatus)
 {
     const curr_info = $player_self.get().info;
     $player_self.setKey("info", { ...curr_info, name: new_status });
+}
+
+// Chat stuff
+
+export function player_self_toggle_microphone()
+{
+    const curr_chat = $player_self.get().chat;
+    $player_self.setKey("chat", { ...curr_chat, is_mike_active: !curr_chat.is_mike_active });
+}
+
+export function player_self_toggle_webcam()
+{
+    const curr_chat = $player_self.get().chat;
+    $player_self.setKey("chat", { ...curr_chat, is_webcam_active: !curr_chat.is_webcam_active });
+}
+
+export function player_self_toggle_screenshare()
+{
+    const curr_chat = $player_self.get().chat;
+    $player_self.setKey("chat", { ...curr_chat, is_screensharing: !curr_chat.is_screensharing });
 }

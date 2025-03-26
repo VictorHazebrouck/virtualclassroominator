@@ -1,6 +1,6 @@
 import type { Postion, SocketData } from "@repo/shared-types/socket";
 import { atom } from "nanostores";
-import { $players_other_persisted } from "./players_other";
+import { $players_other_persisted } from "./players_other_persisted";
 
 export const $player_card = atom<{
     _id: string;
