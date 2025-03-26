@@ -8,7 +8,7 @@ import type {
 import { map } from "nanostores";
 import { $player_self_persisted, sync_persisted_self_data } from "./player_self_persisted";
 
-/** We init data form our localstorage */
+// We init data form our localstorage
 export const $player_self = map<SocketData>({
     _id: $player_self_persisted.get()._id,
     info: $player_self_persisted.get().info,
@@ -28,6 +28,7 @@ export const $player_self = map<SocketData>({
     },
 });
 
+// and keep them in sync for next time we connect
 sync_persisted_self_data($player_self);
 
 // Movement Stuff

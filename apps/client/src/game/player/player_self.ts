@@ -1,5 +1,5 @@
 import type { SocketData } from "@repo/shared-types/socket";
-import type { Ticker, TickerCallback } from "pixi.js";
+import { Ticker, type TickerCallback } from "pixi.js";
 import { Player } from "./player_base";
 import CollisionValidator from "../CollisionValidator";
 import { animate_player } from "./utils";

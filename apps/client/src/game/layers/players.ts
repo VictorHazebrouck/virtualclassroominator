@@ -22,6 +22,11 @@ export default class PlayersLayer extends Container
         return this.players_other_map.get(player_id);
     }
 
+    public get_other_players()
+    {
+        return this.players_other_map;
+    }
+
     public get_self()
     {
         return this.player_self;
