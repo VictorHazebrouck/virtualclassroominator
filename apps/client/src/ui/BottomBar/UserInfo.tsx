@@ -1,25 +1,28 @@
 import { useStore } from "@nanostores/react";
-import type { AvailableSkins } from "@repo/shared-types/socket";
+import type { AvailableSkins, PlayerStatus } from "@repo/shared-types/socket";
 import { useState } from "react";
 import {
     $player_self,
     player_self_change_name,
     player_self_change_skin,
+    player_self_change_status,
 } from "~/store/player_self";
+import Modal from "../-components/Modal";
 
 export default function UserInfo()
 {
+    const [is_visible, set_is_visible] = useState(false);
     const data = useStore($player_self);
 
     return (
         <div className="flex bg-yellow-500 relative">
-            <p>{data.info.name}</p>
-            <ChangeUserInfo />
+            <p onClick={() => set_is_visible(true)}>{data.info.name}</p>
+            <ChangeUserInfoModal visible={is_visible} onClose={() => set_is_visible(false)} />
         </div>
     );
 }
 
-function ChangeUserInfo()
+function ChangeUserInfoModal({ visible, onClose }: { visible: boolean; onClose: () => void })
 {
     const available_skins: AvailableSkins[] = ["alex", "anna", "ardley", "colt", "ester", "tom"];
     const [username, set_username] = useState("");
@@ -34,8 +37,17 @@ function ChangeUserInfo()
         player_self_change_skin(skin);
     }
 
+    // function handle_change_status(status: PlayerStatus)
+    // {
+    //     player_self_change_status(status);
+    // }
+
     return (
-        <div className="absolute bg-gray-800 bottom-12 text-white rounded-md px-6 py-2 flex flex-col gap-2">
+        <Modal
+            onClickOutside={() => onClose()}
+            visible={visible}
+            className="bottom-12 flex flex-col gap-2"
+        >
             <div className="flex flex-col gap-2">
                 {available_skins.map((e) => (
                     <button
@@ -54,6 +66,6 @@ function ChangeUserInfo()
                 placeholder="new username..."
             />
             <button onClick={() => handle_change_name()}>change</button>
-        </div>
+        </Modal>
     );
 }
