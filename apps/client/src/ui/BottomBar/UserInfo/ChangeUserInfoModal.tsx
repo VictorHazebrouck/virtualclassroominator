@@ -1,31 +1,23 @@
-import { useStore } from "@nanostores/react";
 import type { AvailableSkins, PlayerStatus } from "@repo/shared-types/socket";
 import { useState } from "react";
 import {
-    $player_self,
     player_self_change_name,
     player_self_change_skin,
     player_self_change_status,
 } from "~/store/player_self";
-import Modal from "../-components/Modal";
+import Modal from "~/ui/-components/Modal";
 
-export default function UserInfo()
+const AVAILABLE_SKINS: AvailableSkins[] = ["alex", "anna", "ardley", "colt", "ester", "tom"];
+const AVAILABLE_STATUSES: PlayerStatus[] = ["away", "on", "off"];
+
+export default function ChangeUserInfoModal({
+    visible,
+    onClose,
+}: {
+    visible: boolean;
+    onClose: () => void;
+})
 {
-    const [is_visible, set_is_visible] = useState(false);
-    const data = useStore($player_self);
-
-    return (
-        <div className="flex bg-yellow-500 relative">
-            <p onClick={() => set_is_visible(true)}>{data.info.name}</p>
-            <ChangeUserInfoModal visible={is_visible} onClose={() => set_is_visible(false)} />
-        </div>
-    );
-}
-
-function ChangeUserInfoModal({ visible, onClose }: { visible: boolean; onClose: () => void })
-{
-    const AVAILABLE_SKINS: AvailableSkins[] = ["alex", "anna", "ardley", "colt", "ester", "tom"];
-    const AVAILABLE_STATUSES: PlayerStatus[] = ["away", "on", "off"];
     const [username, set_username] = useState("");
 
     function handle_change_name()
