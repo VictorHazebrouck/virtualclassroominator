@@ -5,6 +5,11 @@ export async function request_screenshare_track()
         audio: false,
     });
     const screen_track = stream.getVideoTracks()[0]!;
+    screen_track.addEventListener("ended", () =>
+    {
+        console.log("hahahah");
+    });
+
     return screen_track;
 }
 

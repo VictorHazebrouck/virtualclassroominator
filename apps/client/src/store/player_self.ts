@@ -68,7 +68,7 @@ export function player_self_change_skin(new_skin: AvailableSkins)
 export function player_self_change_status(new_status: PlayerStatus)
 {
     const curr_info = $player_self.get().info;
-    $player_self.setKey("info", { ...curr_info, name: new_status });
+    $player_self.setKey("info", { ...curr_info, status: new_status });
 }
 
 // Chat stuff

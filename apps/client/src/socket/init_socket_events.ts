@@ -3,6 +3,7 @@ import Socket from "../socket/SocketIO";
 import {
     create_player_other,
     remove_player_other,
+    set_player_other_chat,
     set_player_other_info,
     set_player_other_spacial,
 } from "~/store/players_other";
@@ -37,5 +38,10 @@ Socket.on("connect", () =>
     Socket.on("server:game:broadcast-player-movement", ({ player_id, spacial }) =>
     {
         set_player_other_spacial(player_id, spacial);
+    });
+
+    Socket.on("server:game:broadcast-player-chat", ({ player_id, chat }) =>
+    {
+        set_player_other_chat(player_id, chat);
     });
 });

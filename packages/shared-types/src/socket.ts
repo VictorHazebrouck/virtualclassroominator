@@ -15,6 +15,10 @@ export interface ServerToClientEvents
         player_id: string;
         info: SocketData["info"];
     }) => void;
+    "server:game:broadcast-player-chat": (data: {
+        player_id: string;
+        chat: SocketData["chat"];
+    }) => void;
 }
 
 export interface ClientToServerEvents
@@ -26,6 +30,7 @@ export interface ClientToServerEvents
 
     "client:game:player:movement": (data: SocketData["spacial"]) => void;
     "client:game:player:info": (data: SocketData["info"]) => void;
+    "client:game:player:chat": (data: SocketData["chat"]) => void;
 }
 
 export interface InterServerEvents

@@ -24,7 +24,8 @@ export default function UserInfo()
 
 function ChangeUserInfoModal({ visible, onClose }: { visible: boolean; onClose: () => void })
 {
-    const available_skins: AvailableSkins[] = ["alex", "anna", "ardley", "colt", "ester", "tom"];
+    const AVAILABLE_SKINS: AvailableSkins[] = ["alex", "anna", "ardley", "colt", "ester", "tom"];
+    const AVAILABLE_STATUSES: PlayerStatus[] = ["away", "on", "off"];
     const [username, set_username] = useState("");
 
     function handle_change_name()
@@ -37,10 +38,10 @@ function ChangeUserInfoModal({ visible, onClose }: { visible: boolean; onClose: 
         player_self_change_skin(skin);
     }
 
-    // function handle_change_status(status: PlayerStatus)
-    // {
-    //     player_self_change_status(status);
-    // }
+    function handle_change_status(status: PlayerStatus)
+    {
+        player_self_change_status(status);
+    }
 
     return (
         <Modal
@@ -49,11 +50,22 @@ function ChangeUserInfoModal({ visible, onClose }: { visible: boolean; onClose: 
             className="bottom-12 flex flex-col gap-2"
         >
             <div className="flex flex-col gap-2">
-                {available_skins.map((e) => (
+                {AVAILABLE_SKINS.map((e) => (
                     <button
-                        className="px-6 py-2 cursor-pointer"
                         key={e}
+                        className="px-6 py-2 cursor-pointer"
                         onClick={() => handle_change_skin(e)}
+                    >
+                        {e}
+                    </button>
+                ))}
+            </div>
+            <div className="flex flex-col gap-2">
+                {AVAILABLE_STATUSES.map((e) => (
+                    <button
+                        key={e}
+                        className="px-6 py-2 cursor-pointer text-white"
+                        onClick={() => handle_change_status(e)}
                     >
                         {e}
                     </button>

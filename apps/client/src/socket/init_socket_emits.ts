@@ -11,3 +11,8 @@ listenKeys($player_self, ["spacial"], (e) =>
 {
     Socket.emit("client:game:player:movement", e.spacial);
 });
+
+listenKeys($player_self, ["chat"], (e) =>
+{
+    Socket.emit("client:game:player:chat", e.chat);
+});

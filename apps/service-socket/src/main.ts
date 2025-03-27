@@ -53,6 +53,16 @@ io.on("connection", (socket) =>
         });
     });
 
+    socket.on("client:game:player:chat", (chat_data) =>
+    {
+        socket.data.chat = chat_data;
+
+        socket.broadcast.emit("server:game:broadcast-player-chat", {
+            player_id: socket.data._id,
+            chat: socket.data.chat,
+        });
+    });
+
     socket.on("client:chat:send-message-global", ({ value }) =>
     {
         socket.broadcast.emit("server:chat:send-message-global", {

@@ -23,3 +23,8 @@ export function set_player_other_spacial(player_id: string, spacial: SocketData[
 {
     $players_other.setKey(`${player_id}.spacial`, spacial);
 }
+
+export function set_player_other_chat(player_id: string, chat: SocketData["chat"])
+{
+    $players_other.setKey(`${player_id}.chat`, chat);
+}
