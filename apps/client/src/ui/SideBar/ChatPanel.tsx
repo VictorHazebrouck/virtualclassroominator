@@ -27,11 +27,11 @@ function ConversationList({
     const conversations_preview = useStore($conversations_preview);
 
     return (
-        <div className="flex flex-col h-full w-full gap-6">
+        <div className="flex h-full w-full flex-col gap-6">
             {conversations_preview.map((e) => (
                 <button
                     key={e._id}
-                    className="flex flex-col w-full bg-gray-800 py-2 px-4 rounded-lg cursor-pointer"
+                    className="flex w-full cursor-pointer flex-col rounded-lg bg-gray-800 px-4 py-2"
                     onClick={() => onSelectConversation(e._id)}
                 >
                     <h6 className="text-stone-100">{e.participants[0]?.info.name || "unknown"}</h6>
@@ -48,7 +48,7 @@ type ConversationProps = {
 function Conversation({ onClickGoBack }: ConversationProps)
 {
     return (
-        <div className="flex flex-col h-full w-full text-white">
+        <div className="flex h-full w-full flex-col text-white">
             <div onClick={() => onClickGoBack()}>
                 <p>go back</p>
             </div>

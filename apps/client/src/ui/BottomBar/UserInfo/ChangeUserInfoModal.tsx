@@ -45,7 +45,7 @@ export default function ChangeUserInfoModal({
                 {AVAILABLE_SKINS.map((e) => (
                     <button
                         key={e}
-                        className="px-6 py-2 cursor-pointer"
+                        className="cursor-pointer px-6 py-2"
                         onClick={() => handle_change_skin(e)}
                     >
                         {e}
@@ -56,7 +56,7 @@ export default function ChangeUserInfoModal({
                 {AVAILABLE_STATUSES.map((e) => (
                     <button
                         key={e}
-                        className="px-6 py-2 cursor-pointer text-white"
+                        className="cursor-pointer px-6 py-2 text-white"
                         onClick={() => handle_change_status(e)}
                     >
                         {e}
@@ -64,7 +64,7 @@ export default function ChangeUserInfoModal({
                 ))}
             </div>
             <input
-                className="px-3 py-1 rounded-md"
+                className="rounded-md px-3 py-1"
                 value={username}
                 onChange={(e) => set_username(e.target.value)}
                 placeholder="new username..."

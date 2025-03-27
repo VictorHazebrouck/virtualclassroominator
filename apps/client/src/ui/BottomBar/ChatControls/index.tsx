@@ -19,7 +19,7 @@ export default function ChatControls()
     }
 
     return (
-        <div className="flex text-white gap-8 bg-gray-800 h-fit py-1 px-8 rounded-full">
+        <div className="flex h-fit gap-8 rounded-full bg-gray-800 px-8 py-1 text-white">
             <ControlButton
                 isActive={is_mike_active}
                 onClick={() => player_self_toggle_microphone()}

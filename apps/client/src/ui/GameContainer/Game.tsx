@@ -16,6 +16,6 @@ export default function Game()
     }, [div_ref.current]);
 
     return (
-        <div className="h-full w-full overflow-hidden absolute top-0 left-0" ref={div_ref}></div>
+        <div className="absolute top-0 left-0 h-full w-full overflow-hidden" ref={div_ref}></div>
     );
 }

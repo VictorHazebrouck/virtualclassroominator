@@ -31,12 +31,12 @@ export default function TabPanelControls()
     }
 
     return (
-        <div className="flex gap-6 items-center">
+        <div className="flex items-center gap-6">
             {tabs.map(({ name, Icon }) => (
                 <button
                     key={name}
                     className={tm(
-                        "text-zinc-400 cursor-pointer h-fit w-fit",
+                        "h-fit w-fit cursor-pointer text-zinc-400",
                         "hover:text-zinc-200",
                         current_tab == name && "text-zinc-50",
                     )}

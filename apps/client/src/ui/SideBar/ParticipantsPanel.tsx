@@ -9,7 +9,7 @@ export default function ParticipantsPanel()
     const user_data_persisted = useStore($players_other_persisted);
 
     return (
-        <div className="flex flex-col w-full gap-3">
+        <div className="flex w-full flex-col gap-3">
             {Object.values(user_data_persisted).map(({ _id, info }) => (
                 <ParticipantCard
                     key={_id}
@@ -48,7 +48,7 @@ function ParticipantCard({ _id, username, skin, status }: ParticipantCardProps)
 
     return (
         <button
-            className="flex flex-col w-full bg-gray-800 py-2 px-4 rounded-lg cursor-pointer relative"
+            className="relative flex w-full cursor-pointer flex-col rounded-lg bg-gray-800 px-4 py-2"
             onClick={() => on_click()}
             ref={ref}
         >

@@ -35,7 +35,7 @@ export default function Modal({ children, visible, onClickOutside, style, classN
         <div
             ref={ref}
             style={style}
-            className={tm("absolute px-4 py-2 rounded-lg bg-gray-900", className)}
+            className={tm("absolute rounded-lg bg-gray-900 px-4 py-2", className)}
         >
             {children}
         </div>

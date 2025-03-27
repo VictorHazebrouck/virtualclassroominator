@@ -5,8 +5,8 @@ import SideBar from "./SideBar";
 export default function Main()
 {
     return (
-        <div className="h-screen w-screen flex  flex-col">
-            <div className="flex w-full h-full">
+        <div className="flex h-screen w-screen flex-col">
+            <div className="flex h-full w-full">
                 <GameContainer />
                 <SideBar />
             </div>

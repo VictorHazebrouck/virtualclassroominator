@@ -6,7 +6,7 @@ import UserInfo from "./UserInfo";
 export default function BottomBar()
 {
     return (
-        <div className="flex justify-between px-12 h-12 w-full items-center">
+        <div className="flex h-12 w-full items-center justify-between px-12">
             <UserInfo />
             <ChatControls />
             <TabPanelControls />
