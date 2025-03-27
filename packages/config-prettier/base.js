@@ -1,8 +1,6 @@
 /**
- * A shared ESLint configuration for the repository.
- *
- * @type {import("eslint").Linter.Config}
- * */
+ * @type {import("prettier").Config}
+ */
 export const config = {
   plugins: ["prettier-plugin-brace-style"],
   braceStyle: "allman",
