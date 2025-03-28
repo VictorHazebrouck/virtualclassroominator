@@ -1,6 +1,7 @@
 import { Container, Graphics, Text, Ticker } from "pixi.js";
 import { Player } from "./player_base";
 import type { SocketData } from "@repo/shared-types/socket";
+import { COLOR_MAP } from "~/constants";
 
 export function create_username_label(username: string, status: SocketData["info"]["status"])
 {
@@ -43,17 +44,10 @@ function create_status_circle(status: SocketData["info"]["status"])
 {
     const CIRCLE_RAD = 8;
 
-    const color_map = {
-        on: "#00C851",
-        off: "#FF4444",
-        away: "#FFEB3B",
-        disconnected: "",
-    };
-
     const circle = new Graphics();
     circle.circle(0, 0, CIRCLE_RAD);
     circle.setStrokeStyle({ width: 2, color: "#111111" });
-    circle.fill(color_map[status]);
+    circle.fill(COLOR_MAP[status]);
     circle.stroke();
     circle.scale.set(0.5);
 

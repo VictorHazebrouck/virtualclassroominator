@@ -1,5 +1,6 @@
 import { $player_self } from "~/store/player_self";
 import { ParticipantSelf } from "./ParticipantSelf";
+import { subscribeKeys } from "nanostores";
 
 class ConversationManagerClass
 {
@@ -9,7 +10,7 @@ class ConversationManagerClass
     {}
 }
 
-$player_self.subscribe((data) =>
+subscribeKeys($player_self, ["chat"], (data) =>
 {
     const { is_mike_active, is_screensharing, is_webcam_active } = data.chat;
 

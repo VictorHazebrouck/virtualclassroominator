@@ -3,9 +3,10 @@ import { useEffect, useRef } from "react";
 export type VideoProps = {
     videotrack?: MediaStreamTrack | null;
     audiotrack?: MediaStreamTrack | null;
+    className?: string;
 };
 
-export default function Video({ videotrack, audiotrack }: VideoProps)
+export default function Video({ videotrack, audiotrack, className }: VideoProps)
 {
     const videoRef = useRef<HTMLVideoElement>(null);
     const audioRef = useRef<HTMLAudioElement>(null);
@@ -28,7 +29,7 @@ export default function Video({ videotrack, audiotrack }: VideoProps)
     }, [videotrack, audiotrack]);
 
     return (
-        <div className="">
+        <div className={className}>
             {videotrack && <video ref={videoRef} autoPlay playsInline muted />}
             {audiotrack && <audio ref={audioRef} autoPlay />}
         </div>

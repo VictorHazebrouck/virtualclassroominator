@@ -5,6 +5,7 @@ import CollisionValidator from "../CollisionValidator";
 import { animate_player } from "./utils";
 import MovementInputControls from "../controls/movement_input_controls";
 import { $player_self, player_self_move, player_self_stop } from "../../store/player_self";
+import { subscribeKeys } from "nanostores";
 
 export class PlayerSelf extends Player
 {
@@ -19,7 +20,10 @@ export class PlayerSelf extends Player
 
     private sub_to_store()
     {
-        $player_self.subscribe((e) => this.set_player_data(e));
+        subscribeKeys($player_self, ["info", "spacial"], (e) =>
+        {
+            this.set_player_data(e);
+        });
     }
 
     private plug_inputs()

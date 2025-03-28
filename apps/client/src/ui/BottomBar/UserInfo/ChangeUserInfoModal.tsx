@@ -1,5 +1,6 @@
 import type { AvailableSkins, PlayerStatus } from "@repo/shared-types/socket";
 import { useState } from "react";
+import { COLOR_MAP } from "~/constants";
 import {
     player_self_change_name,
     player_self_change_skin,
@@ -22,6 +23,8 @@ export default function ChangeUserInfoModal({
 
     function handle_change_name()
     {
+        if (username.length < 3) return alert("Username too short");
+        if (username.length > 18) return alert("Username too long");
         player_self_change_name(username);
     }
 
@@ -39,7 +42,7 @@ export default function ChangeUserInfoModal({
         <Modal
             onClickOutside={() => onClose()}
             visible={visible}
-            className="bottom-12 flex flex-col gap-2"
+            className="bottom-12 flex flex-col gap-2 py-4"
         >
             <div className="flex flex-col gap-2">
                 {AVAILABLE_SKINS.map((e) => (
@@ -52,24 +55,35 @@ export default function ChangeUserInfoModal({
                     </button>
                 ))}
             </div>
-            <div className="flex flex-col gap-2">
+            <div className="flex gap-2">
                 {AVAILABLE_STATUSES.map((e) => (
                     <button
                         key={e}
-                        className="cursor-pointer px-6 py-2 text-white"
+                        className="cursor-pointer px-6 py-2 text-white flex gap-1"
                         onClick={() => handle_change_status(e)}
                     >
                         {e}
+                        <div
+                            className="h-2 w-2 rounded-full"
+                            style={{ backgroundColor: COLOR_MAP[e] }}
+                        ></div>
                     </button>
                 ))}
             </div>
-            <input
-                className="rounded-md px-3 py-1"
-                value={username}
-                onChange={(e) => set_username(e.target.value)}
-                placeholder="new username..."
-            />
-            <button onClick={() => handle_change_name()}>change</button>
+            <div className="flex">
+                <input
+                    className="rounded-md px-3 py-1 text-zinc-400"
+                    value={username}
+                    onChange={(e) => set_username(e.target.value)}
+                    placeholder="new username..."
+                />
+                <button
+                    className="text-zinc-100 cursor-pointer px-3 py-1"
+                    onClick={() => handle_change_name()}
+                >
+                    change
+                </button>
+            </div>
         </Modal>
     );
 }

@@ -5,7 +5,7 @@ export interface ModalProps
 {
     children: React.ReactElement | React.ReactElement[];
     visible: boolean;
-    onClickOutside: () => void;
+    onClickOutside?: () => void;
     style?: React.CSSProperties;
     className?: string;
 }
@@ -16,7 +16,7 @@ export default function Modal({ children, visible, onClickOutside, style, classN
 
     function handleClickOutside(e: MouseEvent)
     {
-        if (ref.current && !ref.current.contains(e.target as Node))
+        if (ref.current && !ref.current.contains(e.target as Node) && onClickOutside)
         {
             onClickOutside();
         }
