@@ -1,33 +1,13 @@
-import { subscribeKeys } from "nanostores";
+import { Participant } from "./Participant";
 import { request_microphone_track, request_screenshare_track, request_webcam_track } from "./utils";
-import {
-    $player_self,
-    player_self_toggle_microphone,
-    player_self_toggle_screenshare,
-    player_self_toggle_webcam,
-} from "~/store/player_self";
 
-export class ParticipantSelf
+class ParticipantSelfClass extends Participant
 {
-    my_id = $player_self.get()._id;
-    stream = new MediaStream();
+    _id?: string;
 
-    microphone_track?: MediaStreamTrack;
-    webcam_track?: MediaStreamTrack;
-    screenshare_track?: MediaStreamTrack;
-
-    is_webcam_microphone_loading = false;
-
-    constructor()
+    init(self_id: string)
     {
-        subscribeKeys($player_self, ["chat"], (self_data) =>
-        {
-            const { is_mike_active, is_screensharing, is_webcam_active } = self_data.chat;
-
-            this.toggle_microphone(is_mike_active);
-            this.toggle_webcam(is_webcam_active);
-            this.toggle_screenshare(is_screensharing);
-        });
+        this._id = self_id;
     }
 
     async toggle_screenshare(on: boolean)
@@ -37,6 +17,7 @@ export class ParticipantSelf
             this.screenshare_track.stop();
             this.stream.removeTrack(this.screenshare_track);
             this.screenshare_track = undefined;
+            this.on_screenshare_share_lists.forEach((cb) => cb(false));
         }
         else if (on)
         {
@@ -45,10 +26,12 @@ export class ParticipantSelf
                 const track = await request_screenshare_track();
                 this.screenshare_track = track;
                 this.stream.addTrack(this.screenshare_track);
+                this.on_screenshare_share_lists.forEach((cb) => cb(true, track));
             }
             catch (_e)
             {
-                player_self_toggle_screenshare();
+                console.warn(_e);
+                this.on_screenshare_share_lists.forEach((cb) => cb(false));
             }
         }
     }
@@ -60,6 +43,7 @@ export class ParticipantSelf
             this.webcam_track.stop();
             this.stream.removeTrack(this.webcam_track!);
             this.webcam_track = undefined;
+            this.on_webcam_share_lists.forEach((cb) => cb(false));
         }
         else if (on)
         {
@@ -68,10 +52,12 @@ export class ParticipantSelf
                 const track = await request_webcam_track();
                 this.webcam_track = track;
                 this.stream.addTrack(this.webcam_track);
+                this.on_webcam_share_lists.forEach((cb) => cb(true, track));
             }
             catch (_e)
             {
-                player_self_toggle_webcam();
+                console.warn(_e);
+                this.on_webcam_share_lists.forEach((cb) => cb(false));
             }
         }
     }
@@ -83,6 +69,7 @@ export class ParticipantSelf
             this.microphone_track.stop();
             this.stream.removeTrack(this.microphone_track);
             this.microphone_track = undefined;
+            this.on_microphone_share_lists.forEach((cb) => cb(false));
         }
         else if (on)
         {
@@ -91,11 +78,15 @@ export class ParticipantSelf
                 const track = await request_microphone_track();
                 this.microphone_track = track;
                 this.stream.addTrack(this.microphone_track);
+                this.on_microphone_share_lists.forEach((cb) => cb(true, track));
             }
             catch (_e)
             {
-                player_self_toggle_microphone();
+                console.warn(_e);
+                this.on_microphone_share_lists.forEach((cb) => cb(false));
             }
         }
     }
 }
+
+export const ParticipantSelf = new ParticipantSelfClass();
