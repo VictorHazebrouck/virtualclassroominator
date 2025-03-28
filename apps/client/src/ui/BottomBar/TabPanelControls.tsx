@@ -1,9 +1,9 @@
 import { useStore } from "@nanostores/react";
 import { BiChat, BiUser } from "react-icons/bi";
-import { $current_tab, type Tab } from "~/store/nav";
+import { $current_tab, close_tab_panel, open_tab_panel, type Tab } from "~/store/nav";
 import { tm } from "~/utils/tm";
 
-const tabs = [
+const AVAILABLE_TABS = [
     {
         name: "chat",
         Icon: BiChat,
@@ -18,21 +18,15 @@ export default function TabPanelControls()
 {
     const current_tab = useStore($current_tab);
 
-    function handle_select_tab(name: Tab)
+    function handle_select_tab(tab_name: Tab)
     {
-        if (current_tab === name)
-        {
-            $current_tab.set(null);
-        }
-        else
-        {
-            $current_tab.set(name);
-        }
+        if (current_tab === tab_name) close_tab_panel();
+        else open_tab_panel(tab_name);
     }
 
     return (
         <div className="flex items-center gap-6">
-            {tabs.map(({ name, Icon }) => (
+            {AVAILABLE_TABS.map(({ name, Icon }) => (
                 <button
                     key={name}
                     className={tm(
