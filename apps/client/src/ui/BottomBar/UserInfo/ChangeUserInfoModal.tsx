@@ -42,47 +42,56 @@ export default function ChangeUserInfoModal({
         <Modal
             onClickOutside={() => onClose()}
             visible={visible}
-            className="bottom-12 flex flex-col gap-2 py-4"
+            className="bottom-12 flex flex-col gap-6 px-8 py-8 w-72"
         >
             <div className="flex flex-col gap-2">
-                {AVAILABLE_SKINS.map((e) => (
-                    <button
-                        key={e}
-                        className="cursor-pointer px-6 py-2"
-                        onClick={() => handle_change_skin(e)}
-                    >
-                        {e}
-                    </button>
-                ))}
+                <h3 className="text-zinc-200">choose character</h3>
+                <div className="flex flex-wrap gap-x-2">
+                    {AVAILABLE_SKINS.map((e) => (
+                        <button
+                            key={e}
+                            className="cursor-pointer px-3 py-1 text-zinc-400 hover:text-zinc-100"
+                            onClick={() => handle_change_skin(e)}
+                        >
+                            {e}
+                        </button>
+                    ))}
+                </div>
             </div>
-            <div className="flex gap-2">
-                {AVAILABLE_STATUSES.map((e) => (
-                    <button
-                        key={e}
-                        className="cursor-pointer px-6 py-2 text-white flex gap-1"
-                        onClick={() => handle_change_status(e)}
-                    >
-                        {e}
-                        <div
-                            className="h-2 w-2 rounded-full"
-                            style={{ backgroundColor: COLOR_MAP[e] }}
-                        ></div>
-                    </button>
-                ))}
+            <div className="flex flex-col gap-2">
+                <h3 className="text-zinc-200">change status</h3>
+                <div className="flex gap-2">
+                    {AVAILABLE_STATUSES.map((e) => (
+                        <button
+                            key={e}
+                            className="cursor-pointer px-3 py-1 flex gap-1 text-zinc-400 hover:text-zinc-100"
+                            onClick={() => handle_change_status(e)}
+                        >
+                            {e}
+                            <div
+                                className="h-2 w-2 rounded-full"
+                                style={{ backgroundColor: COLOR_MAP[e] }}
+                            ></div>
+                        </button>
+                    ))}
+                </div>
             </div>
-            <div className="flex">
-                <input
-                    className="rounded-md px-3 py-1 text-zinc-400"
-                    value={username}
-                    onChange={(e) => set_username(e.target.value)}
-                    placeholder="new username..."
-                />
-                <button
-                    className="text-zinc-100 cursor-pointer px-3 py-1"
-                    onClick={() => handle_change_name()}
-                >
-                    change
-                </button>
+            <div className="flex flex-col gap-2">
+                <h3 className="text-zinc-200">change username</h3>
+                <div className="flex w-fit">
+                    <input
+                        className="rounded-md px-3 py-1 text-zinc-400 w-full"
+                        value={username}
+                        onChange={(e) => set_username(e.target.value)}
+                        placeholder="new username..."
+                    />
+                    <button
+                        className="text-zinc-100 cursor-pointer px-3 py-1"
+                        onClick={() => handle_change_name()}
+                    >
+                        change
+                    </button>
+                </div>
             </div>
         </Modal>
     );
