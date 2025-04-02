@@ -29,9 +29,7 @@ export default function UserInfo()
             >
                 {!webcam_track && <BiCameraOff size={20} className="text-red-600" />}
                 {webcam_track && !is_video_enlarged_visible && (
-                    <div className="flex items-center justify-center h-full w-full object-cover object-center">
-                        <Video videotrack={webcam_track} />
-                    </div>
+                    <Video className="h-full w-full" videotrack={webcam_track} />
                 )}
             </div>
             <div
@@ -62,10 +60,7 @@ function PersonalWebcamModal({
 })
 {
     return (
-        <Modal
-            visible={visible}
-            className="bottom-12 h-36 aspect-video bg-gray-800 rounded-lg p-0 overflow-hidden"
-        >
+        <Modal visible={visible} className="bottom-12 p-0">
             <Video videotrack={videotrack} />
         </Modal>
     );
