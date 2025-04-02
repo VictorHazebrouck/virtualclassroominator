@@ -46,4 +46,55 @@ export class Participant
     {
         this.on_screenshare_share_lists.filter((e) => e !== cb);
     }
+
+    protected _toggle_screenshare(on: boolean, track?: MediaStreamTrack)
+    {
+        if (!on && this.screenshare_track)
+        {
+            this.screenshare_track.stop();
+            this.stream.removeTrack(this.screenshare_track);
+            this.screenshare_track = undefined;
+            this.on_screenshare_share_lists.forEach((cb) => cb(false));
+        }
+        else if (on && track)
+        {
+            this.screenshare_track = track;
+            this.stream.addTrack(this.screenshare_track);
+            this.on_screenshare_share_lists.forEach((cb) => cb(true, track));
+        }
+    }
+
+    protected _toggle_webcam(on: boolean, track?: MediaStreamTrack)
+    {
+        if (!on && this.webcam_track)
+        {
+            this.webcam_track.stop();
+            this.stream.removeTrack(this.webcam_track!);
+            this.webcam_track = undefined;
+            this.on_webcam_share_lists.forEach((cb) => cb(false));
+        }
+        else if (on && track)
+        {
+            this.webcam_track = track;
+            this.stream.addTrack(this.webcam_track);
+            this.on_webcam_share_lists.forEach((cb) => cb(true, track));
+        }
+    }
+
+    protected _toggle_microphone(on: boolean, track?: MediaStreamTrack)
+    {
+        if (!on && this.microphone_track)
+        {
+            this.microphone_track.stop();
+            this.stream.removeTrack(this.microphone_track);
+            this.microphone_track = undefined;
+            this.on_microphone_share_lists.forEach((cb) => cb(false));
+        }
+        else if (on && track)
+        {
+            this.microphone_track = track;
+            this.stream.addTrack(this.microphone_track);
+            this.on_microphone_share_lists.forEach((cb) => cb(true, track));
+        }
+    }
 }
