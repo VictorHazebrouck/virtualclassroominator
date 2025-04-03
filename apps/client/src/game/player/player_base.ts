@@ -55,11 +55,6 @@ export class Player extends Container
         // new spacial is being handled by the gameloop directly
     }
 
-    public cleanup()
-    {
-        Ticker.shared.remove(this._animate_fn);
-    }
-
     private set_username_label()
     {
         if (this.username_label)
