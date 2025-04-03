@@ -2,13 +2,20 @@ import { useStore } from "@nanostores/react";
 import type { SocketData } from "@repo/shared-types/socket";
 import { BiCameraOff, BiMicrophoneOff } from "react-icons/bi";
 import { $nearby_players } from "~/store/nearby_players";
+import { use_get_personal_screenshare } from "~/stream/hooks";
+import { VideoLayout, VideoLayoutLabel, VideoScreenShare } from "~/ui/-components/Video";
 
 export default function ConversationOverlay()
 {
     const nearby_players = useStore($nearby_players);
+    const personal_screenshare_track = use_get_personal_screenshare();
 
     return (
-        <div className="h-fit w-full max-h-full absolute overflow-y-scroll p-2 gap-2">
+        <div className="h-fit max-h-full absolute overflow-y-scroll flex flex-col p-2 gap-2 w-fit">
+            {personal_screenshare_track && (
+                <VideoScreenShare video_track={personal_screenshare_track} label="my screenshare" />
+            )}
+
             {nearby_players.map((e) => (
                 <PlayerCam key={e._id} playerData={e} />
             ))}
@@ -19,23 +26,32 @@ export default function ConversationOverlay()
 function PlayerCam({ playerData }: { playerData: SocketData })
 {
     const { name } = playerData.info;
-    const { is_webcam_active, is_mike_active } = playerData.chat;
+    const { is_webcam_active, is_mike_active, is_screensharing } = playerData.chat;
 
     return (
-        <div className="relative h-36 w-62 rounded-lg bg-gray-800">
-            <div className="absolute top-1 left-1 flex items-center justify-center gap-2 rounded-md bg-black/80 px-3">
-                {!is_mike_active && <BiMicrophoneOff size={16} className="text-red-600" />}
-                <h6 className="-mt-[3px] text-white">{name}</h6>
-            </div>
-            <div className="absolute top-1 right-1 flex items-center justify-center"></div>
-            {!is_webcam_active && (
-                <div className="flex h-full items-center justify-center">
-                    <BiCameraOff size={32} className="text-red-600" />
-                </div>
+        <>
+            <VideoLayout>
+                <VideoLayoutLabel>
+                    {!is_mike_active && <BiMicrophoneOff size={16} className="text-red-600" />}
+                    <h6 className="-mt-[3px] text-white">{name}</h6>
+                </VideoLayoutLabel>
+
+                {!is_webcam_active && (
+                    <div className="flex h-full items-center justify-center">
+                        <BiCameraOff size={32} className="text-red-600" />
+                    </div>
+                )}
+
+                {is_webcam_active && (
+                    <div className="flex h-full w-full items-center justify-center">
+                        webcam active
+                    </div>
+                )}
+            </VideoLayout>
+
+            {is_screensharing && (
+                <VideoScreenShare video_track={null} label={`${name}'s screenshare`} />
             )}
-            {is_webcam_active && (
-                <div className="flex h-full w-full items-center justify-center">webcam active</div>
-            )}
-        </div>
+        </>
     );
 }

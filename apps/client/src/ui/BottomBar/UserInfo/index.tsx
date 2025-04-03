@@ -3,7 +3,7 @@ import { useState } from "react";
 import { BiCameraOff } from "react-icons/bi";
 import { $player_self } from "~/store/player_self";
 import { use_get_personal_video } from "~/stream/hooks";
-import Video from "~/ui/-components/Video";
+import { Video, VideoLayout } from "~/ui/-components/Video";
 import ChangeUserInfoModal from "./ChangeUserInfoModal";
 import Modal from "~/ui/-components/Modal";
 import { tm } from "~/utils/tm";
@@ -61,7 +61,9 @@ function PersonalWebcamModal({
 {
     return (
         <Modal visible={visible} className="bottom-12 p-0">
-            <Video videotrack={videotrack} />
+            <VideoLayout>
+                <Video videotrack={videotrack} />
+            </VideoLayout>
         </Modal>
     );
 }

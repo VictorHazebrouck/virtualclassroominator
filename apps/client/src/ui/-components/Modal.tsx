@@ -3,7 +3,7 @@ import { tm } from "~/utils/tm";
 
 export interface ModalProps
 {
-    children: React.ReactElement | React.ReactElement[];
+    children: React.ReactNode;
     visible: boolean;
     onClickOutside?: () => void;
     style?: React.CSSProperties;

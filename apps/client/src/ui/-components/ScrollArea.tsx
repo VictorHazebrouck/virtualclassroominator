@@ -1,10 +1,11 @@
 import type React from "react";
 import { tm } from "~/utils/tm";
 
-export type ScrollAreaProps = {
+export interface ScrollAreaProps
+{
     className?: string;
-    children: React.ReactElement;
-};
+    children: React.ReactNode;
+}
 
 export default function ScrollArea({ children, className }: ScrollAreaProps)
 {
