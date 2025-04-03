@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
-import { ParticipantSelf } from "./ParticipantSelf";
+import { ConversationManager } from "./main";
+
+const ParticipantSelf = ConversationManager.participant_self;
 
 export function use_get_personal_video()
 {
@@ -47,4 +49,27 @@ export function use_get_personal_screenshare()
     }, []);
 
     return screenshare_track;
+}
+
+export function use_set_personal_screenshare()
+{
+    return async (on: boolean) =>
+    {
+        await ParticipantSelf.toggle_screenshare(on);
+    };
+}
+
+export function use_set_personal_webcam()
+{
+    return async (on: boolean) =>
+    {
+        await ParticipantSelf.toggle_webcam(on);
+    };
+}
+export function use_set_personal_microphone()
+{
+    return async (on: boolean) =>
+    {
+        await ParticipantSelf.toggle_microphone(on);
+    };
 }

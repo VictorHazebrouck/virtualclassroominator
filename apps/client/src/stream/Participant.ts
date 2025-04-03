@@ -5,6 +5,13 @@ type CallbackToggleTrack = {
 
 export class Participant
 {
+    _id: string;
+
+    constructor(player_id: string)
+    {
+        this._id = player_id;
+    }
+
     stream = new MediaStream();
 
     microphone_track?: MediaStreamTrack;

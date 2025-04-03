@@ -1,24 +1,25 @@
-// import Peer from "peerjs";
+import Peer from "peerjs";
 
-// const URL_PEERJS = import.meta.env.VITE_PEERJS_BACKEND_URL;
-// const PATH_PEERJS = import.meta.env.VITE_PEER_SERVER_PATH;
-// const IS_SECURE_PEERJS = import.meta.env.VITE_PEER_SERVER_IS_SECURE == "true" ? true : false;
-// const PORT_PEERJS = import.meta.env.VITE_PEER_SERVER_PORT;
+const URL_PEERJS = import.meta.env.VITE_PEERJS_BACKEND_URL;
+const PATH_PEERJS = import.meta.env.VITE_PEER_SERVER_PATH;
+const IS_SECURE_PEERJS = import.meta.env.VITE_PEER_SERVER_IS_SECURE == "true" ? true : false;
+const PORT_PEERJS = import.meta.env.VITE_PEER_SERVER_PORT;
 
-// export class P2P
-// {
-//     peer: Peer;
-//     participants = new Map<any, any>();
+export class P2P
+{
+    peer: Peer;
+    participants = new Map<any, any>();
 
-//     constructor(user_id: string)
-//     {
-//         this.peer = new Peer(user_id, {
-//             host: URL_PEERJS,
-//             path: PATH_PEERJS,
-//             secure: IS_SECURE_PEERJS,
-//             port: PORT_PEERJS,
-//         });
-//     }
+    constructor(user_id: string)
+    {
+        this.peer = new Peer(user_id, {
+            host: URL_PEERJS,
+            path: PATH_PEERJS,
+            secure: IS_SECURE_PEERJS,
+            port: PORT_PEERJS,
+        });
+    }
+}
 
 //     close_all_connections()
 //     {}

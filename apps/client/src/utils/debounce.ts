@@ -1,10 +1,10 @@
-export function debounced_fn(func: () => void, delay_ms: number)
+export function debounced_fn<T = undefined>(func: (a: T) => void, delay_ms: number)
 {
     let timeout: NodeJS.Timeout;
 
-    return () =>
+    return (args: T) =>
     {
         clearTimeout(timeout);
-        timeout = setTimeout(func, delay_ms);
+        timeout = setTimeout(() => func(args!), delay_ms);
     };
 }

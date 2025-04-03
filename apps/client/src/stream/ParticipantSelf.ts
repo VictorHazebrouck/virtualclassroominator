@@ -1,15 +1,8 @@
 import { Participant } from "./Participant";
 import { request_microphone_track, request_screenshare_track, request_webcam_track } from "./utils";
 
-class ParticipantSelfClass extends Participant
+export default class ParticipantSelf extends Participant
 {
-    _id?: string;
-
-    init(self_id: string)
-    {
-        this._id = self_id;
-    }
-
     async toggle_screenshare(on: boolean)
     {
         if (!on && this.screenshare_track)
@@ -22,6 +15,8 @@ class ParticipantSelfClass extends Participant
             {
                 const track = await request_screenshare_track();
                 this._toggle_screenshare(true, track);
+
+                track.onended = () => this._toggle_screenshare(false);
             }
             catch (_e)
             {
@@ -76,5 +71,3 @@ class ParticipantSelfClass extends Participant
         }
     }
 }
-
-export const ParticipantSelf = new ParticipantSelfClass();

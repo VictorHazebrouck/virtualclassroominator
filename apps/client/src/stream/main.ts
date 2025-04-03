@@ -1,22 +1,27 @@
-import { $player_self } from "~/store/player_self";
-import { ParticipantSelf } from "./ParticipantSelf";
-import { subscribeKeys } from "nanostores";
+import {
+    $player_self,
+    player_self_toggle_microphone,
+    player_self_toggle_screenshare,
+    player_self_toggle_webcam,
+} from "~/store/player_self";
+import ParticipantSelf from "./ParticipantSelf";
+import { P2P } from "./p2p/main";
 
 class ConversationManagerClass
 {
-    participant_self = ParticipantSelf;
+    participant_self: ParticipantSelf;
+    p2pclient: P2P;
 
-    constructor()
-    {}
+    constructor(self_id: string)
+    {
+        this.p2pclient = new P2P(self_id);
+        this.participant_self = new ParticipantSelf(self_id);
+    }
 }
 
-subscribeKeys($player_self, ["chat"], (data) =>
-{
-    const { is_mike_active, is_screensharing, is_webcam_active } = data.chat;
+export const ConversationManager = new ConversationManagerClass($player_self.get()._id);
+const participant_self = ConversationManager.participant_self;
 
-    ParticipantSelf.toggle_webcam(is_webcam_active);
-    ParticipantSelf.toggle_microphone(is_mike_active);
-    ParticipantSelf.toggle_screenshare(is_screensharing);
-});
-
-export const ConversationManager = new ConversationManagerClass();
+participant_self.on_screenshare_share((on) => player_self_toggle_screenshare(on));
+participant_self.on_microphone_share((on) => player_self_toggle_microphone(on));
+participant_self.on_webcam_share((on) => player_self_toggle_webcam(on));

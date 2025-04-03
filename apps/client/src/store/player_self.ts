@@ -7,7 +7,6 @@ import type {
 } from "@repo/shared-types/socket";
 import { map } from "nanostores";
 import { $player_self_persisted, sync_persisted_self_data } from "./player_self_persisted";
-import { debounced_fn } from "~/utils/debounce";
 
 // We init data form our localstorage
 export const $player_self = map<SocketData>({
@@ -74,20 +73,20 @@ export function player_self_change_status(new_status: PlayerStatus)
 
 // Chat stuff
 
-export const player_self_toggle_microphone = debounced_fn(() =>
+export function player_self_toggle_microphone(on: boolean)
 {
     const curr_chat = $player_self.get().chat;
-    $player_self.setKey("chat", { ...curr_chat, is_mike_active: !curr_chat.is_mike_active });
-}, 1000);
+    $player_self.setKey("chat", { ...curr_chat, is_mike_active: on });
+}
 
-export const player_self_toggle_webcam = debounced_fn(() =>
+export function player_self_toggle_webcam(on: boolean)
 {
     const curr_chat = $player_self.get().chat;
-    $player_self.setKey("chat", { ...curr_chat, is_webcam_active: !curr_chat.is_webcam_active });
-}, 1000);
+    $player_self.setKey("chat", { ...curr_chat, is_webcam_active: on });
+}
 
-export const player_self_toggle_screenshare = debounced_fn(() =>
+export function player_self_toggle_screenshare(on: boolean)
 {
     const curr_chat = $player_self.get().chat;
-    $player_self.setKey("chat", { ...curr_chat, is_screensharing: !curr_chat.is_screensharing });
-}, 1000);
+    $player_self.setKey("chat", { ...curr_chat, is_screensharing: on });
+}
