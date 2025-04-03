@@ -29,7 +29,7 @@ export default function UserInfo()
             >
                 {!webcam_track && <BiCameraOff size={20} className="text-red-600" />}
                 {webcam_track && !is_video_enlarged_visible && (
-                    <Video className="h-full w-full" videotrack={webcam_track} />
+                    <Video className="h-full w-full rounded-none" videotrack={webcam_track} />
                 )}
             </div>
             <div

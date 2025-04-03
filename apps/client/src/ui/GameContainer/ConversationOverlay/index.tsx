@@ -2,19 +2,20 @@ import { useStore } from "@nanostores/react";
 import type { SocketData } from "@repo/shared-types/socket";
 import { BiCameraOff, BiMicrophoneOff } from "react-icons/bi";
 import { $nearby_players } from "~/store/nearby_players";
+import ScrollArea from "~/ui/-components/ScrollArea";
 
 export default function ConversationOverlay()
 {
     const nearby_players = useStore($nearby_players);
 
     return (
-        <div className="absolute h-fit max-h-full w-fit overflow-y-scroll px-2 py-2">
-            <div className="flex flex-col gap-2">
+        <ScrollArea>
+            <div className="flex flex-col gap-2 px-2 py-2">
                 {nearby_players.map((e) => (
                     <PlayerCam key={e._id} playerData={e} />
                 ))}
             </div>
-        </div>
+        </ScrollArea>
     );
 }
 
@@ -35,7 +36,9 @@ function PlayerCam({ playerData }: { playerData: SocketData })
                     <BiCameraOff size={32} className="text-red-600" />
                 </div>
             )}
-            {is_webcam_active && <div>webcam active</div>}
+            {is_webcam_active && (
+                <div className="flex h-full w-full items-center justify-center">webcam active</div>
+            )}
         </div>
     );
 }
