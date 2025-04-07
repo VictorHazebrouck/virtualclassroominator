@@ -7,17 +7,21 @@ import {
 import ParticipantSelf from "./ParticipantSelf";
 import { P2P } from "./p2p/main";
 import { $nearby_players_ids } from "~/store/nearby_players";
+import { ParticipantsOther } from "./ParticipantOther";
 
 class ConversationManagerClass
 {
     participant_self: ParticipantSelf;
+    participants_other = new ParticipantsOther();
+
+    mode: "p2p" | "sfu" = "p2p";
     p2p_client: P2P;
     sfu_client = null;
 
     constructor(self_id: string)
     {
         this.participant_self = new ParticipantSelf(self_id);
-        this.p2p_client = new P2P(self_id, this.participant_self);
+        this.p2p_client = new P2P(self_id, this.participant_self, this.participants_other);
     }
 
     call_users_by_ids(user_ids: string[])

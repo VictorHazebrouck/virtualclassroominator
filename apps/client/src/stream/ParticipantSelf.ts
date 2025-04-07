@@ -21,7 +21,6 @@ export default class ParticipantSelf extends Participant
             catch (_e)
             {
                 console.warn(_e);
-                // this.on_screenshare_share_lists.forEach((cb) => cb(false));
                 this._toggle_screenshare(null);
                 alert("Error accessing screenshare.\nPlease check permissions.");
             }

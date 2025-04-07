@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { ConversationManager } from ".";
 
 const ParticipantSelf = ConversationManager.participant_self;
-const ParticipantsOther = ConversationManager.p2p_client.participants;
+const ParticipantsOther = ConversationManager.participants_other.participants_map;
 
 export function use_get_personal_video()
 {

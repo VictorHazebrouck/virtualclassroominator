@@ -1,6 +1,6 @@
 import Peer from "peerjs";
 import type ParticipantSelf from "../ParticipantSelf";
-import { ParticipantOther } from "../ParticipantOther";
+import { ParticipantOther, ParticipantsOther } from "../ParticipantOther";
 
 const URL_PEERJS = import.meta.env.VITE_PEERJS_BACKEND_URL;
 const PATH_PEERJS = import.meta.env.VITE_PEER_SERVER_PATH;
@@ -11,11 +11,17 @@ export class P2P
 {
     peer: Peer;
     participant_self: ParticipantSelf;
-    participants = new Map<string, ParticipantOther>();
+    participants_other: ParticipantsOther;
 
-    constructor(user_id: string, participant_self: ParticipantSelf)
+    constructor(
+        user_id: string,
+        participant_self: ParticipantSelf,
+        participants_other: ParticipantsOther,
+    )
     {
         this.participant_self = participant_self;
+        this.participants_other = participants_other;
+
         this.peer = new Peer(user_id, {
             host: URL_PEERJS,
             path: PATH_PEERJS,
@@ -100,25 +106,6 @@ export class P2P
     {
         const connections = this.peer.connections;
         Object.values(connections).forEach((conns: any[]) => conns.forEach((conn) => conn.close()));
-    }
-
-    set_participant_stream(stream: MediaStream | undefined, participant: ParticipantOther)
-    {
-        console.log("receiving stream....", participant);
-        if (!stream) return;
-
-        const [audiotrack] = stream.getAudioTracks();
-
-        if (audiotrack) participant.toggle_microphone(audiotrack);
-        else participant.toggle_microphone(null);
-
-        const [videotrack1, videotrack2] = stream.getVideoTracks();
-
-        if (videotrack1) participant.toggle_webcam(videotrack1);
-        else participant.toggle_webcam(null);
-
-        if (videotrack2) participant.toggle_screenshare(videotrack2);
-        else participant.toggle_screenshare(null);
     }
 }
 
