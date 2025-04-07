@@ -2,8 +2,12 @@ import { useStore } from "@nanostores/react";
 import type { SocketData } from "@repo/shared-types/socket";
 import { BiCameraOff, BiMicrophoneOff } from "react-icons/bi";
 import { $nearby_players } from "~/store/nearby_players";
-import { use_get_personal_screenshare } from "~/stream/hooks";
-import { VideoLayout, VideoLayoutLabel, VideoScreenShare } from "~/ui/-components/Video";
+import {
+    use_get_personal_screenshare,
+    use_get_user_screenshare_by_id,
+    use_get_user_video_by_id,
+} from "~/stream/hooks";
+import { Video, VideoLayout, VideoLayoutLabel, VideoScreenShare } from "~/ui/-components/Video";
 
 export default function ConversationOverlay()
 {
@@ -27,6 +31,8 @@ function PlayerCam({ playerData }: { playerData: SocketData })
 {
     const { name } = playerData.info;
     const { is_webcam_active, is_mike_active, is_screensharing } = playerData.chat;
+    const video_track = use_get_user_video_by_id(playerData._id);
+    const screenshare_track = use_get_user_screenshare_by_id(playerData._id);
 
     return (
         <>
@@ -43,14 +49,15 @@ function PlayerCam({ playerData }: { playerData: SocketData })
                 )}
 
                 {is_webcam_active && (
-                    <div className="flex h-full w-full items-center justify-center">
-                        webcam active
-                    </div>
+                    <Video videotrack={video_track} />
+                    // <div className="flex h-full w-full items-center justify-center">
+                    //     webcam active
+                    // </div>
                 )}
             </VideoLayout>
 
             {is_screensharing && (
-                <VideoScreenShare video_track={null} label={`${name}'s screenshare`} />
+                <VideoScreenShare video_track={screenshare_track} label={`${name}'s screenshare`} />
             )}
         </>
     );

@@ -12,46 +12,57 @@ export class Participant
         this._id = player_id;
     }
 
-    stream = new MediaStream();
+    readonly stream = new MediaStream();
 
     microphone_track?: MediaStreamTrack;
     webcam_track?: MediaStreamTrack;
     screenshare_track?: MediaStreamTrack;
 
-    private on_microphone_share_lists: CallbackToggleTrack[] = [];
-    private on_webcam_share_lists: CallbackToggleTrack[] = [];
-    private on_screenshare_share_lists: CallbackToggleTrack[] = [];
+    private on_microphone_share_listeners: CallbackToggleTrack[] = [];
+    private on_webcam_share_listeners: CallbackToggleTrack[] = [];
+    private on_screenshare_share_listeners: CallbackToggleTrack[] = [];
 
     /** @returns - cleanup function */
     on_microphone_share(cb: CallbackToggleTrack)
     {
-        this.on_microphone_share_lists.push(cb);
+        this.on_microphone_share_listeners.push(cb);
         return () => this.off_microphone_share(cb);
     }
     /** @returns - cleanup function */
     on_webcam_share(cb: CallbackToggleTrack)
     {
-        this.on_webcam_share_lists.push(cb);
+        this.on_webcam_share_listeners.push(cb);
         return () => this.off_webcam_share(cb);
     }
     /** @returns - cleanup function */
     on_screenshare_share(cb: CallbackToggleTrack)
     {
-        this.on_screenshare_share_lists.push(cb);
+        this.on_screenshare_share_listeners.push(cb);
         return () => this.off_screenshare_share(cb);
     }
 
     off_microphone_share(cb: CallbackToggleTrack)
     {
-        this.on_microphone_share_lists = this.on_microphone_share_lists.filter((e) => e !== cb);
+        this.on_microphone_share_listeners = this.on_microphone_share_listeners.filter(
+            (e) => e !== cb,
+        );
     }
     off_webcam_share(cb: CallbackToggleTrack)
     {
-        this.on_webcam_share_lists = this.on_webcam_share_lists.filter((e) => e !== cb);
+        this.on_webcam_share_listeners = this.on_webcam_share_listeners.filter((e) => e !== cb);
     }
     off_screenshare_share(cb: CallbackToggleTrack)
     {
-        this.on_screenshare_share_lists = this.on_screenshare_share_lists.filter((e) => e !== cb);
+        this.on_screenshare_share_listeners = this.on_screenshare_share_listeners.filter(
+            (e) => e !== cb,
+        );
+    }
+
+    cleanup()
+    {
+        this.on_microphone_share_listeners.forEach((cb) => this.off_microphone_share(cb));
+        this.on_webcam_share_listeners.forEach((cb) => this.off_webcam_share(cb));
+        this.on_screenshare_share_listeners.forEach((cb) => this.off_screenshare_share(cb));
     }
 
     protected _toggle_screenshare(on: boolean, track?: MediaStreamTrack)
@@ -64,13 +75,13 @@ export class Participant
                 this.stream.removeTrack(this.screenshare_track);
             }
             this.screenshare_track = undefined;
-            this.on_screenshare_share_lists.forEach((cb) => cb(false));
+            this.on_screenshare_share_listeners.forEach((cb) => cb(false));
         }
         else if (on && track)
         {
             this.screenshare_track = track;
             this.stream.addTrack(this.screenshare_track);
-            this.on_screenshare_share_lists.forEach((cb) => cb(true, track));
+            this.on_screenshare_share_listeners.forEach((cb) => cb(true, track));
         }
     }
 
@@ -84,13 +95,13 @@ export class Participant
                 this.stream.removeTrack(this.webcam_track!);
             }
             this.webcam_track = undefined;
-            this.on_webcam_share_lists.forEach((cb) => cb(false));
+            this.on_webcam_share_listeners.forEach((cb) => cb(false));
         }
         else if (on && track)
         {
             this.webcam_track = track;
             this.stream.addTrack(this.webcam_track);
-            this.on_webcam_share_lists.forEach((cb) => cb(true, track));
+            this.on_webcam_share_listeners.forEach((cb) => cb(true, track));
         }
     }
 
@@ -104,13 +115,13 @@ export class Participant
                 this.stream.removeTrack(this.microphone_track);
             }
             this.microphone_track = undefined;
-            this.on_microphone_share_lists.forEach((cb) => cb(false));
+            this.on_microphone_share_listeners.forEach((cb) => cb(false));
         }
         else if (on && track)
         {
             this.microphone_track = track;
             this.stream.addTrack(this.microphone_track);
-            this.on_microphone_share_lists.forEach((cb) => cb(true, track));
+            this.on_microphone_share_listeners.forEach((cb) => cb(true, track));
         }
     }
 }

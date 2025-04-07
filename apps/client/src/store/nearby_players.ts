@@ -1,7 +1,7 @@
 import { atom, computed } from "nanostores";
 import { $players_other } from "./players_other";
 
-const $nearby_players_ids = atom<string[]>([]);
+export const $nearby_players_ids = atom<string[]>([]);
 
 export const $nearby_players = computed([$nearby_players_ids, $players_other], (ids, players) =>
 {
