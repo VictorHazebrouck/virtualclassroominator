@@ -35,9 +35,9 @@ class ConversationManagerClass
 export const ConversationManager = new ConversationManagerClass($player_self.get()._id);
 const participant_self = ConversationManager.participant_self;
 
-participant_self.on_screenshare_share((on) => player_self_toggle_screenshare(on));
-participant_self.on_microphone_share((on) => player_self_toggle_microphone(on));
-participant_self.on_webcam_share((on) => player_self_toggle_webcam(on));
+participant_self.on_screenshare_share((track) => player_self_toggle_screenshare(Boolean(track)));
+participant_self.on_microphone_share((track) => player_self_toggle_microphone(Boolean(track)));
+participant_self.on_webcam_share((track) => player_self_toggle_webcam(Boolean(track)));
 
 $nearby_players_ids.subscribe((user_ids) =>
 {

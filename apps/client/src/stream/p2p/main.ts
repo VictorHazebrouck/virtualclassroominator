@@ -90,20 +90,7 @@ export class P2P
     {
         this.close_all_connections();
 
-        this.participants.forEach((p, key) =>
-        {
-            // if (!user_ids.includes(key))
-            // {
-            //     console.log("player leave");
-
-            //     const participant = this.participants.get(key);
-            //     participant?.cleanup();
-            //     this.participants.delete(key);
-            // }
-
-            p.cleanup();
-        });
-
+        this.participants.forEach((p) => p.cleanup());
         this.participants.clear();
 
         user_ids.forEach((id) => this.call_user_by_id(id));
@@ -122,16 +109,16 @@ export class P2P
 
         const [audiotrack] = stream.getAudioTracks();
 
-        if (audiotrack) participant.toggle_microphone(true, audiotrack);
-        else participant.toggle_microphone(false);
+        if (audiotrack) participant.toggle_microphone(audiotrack);
+        else participant.toggle_microphone(null);
 
         const [videotrack1, videotrack2] = stream.getVideoTracks();
 
-        if (videotrack1) participant.toggle_webcam(true, videotrack1);
-        else participant.toggle_webcam(false);
+        if (videotrack1) participant.toggle_webcam(videotrack1);
+        else participant.toggle_webcam(null);
 
-        if (videotrack2) participant.toggle_screenshare(true, videotrack2);
-        else participant.toggle_screenshare(false);
+        if (videotrack2) participant.toggle_screenshare(videotrack2);
+        else participant.toggle_screenshare(null);
     }
 }
 

@@ -1,7 +1,4 @@
-type CallbackToggleTrack = {
-    (on: true, track: MediaStreamTrack): void;
-    (on: false, track?: undefined): void;
-};
+type CallbackToggleTrack = (track: MediaStreamTrack | null) => void;
 
 export class Participant
 {
@@ -14,9 +11,9 @@ export class Participant
 
     readonly stream = new MediaStream();
 
-    microphone_track?: MediaStreamTrack;
-    webcam_track?: MediaStreamTrack;
-    screenshare_track?: MediaStreamTrack;
+    microphone_track: MediaStreamTrack | null = null;
+    webcam_track: MediaStreamTrack | null = null;
+    screenshare_track: MediaStreamTrack | null = null;
 
     private on_microphone_share_listeners: CallbackToggleTrack[] = [];
     private on_webcam_share_listeners: CallbackToggleTrack[] = [];
@@ -65,63 +62,66 @@ export class Participant
         this.on_screenshare_share_listeners.forEach((cb) => this.off_screenshare_share(cb));
     }
 
-    protected _toggle_screenshare(on: boolean, track?: MediaStreamTrack)
+    protected _toggle_screenshare(track: MediaStreamTrack | null)
     {
-        if (!on)
+        if (this.screenshare_track)
         {
-            if (this.screenshare_track)
-            {
-                this.screenshare_track.stop();
-                this.stream.removeTrack(this.screenshare_track);
-            }
-            this.screenshare_track = undefined;
-            this.on_screenshare_share_listeners.forEach((cb) => cb(false));
+            this.screenshare_track.stop();
+            this.stream.removeTrack(this.screenshare_track);
         }
-        else if (on && track)
+
+        if (!track)
+        {
+            this.screenshare_track = null;
+            this.on_screenshare_share_listeners.forEach((cb) => cb(null));
+        }
+        else
         {
             this.screenshare_track = track;
             this.stream.addTrack(this.screenshare_track);
-            this.on_screenshare_share_listeners.forEach((cb) => cb(true, track));
+            this.on_screenshare_share_listeners.forEach((cb) => cb(track));
         }
     }
 
-    protected _toggle_webcam(on: boolean, track?: MediaStreamTrack)
+    protected _toggle_webcam(track: MediaStreamTrack | null)
     {
-        if (!on)
+        if (this.webcam_track)
         {
-            if (this.webcam_track)
-            {
-                this.webcam_track.stop();
-                this.stream.removeTrack(this.webcam_track!);
-            }
-            this.webcam_track = undefined;
-            this.on_webcam_share_listeners.forEach((cb) => cb(false));
+            this.webcam_track.stop();
+            this.stream.removeTrack(this.webcam_track!);
         }
-        else if (on && track)
+
+        if (!track)
+        {
+            this.webcam_track = null;
+            this.on_webcam_share_listeners.forEach((cb) => cb(null));
+        }
+        else
         {
             this.webcam_track = track;
             this.stream.addTrack(this.webcam_track);
-            this.on_webcam_share_listeners.forEach((cb) => cb(true, track));
+            this.on_webcam_share_listeners.forEach((cb) => cb(track));
         }
     }
 
-    protected _toggle_microphone(on: boolean, track?: MediaStreamTrack)
+    protected _toggle_microphone(track: MediaStreamTrack | null)
     {
-        if (!on)
+        if (this.microphone_track)
         {
-            if (this.microphone_track)
-            {
-                this.microphone_track.stop();
-                this.stream.removeTrack(this.microphone_track);
-            }
-            this.microphone_track = undefined;
-            this.on_microphone_share_listeners.forEach((cb) => cb(false));
+            this.microphone_track.stop();
+            this.stream.removeTrack(this.microphone_track);
         }
-        else if (on && track)
+
+        if (!track)
+        {
+            this.microphone_track = null;
+            this.on_microphone_share_listeners.forEach((cb) => cb(null));
+        }
+        else
         {
             this.microphone_track = track;
             this.stream.addTrack(this.microphone_track);
-            this.on_microphone_share_listeners.forEach((cb) => cb(true, track));
+            this.on_microphone_share_listeners.forEach((cb) => cb(track));
         }
     }
 }
