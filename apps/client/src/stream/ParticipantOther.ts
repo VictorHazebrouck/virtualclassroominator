@@ -11,6 +11,11 @@ export class ParticipantsOther
 {
     participants_map = new Map<string, ParticipantOther>();
 
+    get_participants_ids()
+    {
+        return [...this.participants_map.keys()];
+    }
+
     add_or_set_participant_by_id(user_id: string, stream?: MediaStream)
     {
         let participant = this.participants_map.get(user_id);
@@ -38,5 +43,19 @@ export class ParticipantsOther
 
         if (videotrack2) participant.toggle_screenshare(videotrack2);
         else participant.toggle_screenshare(null);
+    }
+
+    handle_new_participants(new_user_ids: string[])
+    {
+        this.participants_map.forEach((participant, id) =>
+        {
+            if (!new_user_ids.includes(id))
+            {
+                participant.cleanup();
+                this.participants_map.delete(id);
+            }
+        });
+
+        new_user_ids.forEach((id) => this.add_or_set_participant_by_id(id));
     }
 }

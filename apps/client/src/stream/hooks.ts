@@ -125,6 +125,7 @@ export function use_get_user_video_by_id(user_id: string)
 
         return participant.on_webcam_share((track) =>
         {
+            console.log("refreshing webcam...", track);
             set_video_track(track);
         });
     }, []);

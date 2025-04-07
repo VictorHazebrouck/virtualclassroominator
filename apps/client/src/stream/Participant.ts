@@ -55,6 +55,7 @@ export class Participant
         );
     }
 
+    /** removes all listeners attached to the Participant */
     cleanup()
     {
         this.on_microphone_share_listeners.forEach((cb) => this.off_microphone_share(cb));
@@ -64,14 +65,14 @@ export class Participant
 
     protected _toggle_screenshare(track: MediaStreamTrack | null)
     {
-        if (this.screenshare_track)
-        {
-            this.screenshare_track.stop();
-            this.stream.removeTrack(this.screenshare_track);
-        }
-
         if (!track)
         {
+            if (this.screenshare_track)
+            {
+                this.screenshare_track.stop();
+                this.stream.removeTrack(this.screenshare_track);
+            }
+
             this.screenshare_track = null;
             this.on_screenshare_share_listeners.forEach((cb) => cb(null));
         }
@@ -85,14 +86,14 @@ export class Participant
 
     protected _toggle_webcam(track: MediaStreamTrack | null)
     {
-        if (this.webcam_track)
-        {
-            this.webcam_track.stop();
-            this.stream.removeTrack(this.webcam_track!);
-        }
-
         if (!track)
         {
+            if (this.webcam_track)
+            {
+                this.webcam_track.stop();
+                this.stream.removeTrack(this.webcam_track!);
+            }
+
             this.webcam_track = null;
             this.on_webcam_share_listeners.forEach((cb) => cb(null));
         }
@@ -106,14 +107,13 @@ export class Participant
 
     protected _toggle_microphone(track: MediaStreamTrack | null)
     {
-        if (this.microphone_track)
-        {
-            this.microphone_track.stop();
-            this.stream.removeTrack(this.microphone_track);
-        }
-
         if (!track)
         {
+            if (this.microphone_track)
+            {
+                this.microphone_track.stop();
+                this.stream.removeTrack(this.microphone_track);
+            }
             this.microphone_track = null;
             this.on_microphone_share_listeners.forEach((cb) => cb(null));
         }
