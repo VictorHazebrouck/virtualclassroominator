@@ -18,9 +18,9 @@ export class Participant
     webcam_track?: MediaStreamTrack;
     screenshare_track?: MediaStreamTrack;
 
-    on_microphone_share_lists: CallbackToggleTrack[] = [];
-    on_webcam_share_lists: CallbackToggleTrack[] = [];
-    on_screenshare_share_lists: CallbackToggleTrack[] = [];
+    private on_microphone_share_lists: CallbackToggleTrack[] = [];
+    private on_webcam_share_lists: CallbackToggleTrack[] = [];
+    private on_screenshare_share_lists: CallbackToggleTrack[] = [];
 
     /** @returns - cleanup function */
     on_microphone_share(cb: CallbackToggleTrack)
@@ -43,23 +43,26 @@ export class Participant
 
     off_microphone_share(cb: CallbackToggleTrack)
     {
-        this.on_microphone_share_lists.filter((e) => e !== cb);
+        this.on_microphone_share_lists = this.on_microphone_share_lists.filter((e) => e !== cb);
     }
     off_webcam_share(cb: CallbackToggleTrack)
     {
-        this.on_webcam_share_lists.filter((e) => e !== cb);
+        this.on_webcam_share_lists = this.on_webcam_share_lists.filter((e) => e !== cb);
     }
     off_screenshare_share(cb: CallbackToggleTrack)
     {
-        this.on_screenshare_share_lists.filter((e) => e !== cb);
+        this.on_screenshare_share_lists = this.on_screenshare_share_lists.filter((e) => e !== cb);
     }
 
     protected _toggle_screenshare(on: boolean, track?: MediaStreamTrack)
     {
-        if (!on && this.screenshare_track)
+        if (!on)
         {
-            this.screenshare_track.stop();
-            this.stream.removeTrack(this.screenshare_track);
+            if (this.screenshare_track)
+            {
+                this.screenshare_track.stop();
+                this.stream.removeTrack(this.screenshare_track);
+            }
             this.screenshare_track = undefined;
             this.on_screenshare_share_lists.forEach((cb) => cb(false));
         }
@@ -73,10 +76,13 @@ export class Participant
 
     protected _toggle_webcam(on: boolean, track?: MediaStreamTrack)
     {
-        if (!on && this.webcam_track)
+        if (!on)
         {
-            this.webcam_track.stop();
-            this.stream.removeTrack(this.webcam_track!);
+            if (this.webcam_track)
+            {
+                this.webcam_track.stop();
+                this.stream.removeTrack(this.webcam_track!);
+            }
             this.webcam_track = undefined;
             this.on_webcam_share_lists.forEach((cb) => cb(false));
         }
@@ -90,10 +96,13 @@ export class Participant
 
     protected _toggle_microphone(on: boolean, track?: MediaStreamTrack)
     {
-        if (!on && this.microphone_track)
+        if (!on)
         {
-            this.microphone_track.stop();
-            this.stream.removeTrack(this.microphone_track);
+            if (this.microphone_track)
+            {
+                this.microphone_track.stop();
+                this.stream.removeTrack(this.microphone_track);
+            }
             this.microphone_track = undefined;
             this.on_microphone_share_lists.forEach((cb) => cb(false));
         }

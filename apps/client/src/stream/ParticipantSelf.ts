@@ -5,11 +5,11 @@ export default class ParticipantSelf extends Participant
 {
     async toggle_screenshare(on: boolean)
     {
-        if (!on && this.screenshare_track)
+        if (!on)
         {
             this._toggle_screenshare(false);
         }
-        else if (on)
+        else
         {
             try
             {
@@ -21,7 +21,8 @@ export default class ParticipantSelf extends Participant
             catch (_e)
             {
                 console.warn(_e);
-                this.on_screenshare_share_lists.forEach((cb) => cb(false));
+                // this.on_screenshare_share_lists.forEach((cb) => cb(false));
+                this._toggle_screenshare(false);
                 alert("Error accessing screenshare.\nPlease check permissions.");
             }
         }
@@ -29,11 +30,11 @@ export default class ParticipantSelf extends Participant
 
     async toggle_webcam(on: boolean)
     {
-        if (!on && this.webcam_track)
+        if (!on)
         {
             this._toggle_webcam(false);
         }
-        else if (on)
+        else
         {
             try
             {
@@ -43,7 +44,7 @@ export default class ParticipantSelf extends Participant
             catch (_e)
             {
                 console.warn(_e);
-                this.on_webcam_share_lists.forEach((cb) => cb(false));
+                this._toggle_webcam(false);
                 alert("Error accessing webcam.\nPlease check permissions.");
             }
         }
@@ -51,11 +52,11 @@ export default class ParticipantSelf extends Participant
 
     async toggle_microphone(on: boolean)
     {
-        if (!on && this.microphone_track)
+        if (!on)
         {
             this._toggle_microphone(false);
         }
-        else if (on)
+        else
         {
             try
             {
@@ -65,7 +66,7 @@ export default class ParticipantSelf extends Participant
             catch (_e)
             {
                 console.warn(_e);
-                this.on_microphone_share_lists.forEach((cb) => cb(false));
+                this._toggle_microphone(false);
                 alert("Error accessing microphone.\nPlease check permissions.");
             }
         }

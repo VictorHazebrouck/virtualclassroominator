@@ -1,4 +1,5 @@
 import Peer from "peerjs";
+import type ParticipantSelf from "../ParticipantSelf";
 
 const URL_PEERJS = import.meta.env.VITE_PEERJS_BACKEND_URL;
 const PATH_PEERJS = import.meta.env.VITE_PEER_SERVER_PATH;
@@ -8,17 +9,32 @@ const PORT_PEERJS = import.meta.env.VITE_PEER_SERVER_PORT;
 export class P2P
 {
     peer: Peer;
+    participant_self: ParticipantSelf;
     participants = new Map<any, any>();
 
-    constructor(user_id: string)
+    constructor(user_id: string, participant_self: ParticipantSelf)
     {
+        this.participant_self = participant_self;
         this.peer = new Peer(user_id, {
             host: URL_PEERJS,
             path: PATH_PEERJS,
             secure: IS_SECURE_PEERJS,
             port: PORT_PEERJS,
         });
+        this.peer.on("open", () => console.log("succesfull connection to PEER server"));
     }
+
+    call_user_by_id(user_id: string)
+    {}
+
+    uncall_user_by_id(user_id: string)
+    {}
+
+    call_many_by_ids(user_ids: string)
+    {}
+
+    close_connections()
+    {}
 }
 
 //     close_all_connections()

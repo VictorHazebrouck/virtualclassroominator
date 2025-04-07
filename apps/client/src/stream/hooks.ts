@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { ConversationManager } from "./main";
+import { ConversationManager } from ".";
 
 const ParticipantSelf = ConversationManager.participant_self;
 

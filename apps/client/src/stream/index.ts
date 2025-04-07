@@ -14,9 +14,21 @@ class ConversationManagerClass
 
     constructor(self_id: string)
     {
-        this.p2pclient = new P2P(self_id);
         this.participant_self = new ParticipantSelf(self_id);
+        this.p2pclient = new P2P(self_id, this.participant_self);
     }
+
+    call_user_by_id(user_id: string)
+    {}
+
+    uncall_user_by_id(user_id: string)
+    {}
+
+    join_room_by_id()
+    {}
+
+    leave_room_by_id()
+    {}
 }
 
 export const ConversationManager = new ConversationManagerClass($player_self.get()._id);
