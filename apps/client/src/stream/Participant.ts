@@ -9,8 +9,6 @@ export class Participant
         this._id = player_id;
     }
 
-    readonly stream = new MediaStream();
-
     microphone_track: MediaStreamTrack | null = null;
     webcam_track: MediaStreamTrack | null = null;
     screenshare_track: MediaStreamTrack | null = null;
@@ -58,9 +56,9 @@ export class Participant
     /** removes all listeners attached to the Participant */
     cleanup()
     {
-        this.on_microphone_share_listeners.forEach((cb) => this.off_microphone_share(cb));
-        this.on_webcam_share_listeners.forEach((cb) => this.off_webcam_share(cb));
-        this.on_screenshare_share_listeners.forEach((cb) => this.off_screenshare_share(cb));
+        // this.on_microphone_share_listeners.forEach((cb) => this.off_microphone_share(cb));
+        // this.on_webcam_share_listeners.forEach((cb) => this.off_webcam_share(cb));
+        // this.on_screenshare_share_listeners.forEach((cb) => this.off_screenshare_share(cb));
     }
 
     protected _toggle_screenshare(track: MediaStreamTrack | null)
@@ -70,7 +68,6 @@ export class Participant
             if (this.screenshare_track)
             {
                 this.screenshare_track.stop();
-                this.stream.removeTrack(this.screenshare_track);
             }
 
             this.screenshare_track = null;
@@ -79,7 +76,6 @@ export class Participant
         else
         {
             this.screenshare_track = track;
-            this.stream.addTrack(this.screenshare_track);
             this.on_screenshare_share_listeners.forEach((cb) => cb(track));
         }
     }
@@ -91,7 +87,6 @@ export class Participant
             if (this.webcam_track)
             {
                 this.webcam_track.stop();
-                this.stream.removeTrack(this.webcam_track!);
             }
 
             this.webcam_track = null;
@@ -100,7 +95,7 @@ export class Participant
         else
         {
             this.webcam_track = track;
-            this.stream.addTrack(this.webcam_track);
+            // this.stream.addTrack(this.webcam_track);
             this.on_webcam_share_listeners.forEach((cb) => cb(track));
         }
     }
@@ -112,7 +107,6 @@ export class Participant
             if (this.microphone_track)
             {
                 this.microphone_track.stop();
-                this.stream.removeTrack(this.microphone_track);
             }
             this.microphone_track = null;
             this.on_microphone_share_listeners.forEach((cb) => cb(null));
@@ -120,7 +114,6 @@ export class Participant
         else
         {
             this.microphone_track = track;
-            this.stream.addTrack(this.microphone_track);
             this.on_microphone_share_listeners.forEach((cb) => cb(track));
         }
     }

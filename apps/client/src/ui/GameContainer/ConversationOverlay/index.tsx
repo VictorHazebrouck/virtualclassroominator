@@ -4,10 +4,17 @@ import { BiCameraOff, BiMicrophoneOff } from "react-icons/bi";
 import { $nearby_players } from "~/store/nearby_players";
 import {
     use_get_personal_screenshare,
+    use_get_user_audio_by_id,
     use_get_user_screenshare_by_id,
     use_get_user_video_by_id,
 } from "~/stream/hooks";
-import { Video, VideoLayout, VideoLayoutLabel, VideoScreenShare } from "~/ui/-components/Video";
+import {
+    Video,
+    VideoLayout,
+    VideoLayoutLabel,
+    VideoScreenShare,
+    Audio,
+} from "~/ui/-components/Video";
 
 export default function ConversationOverlay()
 {
@@ -32,10 +39,13 @@ function PlayerCam({ playerData }: { playerData: SocketData })
     const { name } = playerData.info;
     const { is_webcam_active, is_mike_active, is_screensharing } = playerData.chat;
     const video_track = use_get_user_video_by_id(playerData._id);
+    const audio_track = use_get_user_audio_by_id(playerData._id);
     const screenshare_track = use_get_user_screenshare_by_id(playerData._id);
 
     return (
         <>
+            <Audio audiotrack={audio_track} />
+
             <VideoLayout>
                 <VideoLayoutLabel>
                     {!is_mike_active && <BiMicrophoneOff size={16} className="text-red-600" />}

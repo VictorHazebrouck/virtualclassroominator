@@ -69,7 +69,6 @@ export class P2P
 
             const on_receive_stream = (stream: MediaStream) =>
             {
-                console.log("Received stream from peer:", call.peer, stream.getTracks());
                 this.participants_other.add_or_set_participant_by_id(call.peer, stream);
             };
 
@@ -83,7 +82,6 @@ export class P2P
 
         const on_receive_stream = (stream: MediaStream) =>
         {
-            console.log("Received stream from peer:", user_id, stream.getTracks());
             this.participants_other.add_or_set_participant_by_id(user_id, stream);
         };
 

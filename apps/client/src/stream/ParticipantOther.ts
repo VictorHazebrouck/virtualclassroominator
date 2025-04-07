@@ -58,4 +58,6 @@ export class ParticipantsOther
 
         new_user_ids.forEach((id) => this.add_or_set_participant_by_id(id));
     }
+
+    // on_webcam_share(user_id, callback: )
 }
