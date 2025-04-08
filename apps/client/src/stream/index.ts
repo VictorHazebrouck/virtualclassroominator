@@ -24,10 +24,25 @@ class ConversationManagerClass
         this.p2p_client = new P2P(this.participant_self, this.participants_other);
     }
 
-    call_users_by_ids(user_ids: string[])
+    call_users_by_ids(new_user_ids: string[])
     {
-        this.participants_other.handle_new_participants(user_ids);
-        this.p2p_client.call_all_participants();
+        const old_user_ids = this.participants_other.get_participants_ids();
+        for (const old_user_id of old_user_ids)
+        {
+            if (!new_user_ids.includes(old_user_id))
+            {
+                this.participants_other.remove_participant_by_id(old_user_id);
+            }
+        }
+
+        for (const new_user_id of new_user_ids)
+        {
+            if (!old_user_ids.includes(new_user_id))
+            {
+                this.participants_other.add_or_set_participant_by_id(new_user_id);
+                this.p2p_client.call_user_by_id(new_user_id);
+            }
+        }
     }
 
     join_room_by_id()
