@@ -76,7 +76,6 @@ export class ParticipantsOther
         });
 
         new_user_ids.forEach((id) => this.add_or_set_participant_by_id(id));
-        console.log(this.participants_map);
     }
 
     remove_all_participants()

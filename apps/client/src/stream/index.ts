@@ -27,7 +27,7 @@ class ConversationManagerClass
     call_users_by_ids(user_ids: string[])
     {
         this.participants_other.handle_new_participants(user_ids);
-        this.p2p_client.call_many_by_ids();
+        this.p2p_client.call_all_participants();
     }
 
     join_room_by_id()

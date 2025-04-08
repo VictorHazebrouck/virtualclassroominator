@@ -1,4 +1,4 @@
-import Peer from "peerjs";
+import Peer, { type MediaConnection } from "peerjs";
 import type ParticipantSelf from "../ParticipantSelf";
 import { ParticipantsOther } from "../ParticipantOther";
 import type { TracksActive } from "../utils";
@@ -13,6 +13,9 @@ export class P2P
     peer: Peer;
     participant_self: ParticipantSelf;
     participants_other: ParticipantsOther;
+
+    private incoming_calls = new Map<string, MediaConnection>();
+    private outgoing_calls = new Map<string, MediaConnection>();
 
     constructor(participant_self: ParticipantSelf, participants_other: ParticipantsOther)
     {
@@ -34,7 +37,7 @@ export class P2P
     {
         const updateTracks = () =>
         {
-            this.call_many_by_ids();
+            this.call_all_participants();
         };
 
         this.participant_self.on_webcam_share(updateTracks);
@@ -47,6 +50,7 @@ export class P2P
         this.peer.on("call", (call) =>
         {
             call.answer();
+            this.incoming_calls.set(call.peer, call);
 
             const on_receive_stream = (stream: MediaStream) =>
             {
@@ -58,7 +62,7 @@ export class P2P
             };
 
             call.once("stream", on_receive_stream);
-            call.once("close", () => console.log("call closed"));
+            call.once("close", () => this.incoming_calls.delete(call.peer));
         });
     }
 
@@ -74,32 +78,28 @@ export class P2P
         if (webcam_track) my_stream.addTrack(webcam_track);
         if (screenshare_track) my_stream.addTrack(screenshare_track);
 
-        this.peer.call(user_id, my_stream, {
+        const call = this.peer.call(user_id, my_stream, {
             metadata: {
                 microphone_track: Boolean(microphone_track),
                 webcam_track_1: Boolean(webcam_track),
                 screenshare_track_2: Boolean(screenshare_track),
             } as TracksActive,
         });
+
+        this.outgoing_calls.set(user_id, call);
     }
 
-    call_many_by_ids()
+    call_all_participants()
     {
-        this.close_all_connections();
+        this.close_all_outgoing_call();
         const other_ids = this.participants_other.get_participants_ids();
         other_ids.forEach((id) => this.call_user_by_id(id));
     }
 
-    close_all_connections()
+    close_all_outgoing_call()
     {
-        // const connections = this.peer.connections;
-        // console.log(connections);
-        // Object.values(connections).forEach((conns: any[]) =>
-        //     conns.forEach((conn) =>
-        //     {
-        //         console.log("closing connection");
-        //         conn.close();
-        //     }),
-        // );
+        const calls = [...this.outgoing_calls.values()];
+        calls.forEach((call) => call.close());
+        this.outgoing_calls.clear();
     }
 }
