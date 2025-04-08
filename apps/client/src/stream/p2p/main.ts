@@ -1,6 +1,7 @@
 import Peer from "peerjs";
 import type ParticipantSelf from "../ParticipantSelf";
 import { ParticipantsOther } from "../ParticipantOther";
+import type { TracksActive } from "../utils";
 
 const URL_PEERJS = import.meta.env.VITE_PEERJS_BACKEND_URL;
 const PATH_PEERJS = import.meta.env.VITE_PEER_SERVER_PATH;
@@ -12,20 +13,13 @@ export class P2P
     peer: Peer;
     participant_self: ParticipantSelf;
     participants_other: ParticipantsOther;
-    my_stream: MediaStream;
 
-    constructor(
-        user_id: string,
-        participant_self: ParticipantSelf,
-        participants_other: ParticipantsOther,
-    )
+    constructor(participant_self: ParticipantSelf, participants_other: ParticipantsOther)
     {
         this.participant_self = participant_self;
         this.participants_other = participants_other;
 
-        this.my_stream = new MediaStream();
-
-        this.peer = new Peer(user_id, {
+        this.peer = new Peer(this.participant_self._id, {
             host: URL_PEERJS,
             path: PATH_PEERJS,
             secure: IS_SECURE_PEERJS,
@@ -40,19 +34,6 @@ export class P2P
     {
         const updateTracks = () =>
         {
-            // Clear existing tracks from our stream
-            this.my_stream.getTracks().forEach((track) => this.my_stream.removeTrack(track));
-
-            // Add available tracks
-            const newTracks = [
-                this.participant_self.microphone_track,
-                this.participant_self.webcam_track,
-                this.participant_self.screenshare_track,
-            ].filter((t): t is MediaStreamTrack => !!t);
-
-            newTracks.forEach((track) => this.my_stream.addTrack(track));
-
-            // Reconnect
             this.call_many_by_ids();
         };
 
@@ -65,45 +46,60 @@ export class P2P
     {
         this.peer.on("call", (call) =>
         {
-            call.answer(this.my_stream);
+            call.answer();
 
             const on_receive_stream = (stream: MediaStream) =>
             {
-                this.participants_other.add_or_set_participant_by_id(call.peer, stream);
+                this.participants_other.add_or_set_participant_by_id(
+                    call.peer,
+                    stream,
+                    call.metadata as TracksActive,
+                );
             };
 
-            call.on("stream", on_receive_stream);
+            call.once("stream", on_receive_stream);
+            call.once("close", () => console.log("call closed"));
         });
     }
 
     call_user_by_id(user_id: string)
     {
-        const call = this.peer.call(user_id, this.my_stream);
+        const my_stream = new MediaStream();
 
-        const on_receive_stream = (stream: MediaStream) =>
-        {
-            this.participants_other.add_or_set_participant_by_id(user_id, stream);
-        };
+        const microphone_track = this.participant_self.microphone_track;
+        const webcam_track = this.participant_self.webcam_track;
+        const screenshare_track = this.participant_self.screenshare_track;
 
-        call.on("stream", on_receive_stream);
+        if (microphone_track) my_stream.addTrack(microphone_track);
+        if (webcam_track) my_stream.addTrack(webcam_track);
+        if (screenshare_track) my_stream.addTrack(screenshare_track);
+
+        this.peer.call(user_id, my_stream, {
+            metadata: {
+                microphone_track: Boolean(microphone_track),
+                webcam_track_1: Boolean(webcam_track),
+                screenshare_track_2: Boolean(screenshare_track),
+            } as TracksActive,
+        });
     }
 
     call_many_by_ids()
     {
+        this.close_all_connections();
         const other_ids = this.participants_other.get_participants_ids();
-
-        this.close_all_connections(); // Clean slate before calling again
-
-        other_ids.forEach((id) =>
-        {
-            this.call_user_by_id(id);
-        });
+        other_ids.forEach((id) => this.call_user_by_id(id));
     }
 
     close_all_connections()
     {
-        const connections = this.peer.connections;
-
-        Object.values(connections).forEach((conns: any[]) => conns.forEach((conn) => conn.close()));
+        // const connections = this.peer.connections;
+        // console.log(connections);
+        // Object.values(connections).forEach((conns: any[]) =>
+        //     conns.forEach((conn) =>
+        //     {
+        //         console.log("closing connection");
+        //         conn.close();
+        //     }),
+        // );
     }
 }

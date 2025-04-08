@@ -56,9 +56,9 @@ export class Participant
     /** removes all listeners attached to the Participant */
     cleanup()
     {
-        // this.on_microphone_share_listeners.forEach((cb) => this.off_microphone_share(cb));
-        // this.on_webcam_share_listeners.forEach((cb) => this.off_webcam_share(cb));
-        // this.on_screenshare_share_listeners.forEach((cb) => this.off_screenshare_share(cb));
+        this.on_microphone_share_listeners.forEach((cb) => this.off_microphone_share(cb));
+        this.on_webcam_share_listeners.forEach((cb) => this.off_webcam_share(cb));
+        this.on_screenshare_share_listeners.forEach((cb) => this.off_screenshare_share(cb));
     }
 
     protected _toggle_screenshare(track: MediaStreamTrack | null)

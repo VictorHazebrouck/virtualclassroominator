@@ -1,3 +1,9 @@
+export type TracksActive = {
+    microphone_track: boolean;
+    webcam_track_1: boolean;
+    screenshare_track_2: boolean;
+};
+
 export async function request_screenshare_track()
 {
     const stream = await navigator.mediaDevices.getDisplayMedia({

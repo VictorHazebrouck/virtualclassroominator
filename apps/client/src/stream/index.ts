@@ -21,7 +21,7 @@ class ConversationManagerClass
     constructor(self_id: string)
     {
         this.participant_self = new ParticipantSelf(self_id);
-        this.p2p_client = new P2P(self_id, this.participant_self, this.participants_other);
+        this.p2p_client = new P2P(this.participant_self, this.participants_other);
     }
 
     call_users_by_ids(user_ids: string[])
