@@ -23,6 +23,9 @@ importers:
       '@nanostores/react':
         specifier: nanostores/react
         version: https://codeload.github.com/nanostores/react/tar.gz/34a81026c4aeaa572bc651e3d36b47274de2f890(nanostores@0.11.4)(react@19.1.0)
+      '@types/bun':
+        specifier: '1'
+        version: 1.2.9
       livekit-client:
         specifier: ^2.9.8
         version: 2.10.0
