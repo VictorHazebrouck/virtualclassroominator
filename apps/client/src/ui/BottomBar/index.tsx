@@ -1,4 +1,3 @@
-import "@livekit/components-styles";
 import ChatControls from "./ChatControls";
 import TabPanelControls from "./TabPanelControls";
 import UserInfo from "./UserInfo";

@@ -3,7 +3,7 @@ import manifest from "./manifest.json";
 import { Assets, Spritesheet } from "pixi.js";
 import type { AvailableSkins } from "@repo/shared-types/socket";
 
-await Assets.init({ manifest: manifest, basePath: "/assets" });
+Assets.init({ manifest: manifest, basePath: "/assets" });
 
 export type SpriteSheetType = Awaited<ReturnType<typeof load_character_spritesheet>>;
 
