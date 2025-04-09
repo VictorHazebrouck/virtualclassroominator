@@ -1,6 +1,6 @@
 ARG BUN_VERSION=1.2
 ARG PROJECT=service-socket
-ARG PORT=3010
+ARG PORT=6010
 
 # bun alpine image
 FROM oven/bun:${BUN_VERSION}-alpine AS alpine

@@ -12,6 +12,11 @@ import express from "express";
 const app = express();
 app.use(cors);
 
+app.get("/", (req, res) =>
+{
+    res.json({ test: "test" });
+});
+
 const server = http.createServer(app);
 
 const io = new Server<ClientToServerEvents, ServerToClientEvents, InterServerEvents, SocketData>(

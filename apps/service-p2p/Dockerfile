@@ -1,6 +1,6 @@
 ARG BUN_VERSION=1.2
 ARG PROJECT=service-p2p
-ARG PORT=3020
+ARG PORT=6020
 
 # bun alpine image
 FROM oven/bun:${BUN_VERSION}-alpine AS alpine
