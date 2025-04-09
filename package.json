@@ -1,23 +1,23 @@
 {
-  "name": "virtualclassroominator",
-  "private": true,
-  "scripts": {
-    "build": "turbo run build",
-    "dev": "turbo run dev",
-    "lint": "turbo run lint",
-    "format": "turbo run format",
-    "check-types": "turbo run check-types"
-  },
-  "devDependencies": {
-    "turbo": "^2.5.0",
-    "typescript": "5.7.3"
-  },
-  "engines": {
-    "bun": "1.2.0"
-  },
-  "packageManager": "pnpm@10.8.0",
-  "workspaces": [
-    "apps/*",
-    "packages/*"
-  ]
+    "name": "virtualclassroominator",
+    "private": true,
+    "scripts": {
+        "build": "turbo run build",
+        "dev": "turbo run dev",
+        "lint": "turbo run lint",
+        "format": "turbo run format",
+        "check-types": "turbo run check-types"
+    },
+    "devDependencies": {
+        "turbo": "^2.5.0",
+        "typescript": "5.7.3"
+    },
+    "engines": {
+        "bun": "1.2.0"
+    },
+    "packageManager": "bun@1.2.0",
+    "workspaces": [
+        "apps/*",
+        "packages/*"
+    ]
 }

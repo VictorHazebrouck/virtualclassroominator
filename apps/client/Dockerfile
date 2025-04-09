@@ -1,24 +1,15 @@
 ARG BUN_VERSION=1.2
-ARG PROJECT="client"
+ARG PROJECT=client
 ARG PORT=80
 
 # bun alpine image
 FROM oven/bun:${BUN_VERSION}-alpine AS alpine
-RUN apk update
-RUN apk add --no-cache libc6-compat
+# RUN apk update
+# RUN apk add --no-cache libc6-compat
 
-# bun alpine with pnpm and turbo
+# bun alpine with turbo
 FROM alpine AS base
-
-RUN wget -qO- https://get.pnpm.io/install.sh | ENV="$HOME/.shrc" SHELL="$(which sh)" sh -
-ENV PNPM_HOME="/root/.local/share/pnpm"
-ENV PATH="${PNPM_HOME}:${PNPM_HOME}/global-bin:${PATH}"
-RUN mkdir -p /root/.local/share/pnpm/global-bin
-
-RUN pnpm config set store-dir ~/.pnpm-store
-RUN pnpm config set global-bin-dir /root/.local/share/pnpm/global-bin
-
-RUN pnpm install turbo --global
+RUN bun install turbo --global
 
 # prepares one project with only necessary dependencies
 FROM base AS pruner
@@ -27,26 +18,22 @@ ARG PROJECT
 WORKDIR /app
 COPY . .
 
-RUN pnpm turbo prune --scope=${PROJECT} --docker
+RUN turbo prune --scope=${PROJECT} --docker
 
-# copy stuff fron the stipped down project and install dependencies & build
+# copy stuff fron the stripped down project, install dependencies & build
 FROM base AS builder
 ARG PROJECT
 
 WORKDIR /app
-COPY --from=pruner /app/out/pnpm-lock.yaml ./pnpm-lock.yaml
-COPY --from=pruner /app/out/pnpm-workspace.yaml ./pnpm-workspace.yaml
+COPY --from=pruner /app/out/bun.lock ./bun.lock
 COPY --from=pruner /app/out/json/ .
-
-RUN --mount=type=cache,id=pnpm,target=~/.pnpm-store pnpm install --frozen-lockfile
-
 COPY --from=pruner /app/out/full/ .
 
+RUN bun install --frozen-lockfile
 RUN turbo build --filter=${PROJECT}
-RUN --mount=type=cache,id=pnpm,target=~/.pnpm-store pnpm prune --prod --no-optional
 RUN rm -rf ./**/*/src
 
-
+# use nginx to serve the generated assets
 FROM nginx:alpine AS runner
 ARG PROJECT
 ARG PORT
