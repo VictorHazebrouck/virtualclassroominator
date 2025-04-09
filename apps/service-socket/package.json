@@ -9,10 +9,10 @@
         "typecheck": "tsc"
     },
     "devDependencies": {
-        "@repo/shared-types": "*",
-        "@repo/config-eslint": "*",
-        "@repo/config-prettier": "*",
-        "@repo/config-typescript": "*",
+        "@repo/shared-types": "workspace:*",
+        "@repo/config-eslint": "workspace:*",
+        "@repo/config-prettier": "workspace:*",
+        "@repo/config-typescript": "workspace:*",
         "@types/bun": "1",
         "typescript": "5"
     },
