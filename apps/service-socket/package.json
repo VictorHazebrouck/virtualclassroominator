@@ -2,6 +2,7 @@
     "name": "service-socket",
     "type": "module",
     "scripts": {
+        "build": "bun build --entrypoints ./src/main.ts --outdir ./dist --target bun",
         "start": "bun run ./src/main.ts",
         "dev": "bun run ./src/main.ts",
         "lint": "bunx eslint",

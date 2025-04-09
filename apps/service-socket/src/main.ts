@@ -7,6 +7,7 @@ import type {
 import { Server } from "socket.io";
 
 const PORT = process.env.PORT;
+console.log("port: ", PORT);
 if (!PORT) throw new Error("No PORT found");
 
 const io = new Server<ClientToServerEvents, ServerToClientEvents, InterServerEvents, SocketData>(
