@@ -1,8 +1,5 @@
 import { useEffect, useState } from "react";
-import { ConversationManager } from ".";
-
-const ParticipantSelf = ConversationManager.participant_self;
-const ParticipantsOther = ConversationManager.participants_other.participants_map;
+import { ParticipantSelf_S, ParticipantsOther_S } from ".";
 
 export function use_get_personal_video()
 {
@@ -10,7 +7,7 @@ export function use_get_personal_video()
 
     useEffect(() =>
     {
-        return ParticipantSelf.on_webcam_share((track) =>
+        return ParticipantSelf_S.on_webcam_share((track) =>
         {
             set_video_track(track);
         });
@@ -25,7 +22,7 @@ export function use_get_personal_audio()
 
     useEffect(() =>
     {
-        return ParticipantSelf.on_microphone_share((track) =>
+        return ParticipantSelf_S.on_microphone_share((track) =>
         {
             set_audio_track(track);
         });
@@ -40,7 +37,7 @@ export function use_get_personal_screenshare()
 
     useEffect(() =>
     {
-        return ParticipantSelf.on_screenshare_share((track) =>
+        return ParticipantSelf_S.on_screenshare_share((track) =>
         {
             set_screenshare_track(track);
         });
@@ -53,7 +50,7 @@ export function use_set_personal_screenshare()
 {
     return async (on: boolean) =>
     {
-        await ParticipantSelf.toggle_screenshare(on);
+        await ParticipantSelf_S.toggle_screenshare(on);
     };
 }
 
@@ -61,14 +58,14 @@ export function use_set_personal_webcam()
 {
     return async (on: boolean) =>
     {
-        await ParticipantSelf.toggle_webcam(on);
+        await ParticipantSelf_S.toggle_webcam(on);
     };
 }
 export function use_set_personal_microphone()
 {
     return async (on: boolean) =>
     {
-        await ParticipantSelf.toggle_microphone(on);
+        await ParticipantSelf_S.toggle_microphone(on);
     };
 }
 
@@ -78,7 +75,7 @@ export function use_get_user_screenshare_by_id(user_id: string)
 
     useEffect(() =>
     {
-        const participant = ParticipantsOther.get(user_id);
+        const participant = ParticipantsOther_S.get_participant_by_id(user_id);
         if (!participant) return;
 
         set_screenshare_track(participant.screenshare_track || null);
@@ -98,7 +95,7 @@ export function use_get_user_audio_by_id(user_id: string)
 
     useEffect(() =>
     {
-        const participant = ParticipantsOther.get(user_id);
+        const participant = ParticipantsOther_S.get_participant_by_id(user_id);
         if (!participant) return;
 
         set_audio_track(participant.microphone_track || null);
@@ -118,7 +115,7 @@ export function use_get_user_video_by_id(user_id: string)
 
     useEffect(() =>
     {
-        const participant = ParticipantsOther.get(user_id);
+        const participant = ParticipantsOther_S.get_participant_by_id(user_id);
         if (!participant) return;
 
         set_video_track(participant.webcam_track || null);

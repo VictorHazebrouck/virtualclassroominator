@@ -64,4 +64,9 @@ export class ParticipantsOther
         participant.cleanup();
         this.participants_map.delete(user_id);
     }
+
+    get_participant_by_id(user_id: string)
+    {
+        return this.participants_map.get(user_id);
+    }
 }

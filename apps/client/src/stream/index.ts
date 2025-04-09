@@ -52,14 +52,15 @@ class ConversationManagerClass
     {}
 }
 
-export const ConversationManager = new ConversationManagerClass($player_self.get()._id);
-const participant_self = ConversationManager.participant_self;
+export const ConversationManager_S = new ConversationManagerClass($player_self.get()._id);
+export const ParticipantSelf_S = ConversationManager_S.participant_self;
+export const ParticipantsOther_S = ConversationManager_S.participants_other;
 
-participant_self.on_screenshare_share((track) => player_self_toggle_screenshare(Boolean(track)));
-participant_self.on_microphone_share((track) => player_self_toggle_microphone(Boolean(track)));
-participant_self.on_webcam_share((track) => player_self_toggle_webcam(Boolean(track)));
+ParticipantSelf_S.on_screenshare_share((track) => player_self_toggle_screenshare(Boolean(track)));
+ParticipantSelf_S.on_microphone_share((track) => player_self_toggle_microphone(Boolean(track)));
+ParticipantSelf_S.on_webcam_share((track) => player_self_toggle_webcam(Boolean(track)));
 
 $nearby_players_ids.subscribe((user_ids) =>
 {
-    ConversationManager.call_users_by_ids(user_ids as string[]);
+    ConversationManager_S.call_users_by_ids(user_ids as string[]);
 });
