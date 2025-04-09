@@ -1,116 +1,137 @@
 {
-    "bundles": [
+  "bundles": [
+    {
+      "name": "default",
+      "assets": []
+    },
+    {
+      "name": "characters",
+      "assets": [
         {
-            "name": "default",
-            "assets": []
+          "alias": [
+            "characters/alex.png",
+            "alex.png"
+          ],
+          "src": [
+            "characters/alex-xyCUZQ.png",
+            "characters/alex-fRwS@0.5x.png",
+            "characters/alex-fOiiAg@0.5x.webp",
+            "characters/alex-1JxHDA.webp"
+          ],
+          "data": {
+            "tags": {
+              "m": true
+            }
+          }
         },
         {
-            "name": "characters",
-            "assets": [
-                {
-                    "alias": ["characters/alex.png", "alex.png"],
-                    "src": [
-                        "characters/alex-xyCUZQ.png",
-                        "characters/alex-fRwS@0.5x.png",
-                        "characters/alex-fOiiAg@0.5x.webp",
-                        "characters/alex-1JxHDA.webp"
-                    ],
-                    "data": {
-                        "tags": {
-                            "m": true
-                        }
-                    }
-                },
-                {
-                    "alias": ["characters/anna.png", "anna.png"],
-                    "src": [
-                        "characters/anna-NMDi8g.webp",
-                        "characters/anna-Mesrsw.png",
-                        "characters/anna-i2_UpQ@0.5x.webp",
-                        "characters/anna-G6XxYQ@0.5x.png"
-                    ],
-                    "data": {
-                        "tags": {
-                            "m": true
-                        }
-                    }
-                },
-                {
-                    "alias": ["characters/ardley.png", "ardley.png"],
-                    "src": [
-                        "characters/ardley-VPAQaA@0.5x.png",
-                        "characters/ardley-uq0onA.png",
-                        "characters/ardley-eGf23Q@0.5x.webp",
-                        "characters/ardley-d4H6mQ.webp"
-                    ],
-                    "data": {
-                        "tags": {
-                            "m": true
-                        }
-                    }
-                },
-                {
-                    "alias": ["characters/colt.png", "colt.png"],
-                    "src": [
-                        "characters/colt-WNV-Gg.webp",
-                        "characters/colt-PuOkEQ@0.5x.webp",
-                        "characters/colt-7oqc.png",
-                        "characters/colt-_wpe-Q@0.5x.png"
-                    ],
-                    "data": {
-                        "tags": {
-                            "m": true
-                        }
-                    }
-                },
-                {
-                    "alias": ["characters/ester.png", "ester.png"],
-                    "src": [
-                        "characters/ester-rxiNLg.png",
-                        "characters/ester-kUsYnQ@0.5x.webp",
-                        "characters/ester-ktZg7g.webp",
-                        "characters/ester-bQcW_A@0.5x.png"
-                    ],
-                    "data": {
-                        "tags": {
-                            "m": true
-                        }
-                    }
-                },
-                {
-                    "alias": ["characters/tom.png", "tom.png"],
-                    "src": [
-                        "characters/tom-gVA0IA@0.5x.webp",
-                        "characters/tom-8e8N9g.png",
-                        "characters/tom-4Gvbfw.webp",
-                        "characters/tom-2aWy8A@0.5x.png"
-                    ],
-                    "data": {
-                        "tags": {
-                            "m": true
-                        }
-                    }
-                }
-            ]
+          "alias": [
+            "characters/anna.png",
+            "anna.png"
+          ],
+          "src": [
+            "characters/anna-NMDi8g.webp",
+            "characters/anna-Mesrsw.png",
+            "characters/anna-i2_UpQ@0.5x.webp",
+            "characters/anna-G6XxYQ@0.5x.png"
+          ],
+          "data": {
+            "tags": {
+              "m": true
+            }
+          }
         },
         {
-            "name": "tiles",
-            "assets": [
-                {
-                    "alias": ["tiles/topDown_baseTiles.png", "topDown_baseTiles.png"],
-                    "src": [
-                        "tiles/topDown_baseTiles-zCQxqw.webp",
-                        "tiles/topDown_baseTiles-sTSN8Q.png",
-                        "tiles/topDown_baseTiles-Mawc-A@0.5x.webp",
-                        "tiles/topDown_baseTiles-7q6ilA@0.5x.png"
-                    ],
-                    "data": {
-                        "tags": {
-                            "m": true
-                        }
-                    }
-                }
-            ]
+          "alias": [
+            "characters/ardley.png",
+            "ardley.png"
+          ],
+          "src": [
+            "characters/ardley-VPAQaA@0.5x.png",
+            "characters/ardley-uq0onA.png",
+            "characters/ardley-eGf23Q@0.5x.webp",
+            "characters/ardley-d4H6mQ.webp"
+          ],
+          "data": {
+            "tags": {
+              "m": true
+            }
+          }
+        },
+        {
+          "alias": [
+            "characters/colt.png",
+            "colt.png"
+          ],
+          "src": [
+            "characters/colt-WNV-Gg.webp",
+            "characters/colt-PuOkEQ@0.5x.webp",
+            "characters/colt-7oqc.png",
+            "characters/colt-_wpe-Q@0.5x.png"
+          ],
+          "data": {
+            "tags": {
+              "m": true
+            }
+          }
+        },
+        {
+          "alias": [
+            "characters/ester.png",
+            "ester.png"
+          ],
+          "src": [
+            "characters/ester-rxiNLg.png",
+            "characters/ester-kUsYnQ@0.5x.webp",
+            "characters/ester-ktZg7g.webp",
+            "characters/ester-bQcW_A@0.5x.png"
+          ],
+          "data": {
+            "tags": {
+              "m": true
+            }
+          }
+        },
+        {
+          "alias": [
+            "characters/tom.png",
+            "tom.png"
+          ],
+          "src": [
+            "characters/tom-gVA0IA@0.5x.webp",
+            "characters/tom-8e8N9g.png",
+            "characters/tom-4Gvbfw.webp",
+            "characters/tom-2aWy8A@0.5x.png"
+          ],
+          "data": {
+            "tags": {
+              "m": true
+            }
+          }
         }
-    ]
+      ]
+    },
+    {
+      "name": "tiles",
+      "assets": [
+        {
+          "alias": [
+            "tiles/topDown_baseTiles.png",
+            "topDown_baseTiles.png"
+          ],
+          "src": [
+            "tiles/topDown_baseTiles-zCQxqw.webp",
+            "tiles/topDown_baseTiles-sTSN8Q.png",
+            "tiles/topDown_baseTiles-Mawc-A@0.5x.webp",
+            "tiles/topDown_baseTiles-7q6ilA@0.5x.png"
+          ],
+          "data": {
+            "tags": {
+              "m": true
+            }
+          }
+        }
+      ]
+    }
+  ]
 }

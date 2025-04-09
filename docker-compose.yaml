@@ -1,0 +1,30 @@
+version: "3.8"
+
+services:
+  client:
+    build:
+      context: .
+      dockerfile: apps/client/Dockerfile
+    ports:
+      - "3000:80"
+
+  service-socket:
+    build:
+      context: .
+      dockerfile: apps/service-socket/Dockerfile
+    ports:
+      - "3010:3010"
+
+  service-p2p:
+    build:
+      context: .
+      dockerfile: apps/service-p2p/Dockerfile
+    ports:
+      - "3020:3020"
+
+  # service-sfu:
+  #   build:
+  #     context: .
+  #     dockerfile: apps/service-sfu/Dockerfile
+  #   ports:
+  #     - "3030:80"

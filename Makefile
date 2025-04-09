@@ -4,6 +4,11 @@
 	build-service-p2p run-service-p2p clean-service-p2p \
 	build-service-sfu run-service-sfu clean-service-sfu
 
+define stop_and_remove_containers
+	@docker ps -a --filter "ancestor=$(1)" --format "{{.ID}}" | xargs -r docker stop
+	@docker ps -a --filter "ancestor=$(1)" --format "{{.ID}}" | xargs -r docker rm
+endef
+
 CLIENT_APP_NAME := client
 CLIENT_APP_PORT := 3000
 
@@ -12,7 +17,7 @@ build-client:
 run-client:
 	docker run -p $(CLIENT_APP_PORT):80 $(CLIENT_APP_NAME)
 clean-client:
-	docker rm -f $(CLIENT_APP_NAME)
+	$(call stop_and_remove_containers, $(CLIENT_APP_NAME))
 	docker rmi $(CLIENT_APP_NAME)
 
 
@@ -24,7 +29,7 @@ build-service-socket:
 run-service-socket:
 	docker run -p $(SOCKET_SERVICE_PORT):3010 $(SOCKET_SERVICE_NAME)
 clean-service-socket:
-	docker rm -f $(SOCKET_SERVICE_NAME)
+	$(call stop_and_remove_containers, $(SOCKET_SERVICE_NAME))
 	docker rmi $(SOCKET_SERVICE_NAME)
 
 
@@ -36,7 +41,7 @@ build-service-p2p:
 run-service-p2p:
 	docker run -p $(P2P_SERVICE_PORT):3020 $(P2P_SERVICE_NAME)
 clean-service-p2p:
-	docker rm -f $(P2P_SERVICE_NAME)
+	$(call stop_and_remove_containers, $(P2P_SERVICE_NAME))
 	docker rmi $(P2P_SERVICE_NAME)
 
 
@@ -48,7 +53,7 @@ build-service-sfu:
 run-service-sfu:
 	docker run -p $(SFU_SERVICE_PORT):80 $(SFU_SERVICE_NAME)
 clean-service-sfu:
-	docker rm -f $(SFU_SERVICE_NAME)
+	$(call stop_and_remove_containers, $(SFU_SERVICE_NAME))
 	docker rmi $(SFU_SERVICE_NAME)
 
 
@@ -62,3 +67,7 @@ clean-all:
 	- make clean-service-socket
 	- make clean-service-p2p
 	- make clean-service-sfu
+
+destroy-all:
+	docker stop $$(docker ps -q)
+	docker rm -f $$(docker ps -q)
