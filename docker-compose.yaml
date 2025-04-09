@@ -19,6 +19,8 @@ services:
       VITE_PEER_SERVER_IS_SECURE: ${VITE_PEER_SERVER_IS_SECURE}
     ports:
       - "3000:80"
+    env_file:
+      - .env
 
   service-socket:
     build:
@@ -28,6 +30,8 @@ services:
       - "3010:3010"
     environment:
       PORT: 3010
+    env_file:
+      - .env
 
   service-p2p:
     build:
@@ -37,6 +41,8 @@ services:
       - "3020:3020"
     environment:
       PORT: 3020
+    env_file:
+      - .env
 
   # service-sfu:
   #   build:
