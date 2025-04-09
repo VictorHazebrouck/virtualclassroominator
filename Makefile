@@ -69,5 +69,5 @@ clean-all:
 	- make clean-service-sfu
 
 destroy-all:
-	docker stop $$(docker ps -q)
-	docker rm -f $$(docker ps -q)
+	- docker stop $$(docker ps -q)
+	- docker rm -f $$(docker ps -q)
