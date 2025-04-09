@@ -27,9 +27,9 @@ services:
       context: .
       dockerfile: apps/service-socket/Dockerfile
     ports:
-      - "3010:3010"
+      - "6010:6010"
     environment:
-      PORT: 3010
+      PORT: 6010
     env_file:
       - .env
 
@@ -38,9 +38,9 @@ services:
       context: .
       dockerfile: apps/service-p2p/Dockerfile
     ports:
-      - "3020:3020"
+      - "6020:6020"
     environment:
-      PORT: 3020
+      PORT: 6020
     env_file:
       - .env
 
