@@ -9,7 +9,7 @@ export default function SideBar()
     const tab_selected = useStore($current_tab);
 
     return (
-        <div className={tm("w-96 h-full", tab_selected == "" && "w-0 p-0")}>
+        <div className={tm("h-full w-96", tab_selected == "" && "w-0 p-0")}>
             {tab_selected == "chat" && <ChatPanel />}
             {tab_selected == "participants" && <ParticipantsPanel />}
         </div>

@@ -36,7 +36,6 @@
         "@types/react-dom": "^19.0.4",
         "@vitejs/plugin-react": "^4.3.4",
         "globals": "^15.15.0",
-        "prettier-plugin-tailwindcss": "^0.6.11",
         "tailwindcss": "^4.0.0",
         "vite": "^6.2.0",
         "vite-tsconfig-paths": "^5.1.4",
@@ -95,8 +94,10 @@
       "version": "0.0.0",
       "devDependencies": {
         "globals": "^15.15.0",
-        "prettier": "^3.5.0",
+        "prettier": "^3.5.3",
         "prettier-plugin-brace-style": "^0.7.2",
+        "prettier-plugin-merge": "^0.7.3",
+        "prettier-plugin-tailwindcss": "^0.6.11",
         "typescript": "^5.7.3",
         "typescript-eslint": "^8.24.0",
       },
@@ -792,6 +793,8 @@
 
     "dfa": ["dfa@1.2.0", "", {}, "sha512-ED3jP8saaweFTjeGX8HQPjeC1YYyZs98jGNZx6IiBvxW7JG5v492kamAQB3m2wop07CvU/RQmzcKr6bgcC5D/Q=="],
 
+    "diff": ["diff@5.1.0", "", {}, "sha512-D+mk+qE8VC/PAUrlAU34N+VfXev0ghe5ywmpqrawphmVZc1bEfn56uo9qpyGp1p4xpzOHkSW4ztBd6L7Xx4ACw=="],
+
     "dom-walk": ["dom-walk@0.1.2", "", {}, "sha512-6QvTW9mrGeIegrFXdtQi9pk7O/nSK6lSdXW2eqUspN5LWD7UTji2Fqw5V2YLjBpHEoU9Xl/eUWNpDeZvoyOv2w=="],
 
     "dot-prop": ["dot-prop@5.3.0", "", { "dependencies": { "is-obj": "^2.0.0" } }, "sha512-QM8q3zDe58hqUqjraQOmzZ1LIH9SWQJTlEKCH4kJ2oQvLZk7RbQXvtDM2XEq3fwkV9CCvvH4LA0AV+ogFsBM2Q=="],
@@ -1304,9 +1307,11 @@
 
     "prepend-http": ["prepend-http@2.0.0", "", {}, "sha512-ravE6m9Atw9Z/jjttRUZ+clIXogdghyZAuWJ3qEzjT+jI/dL1ifAqhZeC5VHzQp1MSt1+jxKkFNemj/iO7tVUA=="],
 
-    "prettier": ["prettier@3.5.2", "", { "bin": { "prettier": "bin/prettier.cjs" } }, "sha512-lc6npv5PH7hVqozBR7lkBNOGXV9vMwROAPlumdBkX0wTbbzPu/U1hk5yL8p2pt4Xoc+2mkT8t/sow2YrV/M5qg=="],
+    "prettier": ["prettier@3.5.3", "", { "bin": { "prettier": "bin/prettier.cjs" } }, "sha512-QQtaxnoDJeAkDvDKWCLiwIXkTgRhwYDEQCghU9Z6q03iyek/rxRh/2lC3HB7P8sWT2xC/y5JDctPLBIGzHKbhw=="],
 
     "prettier-plugin-brace-style": ["prettier-plugin-brace-style@0.7.2", "", { "peerDependencies": { "prettier": "^2 || ^3", "prettier-plugin-astro": "*", "prettier-plugin-svelte": "*" }, "optionalPeers": ["prettier-plugin-astro", "prettier-plugin-svelte"] }, "sha512-n/phxv28jzqwgezbdsoSLgFaiXRO/rD9nFAKDtkJZonsABW5yV5MIwPTNRU8tZcDa9lX6wMdI/yTfg5U9T0wzg=="],
+
+    "prettier-plugin-merge": ["prettier-plugin-merge@0.7.3", "", { "dependencies": { "diff": "5.1.0" }, "peerDependencies": { "prettier": "^2 || ^3" } }, "sha512-5b4h5MZRFFTqlGWMWS3KOFUWTfEesXdMPjaT5LbTw9Jck7Ghu1hjrhM6P0Dfrzhf0zrqdwIjyFMtF6YG90dOXg=="],
 
     "prettier-plugin-tailwindcss": ["prettier-plugin-tailwindcss@0.6.11", "", { "peerDependencies": { "@ianvs/prettier-plugin-sort-imports": "*", "@prettier/plugin-pug": "*", "@shopify/prettier-plugin-liquid": "*", "@trivago/prettier-plugin-sort-imports": "*", "@zackad/prettier-plugin-twig": "*", "prettier": "^3.0", "prettier-plugin-astro": "*", "prettier-plugin-css-order": "*", "prettier-plugin-import-sort": "*", "prettier-plugin-jsdoc": "*", "prettier-plugin-marko": "*", "prettier-plugin-multiline-arrays": "*", "prettier-plugin-organize-attributes": "*", "prettier-plugin-organize-imports": "*", "prettier-plugin-sort-imports": "*", "prettier-plugin-style-order": "*", "prettier-plugin-svelte": "*" }, "optionalPeers": ["@ianvs/prettier-plugin-sort-imports", "@prettier/plugin-pug", "@shopify/prettier-plugin-liquid", "@trivago/prettier-plugin-sort-imports", "@zackad/prettier-plugin-twig", "prettier-plugin-astro", "prettier-plugin-css-order", "prettier-plugin-import-sort", "prettier-plugin-jsdoc", "prettier-plugin-marko", "prettier-plugin-multiline-arrays", "prettier-plugin-organize-attributes", "prettier-plugin-organize-imports", "prettier-plugin-sort-imports", "prettier-plugin-style-order", "prettier-plugin-svelte"] }, "sha512-YxaYSIvZPAqhrrEpRtonnrXdghZg1irNg4qrjboCXrpybLWVs55cW2N3juhspVJiO0JBvYJT8SYsJpc8OQSnsA=="],
 

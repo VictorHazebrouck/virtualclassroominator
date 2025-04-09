@@ -10,8 +10,8 @@ export interface ScrollAreaProps
 export default function ScrollArea({ children, className }: ScrollAreaProps)
 {
     return (
-        <div className={tm("h-full w-full relative", className)}>
-            <div className="h-fit w-full max-h-full absolute overflow-y-scroll">{children}</div>
+        <div className={tm("relative h-full w-full", className)}>
+            <div className="absolute h-fit max-h-full w-full overflow-y-scroll">{children}</div>
         </div>
     );
 }

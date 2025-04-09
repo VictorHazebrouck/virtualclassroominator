@@ -22,7 +22,7 @@ export default function ConversationOverlay()
     const personal_screenshare_track = use_get_personal_screenshare();
 
     return (
-        <div className="h-fit max-h-full absolute overflow-y-scroll flex flex-col p-2 gap-2 w-fit">
+        <div className="absolute flex h-fit max-h-full w-fit flex-col gap-2 overflow-y-scroll p-2">
             {personal_screenshare_track && (
                 <VideoScreenShare video_track={personal_screenshare_track} label="my screenshare" />
             )}

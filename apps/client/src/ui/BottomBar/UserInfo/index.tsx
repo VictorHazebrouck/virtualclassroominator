@@ -21,7 +21,7 @@ export default function UserInfo()
         <div className="relative flex h-9 rounded-sm bg-gray-800">
             <div
                 className={tm(
-                    "h-9 w-20 border-r-2 border-r-gray-900 items-center justify-center flex overflow-hidden rounded-l-sm",
+                    "flex h-9 w-20 items-center justify-center overflow-hidden rounded-l-sm border-r-2 border-r-gray-900",
                     webcam_track && "cursor-pointer",
                 )}
                 onMouseEnter={() => webcam_track && set_is_video_enlarged_visible(true)}
@@ -33,10 +33,10 @@ export default function UserInfo()
                 )}
             </div>
             <div
-                className="pl-4 pr-1 flex cursor-pointer py-1 gap-1"
+                className="flex cursor-pointer gap-1 py-1 pr-1 pl-4"
                 onClick={() => set_is_userinfo_modal_visible(true)}
             >
-                <p className="text-white text-sm">{player_self_data.info.name}</p>
+                <p className="text-sm text-white">{player_self_data.info.name}</p>
                 <div
                     className="h-2 w-2 rounded-full"
                     style={{ backgroundColor: COLOR_MAP[player_self_data.info.status] }}

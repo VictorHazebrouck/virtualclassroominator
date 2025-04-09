@@ -42,7 +42,7 @@ export default function ChangeUserInfoModal({
         <Modal
             onClickOutside={() => onClose()}
             visible={visible}
-            className="bottom-12 flex flex-col gap-6 px-8 py-8 w-72"
+            className="bottom-12 flex w-72 flex-col gap-6 px-8 py-8"
         >
             <div className="flex flex-col gap-2">
                 <h3 className="text-zinc-200">choose character</h3>
@@ -64,7 +64,7 @@ export default function ChangeUserInfoModal({
                     {AVAILABLE_STATUSES.map((e) => (
                         <button
                             key={e}
-                            className="cursor-pointer px-3 py-1 flex gap-1 text-zinc-400 hover:text-zinc-100"
+                            className="flex cursor-pointer gap-1 px-3 py-1 text-zinc-400 hover:text-zinc-100"
                             onClick={() => handle_change_status(e)}
                         >
                             {e}
@@ -80,13 +80,13 @@ export default function ChangeUserInfoModal({
                 <h3 className="text-zinc-200">change username</h3>
                 <div className="flex w-fit">
                     <input
-                        className="rounded-md px-3 py-1 text-zinc-400 w-full"
+                        className="w-full rounded-md px-3 py-1 text-zinc-400"
                         value={username}
                         onChange={(e) => set_username(e.target.value)}
                         placeholder="new username..."
                     />
                     <button
-                        className="text-zinc-100 cursor-pointer px-3 py-1"
+                        className="cursor-pointer px-3 py-1 text-zinc-100"
                         onClick={() => handle_change_name()}
                     >
                         change

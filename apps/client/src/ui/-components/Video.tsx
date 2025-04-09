@@ -27,7 +27,7 @@ export function Video({ videotrack, className }: VideoProps)
 
     return (
         <video
-            className={tm("w-full h-full object-cover", className)}
+            className={tm("h-full w-full object-cover", className)}
             ref={video_ref}
             autoPlay
             playsInline
@@ -68,7 +68,7 @@ export function VideoLayout({ className, children }: VideoLayoutProps)
     return (
         <div
             className={tm(
-                "w-62 flex-none flex items-center justify-center overflow-hidden aspect-video rounded-lg bg-gray-800 relative",
+                "relative flex aspect-video w-62 flex-none items-center justify-center overflow-hidden rounded-lg bg-gray-800",
                 className,
             )}
         >

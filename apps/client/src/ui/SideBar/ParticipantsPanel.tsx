@@ -18,8 +18,8 @@ export default function ParticipantsPanel()
     );
 
     return (
-        <div className="flex flex-col h-full">
-            <h2 className="text-slate-200 h-10">Participants</h2>
+        <div className="flex h-full flex-col">
+            <h2 className="h-10 text-slate-200">Participants</h2>
 
             <ScrollArea>
                 <div className="flex flex-col gap-2 px-4 py-2">
