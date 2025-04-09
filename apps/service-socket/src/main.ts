@@ -5,13 +5,29 @@ import type {
     SocketData,
 } from "@repo/shared-types/socket";
 import { Server } from "socket.io";
+import http from "http";
 
-const PORT = process.env.PORT;
-console.log("port: ", PORT);
-if (!PORT) throw new Error("No PORT found");
+const server = http.createServer((req, res) =>
+{
+    // Basic CORS headers
+    res.setHeader("Access-Control-Allow-Origin", "*");
+    res.setHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
+    res.setHeader("Access-Control-Allow-Headers", "Content-Type");
+
+    // Handle preflight
+    if (req.method === "OPTIONS")
+    {
+        res.writeHead(204);
+        res.end();
+        return;
+    }
+
+    res.writeHead(200, { "Content-Type": "text/plain" });
+    res.end("Hello from raw HTTP server!");
+});
 
 const io = new Server<ClientToServerEvents, ServerToClientEvents, InterServerEvents, SocketData>(
-    Number(PORT),
+    server,
     {
         cors: {
             origin: "*",
@@ -94,3 +110,8 @@ io.on("connection", (socket) =>
         io.emit("server:player-leave", { player_id: socket.data._id });
     });
 });
+
+const PORT = process.env.PORT;
+if (!PORT) throw new Error("No PORT found");
+
+server.listen(PORT);
