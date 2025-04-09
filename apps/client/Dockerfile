@@ -1,18 +1,31 @@
-FROM oven/bun:latest AS builder
+ARG BUN_VERSION=1.2
+ARG PROJECT=client
+
+# alpine image
+FROM oven/bun:${BUN_VERSION}-alpine AS alpine
+RUN apk update
+RUN apk add --no-cache libc6-compat
+
+# alpine with turbo
+FROM alpine AS base
+RUN bun add --global turbo
+
+# "prunes" one project and install only necessary dependencies
+FROM base AS builder
 WORKDIR /app
 COPY . .
-RUN bun install
-RUN bun turbo prune --scope=client --docker
+RUN ls
+RUN turbo prune --scope=${PROJECT} --docker
 
 # Add lockfile and package.json's of isolated subworkspace
-FROM oven/bun:1.2 AS installer
+FROM base AS installer
 WORKDIR /app
 COPY --from=builder /app/out/json/ .
 COPY --from=builder /app/out/bun.lock ./bun.lock
 COPY --from=builder /app/turbo.json ./turbo.json
 RUN bun install --frozen-lockfile
 
-FROM oven/bun:1.2 AS sourcer
+FROM base AS sourcer
 WORKDIR /app
 COPY --from=installer /app/ .
 COPY --from=builder /app/out/full/ .

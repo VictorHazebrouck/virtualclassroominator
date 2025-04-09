@@ -1,9 +1,7 @@
 node_modules
-bun.lock
+
 .git
-.gitignore
 **/node_modules
-**/bun.lock
 **/dist
 
 #asset gen stuff
