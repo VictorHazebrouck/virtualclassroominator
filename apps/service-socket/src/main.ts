@@ -6,25 +6,13 @@ import type {
 } from "@repo/shared-types/socket";
 import { Server } from "socket.io";
 import http from "http";
+import cors from "cors";
+import express from "express";
 
-const server = http.createServer((req, res) =>
-{
-    // Basic CORS headers
-    res.setHeader("Access-Control-Allow-Origin", "*");
-    res.setHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
-    res.setHeader("Access-Control-Allow-Headers", "Content-Type");
+const app = express();
+app.use(cors);
 
-    // Handle preflight
-    if (req.method === "OPTIONS")
-    {
-        res.writeHead(204);
-        res.end();
-        return;
-    }
-
-    res.writeHead(200, { "Content-Type": "text/plain" });
-    res.end("Hello from raw HTTP server!");
-});
+const server = http.createServer(app);
 
 const io = new Server<ClientToServerEvents, ServerToClientEvents, InterServerEvents, SocketData>(
     server,
@@ -114,4 +102,7 @@ io.on("connection", (socket) =>
 const PORT = process.env.PORT;
 if (!PORT) throw new Error("No PORT found");
 
-server.listen(PORT);
+server.listen(PORT, () =>
+{
+    console.log("Socket Service running on port " + PORT);
+});

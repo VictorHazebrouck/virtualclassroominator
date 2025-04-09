@@ -29,7 +29,7 @@ COPY --from=pruner /app/out/bun.lock ./bun.lock
 COPY --from=pruner /app/out/json/ .
 COPY --from=pruner /app/out/full/ .
 
-RUN bun install --frozen-lockfile
+RUN bun install
 RUN turbo build --filter=${PROJECT}
 RUN rm -rf ./**/*/src
 
