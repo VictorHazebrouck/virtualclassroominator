@@ -61,6 +61,11 @@ export class P2P
 
             call.once("stream", on_receive_stream);
             call.once("close", () => this.incoming_calls.delete(call.peer));
+
+            if (!this.outgoing_calls.has(call.peer))
+            {
+                this.call_user_by_id(call.peer);
+            }
         });
     }
 
@@ -83,6 +88,8 @@ export class P2P
                 screenshare_track_2: Boolean(screenshare_track),
             } as TracksActive,
         });
+
+        call.on("stream", () => console.info("receiving answer from call"));
 
         this.outgoing_calls.set(user_id, call);
     }
