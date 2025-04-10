@@ -26,12 +26,12 @@ class ConversationManagerClass
 
     call_users_by_ids(new_user_ids: string[], old_user_ids: string[])
     {
-        // const old_user_ids = this.participants_other.get_participants_ids();
         for (const old_user_id of old_user_ids)
         {
             if (!new_user_ids.includes(old_user_id))
             {
                 this.participants_other.remove_participant_by_id(old_user_id);
+                this.p2p_client.uncall_participant_by_id(old_user_id);
             }
         }
 

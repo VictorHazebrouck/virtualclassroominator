@@ -54,24 +54,28 @@ export class P2P
 
             const on_receive_stream = (stream: MediaStream) =>
             {
-                console.log("receiving call from peer...");
                 this.participants_other
                     .add_or_set_participant_by_id(call.peer)
                     .set_tracks_from_stream(stream, call.metadata as TracksActive);
             };
 
-            call.once("stream", on_receive_stream);
-            call.once("close", () => this.incoming_calls.delete(call.peer));
-
-            if (!this.outgoing_calls.has(call.peer))
+            const on_stream_end = () =>
             {
-                this.call_user_by_id(call.peer);
-            }
+                this.incoming_calls.get(call.peer)?.close();
+                this.incoming_calls.delete(call.peer);
+            };
+
+            call.once("stream", on_receive_stream);
+            call.once("close", on_stream_end);
+            // call.once("error", on_stream_end);
         });
     }
 
     call_user_by_id(user_id: string)
     {
+        this.outgoing_calls.get(user_id)?.close();
+        this.outgoing_calls.delete(user_id);
+
         const my_stream = new MediaStream();
 
         const microphone_track = this.participant_self.microphone_track;
@@ -90,22 +94,29 @@ export class P2P
             } as TracksActive,
         });
 
-        call.on("stream", () => console.info("receiving answer from call"));
-
         this.outgoing_calls.set(user_id, call);
     }
 
     call_all_participants()
     {
-        this.close_all_outgoing_call();
+        // this.close_all_outgoing_calls();
         const other_ids = this.participants_other.get_participants_ids();
         other_ids.forEach((id) => this.call_user_by_id(id));
     }
 
-    close_all_outgoing_call()
+    uncall_participant_by_id(user_id: string)
     {
-        const calls = [...this.outgoing_calls.values()];
-        calls.forEach((call) => call.close());
-        this.outgoing_calls.clear();
+        this.outgoing_calls.get(user_id)?.close();
+        this.incoming_calls.get(user_id)?.close();
+
+        this.outgoing_calls.delete(user_id);
+        this.incoming_calls.delete(user_id);
     }
+
+    // close_all_outgoing_calls()
+    // {
+    //     const calls = [...this.outgoing_calls.values()];
+    //     calls.forEach((call) => call.close());
+    //     this.outgoing_calls.clear();
+    // }
 }
