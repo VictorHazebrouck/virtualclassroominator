@@ -22,8 +22,6 @@ class ConversationManagerClass
     {
         this.participant_self = new ParticipantSelf(self_id);
         this.p2p_client = new P2P(this.participant_self, this.participants_other);
-
-        setInterval(() => console.log("participants manager: ", this), 3000);
     }
 
     call_users_by_ids(new_user_ids: string[])
