@@ -6,7 +6,7 @@ import { $players_other_persisted } from "~/store/players_other_persisted";
 import ScrollArea from "../-components/ScrollArea";
 import type { SocketDataPersisted } from "~/store/persist_config";
 import { tm } from "~/utils/tm";
-import { BiCaretDown, BiCaretUp } from "react-icons/bi";
+import { BiChevronDown, BiChevronUp } from "react-icons/bi";
 import TextWithStatusTag from "../-components/TextWithStatus";
 import TextInput from "../-components/TextInput";
 
@@ -28,7 +28,7 @@ export default function ParticipantsPanel()
     );
 
     return (
-        <div className="flex h-full flex-col gap-2 px-4 py-2">
+        <div className="flex h-full flex-col gap-2">
             <h2 className="h-10 text-slate-200">Participants</h2>
 
             <TextInput
@@ -80,7 +80,7 @@ function ParticipantSection({
                     className="cursor-pointer text-slate-200"
                     onClick={() => set_is_visible(!is_visible)}
                 >
-                    {is_visible ? <BiCaretUp size={24} /> : <BiCaretDown size={24} />}
+                    {is_visible ? <BiChevronUp size={24} /> : <BiChevronDown size={24} />}
                 </button>
             </div>
 
@@ -115,10 +115,11 @@ interface ParticipantCardProps
 function ParticipantCard({ _id, username, skin, status }: ParticipantCardProps)
 {
     const ref = useRef<null | HTMLButtonElement>(null);
+    const is_active = status !== "disconnected";
 
     function on_click()
     {
-        if (!ref.current) return;
+        if (!ref.current || !is_active) return;
 
         const rect = ref.current.getBoundingClientRect();
         show_player_card(_id, {
@@ -129,17 +130,19 @@ function ParticipantCard({ _id, username, skin, status }: ParticipantCardProps)
 
     return (
         <button
-            className="flex w-full cursor-pointer gap-4 overflow-hidden rounded-lg bg-gray-800 px-4 py-2"
+            className={"flex w-full cursor-pointer overflow-hidden rounded-lg bg-gray-800"}
             onClick={() => on_click()}
             ref={ref}
         >
-            <div className="h-10 w-10 overflow-hidden rounded-full bg-red-500">{skin}</div>
+            <div className={tm("flex w-full gap-4 px-4 py-2", !is_active && "grayscale-75")}>
+                <div className="h-10 w-10 overflow-hidden rounded-full bg-red-500">{skin}</div>
 
-            <TextWithStatusTag
-                text_classname="text-stone-200 text-md"
-                text={username}
-                status={status}
-            />
+                <TextWithStatusTag
+                    text_classname="text-stone-200 text-md"
+                    text={username}
+                    status={status}
+                />
+            </div>
         </button>
     );
 }

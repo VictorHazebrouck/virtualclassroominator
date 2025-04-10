@@ -33,7 +33,7 @@ export default function UserInfo()
                 )}
             </div>
             <div
-                className="flex cursor-pointer pl-4"
+                className="flex cursor-pointer px-4"
                 onClick={() => set_is_userinfo_modal_visible(true)}
             >
                 <TextWithStatusTag

@@ -3,6 +3,7 @@ import { type RefObject } from "react";
 import { $player_card } from "~/store/player_card";
 import Modal from "../-components/Modal";
 import type { Postion } from "@repo/shared-types/socket";
+import TextWithStatusTag from "../-components/TextWithStatus";
 
 const CARD_WIDTH = 150;
 const CARD_HEIGHT = 100;
@@ -19,6 +20,7 @@ export default function PlayerCard({
     if (!container_ref.current || !player_card) return <></>;
 
     const position = get_card_position_within_bounds(container_ref.current, player_card.position);
+    const { name, status } = player_card.info;
 
     return (
         <Modal
@@ -31,7 +33,9 @@ export default function PlayerCard({
                 height: CARD_HEIGHT,
             }}
         >
-            <p>Hello hello</p>
+            <TextWithStatusTag text={name} status={status} />
+            <button className="cursor-pointer text-stone-200">Send message</button>
+            <button className="cursor-pointer text-stone-200">Wave</button>
         </Modal>
     );
 }
