@@ -6,6 +6,7 @@ const PATH_SOCKETIO = import.meta.env.VITE_SOCKETIO_SERVER_PATH;
 
 const Socket: TSocket<ServerToClientEvents, ClientToServerEvents> = io(SOCKET_SERVER, {
     path: PATH_SOCKETIO,
+    autoConnect: false,
 });
 
 export default Socket;
