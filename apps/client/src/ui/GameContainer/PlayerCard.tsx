@@ -4,6 +4,7 @@ import { $player_card } from "~/store/player_card";
 import Modal from "../-components/Modal";
 import type { Postion } from "@repo/shared-types/socket";
 import TextWithStatusTag from "../-components/TextWithStatus";
+import { open_conversation } from "~/store/nav";
 
 const CARD_WIDTH = 150;
 const CARD_HEIGHT = 100;
@@ -16,8 +17,6 @@ export default function PlayerCard({
 })
 {
     const player_card = useStore($player_card);
-
-    console.log(player_card);
 
     if (!container_ref.current || !player_card) return <></>;
 
@@ -36,7 +35,13 @@ export default function PlayerCard({
             }}
         >
             <TextWithStatusTag text={name} status={status} />
-            <button className="cursor-pointer text-stone-200">Send message</button>
+            <button
+                className="cursor-pointer text-stone-200"
+                onClick={() => open_conversation(player_card._id)}
+            >
+                Send message
+            </button>
+
             <button className="cursor-pointer text-stone-200">Wave</button>
         </Modal>
     );
