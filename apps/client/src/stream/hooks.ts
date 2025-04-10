@@ -130,10 +130,12 @@ export function use_get_user_video_by_id(user_id: string)
             return;
         }
 
+        console.log("participant on hook init: ", participant);
         set_video_track(participant.webcam_track);
 
         return participant.on_webcam_share((track) =>
         {
+            console.log("participant on webcam share: ", participant);
             set_video_track(track);
         });
     }, []);
