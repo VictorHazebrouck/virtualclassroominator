@@ -1,60 +1,116 @@
 import { useStore } from "@nanostores/react";
 import type { SocketData } from "@repo/shared-types/socket";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { show_player_card } from "~/store/player_card";
 import { $players_other_persisted } from "~/store/players_other_persisted";
 import ScrollArea from "../-components/ScrollArea";
+import type { SocketDataPersisted } from "~/store/persist_config";
+import { tm } from "~/utils/tm";
+import { BiCaretDown, BiCaretUp } from "react-icons/bi";
+import TextWithStatusTag from "../-components/TextWithStatus";
+import TextInput from "../-components/TextInput";
 
 export default function ParticipantsPanel()
 {
     const user_data_persisted = useStore($players_other_persisted);
+    const [search_value, set_search_value] = useState("");
 
     const online_participants = Object.values(user_data_persisted).filter(
-        (e) => e.info.status !== "disconnected",
+        (e) =>
+            e.info.status !== "disconnected" &&
+            e.info.name.toLowerCase().includes(search_value.toLowerCase()),
     );
 
     const offline_participants = Object.values(user_data_persisted).filter(
-        (e) => e.info.status === "disconnected",
+        (e) =>
+            e.info.status === "disconnected" &&
+            e.info.name.toLowerCase().includes(search_value.toLowerCase()),
     );
 
     return (
-        <div className="flex h-full flex-col">
+        <div className="flex h-full flex-col gap-2 px-4 py-2">
             <h2 className="h-10 text-slate-200">Participants</h2>
 
+            <TextInput
+                value={search_value}
+                on_change_text={set_search_value}
+                placeholder="search participant..."
+            />
+
             <ScrollArea>
-                <div className="flex flex-col gap-2 px-4 py-2">
-                    <h3 className="text-slate-200">Online ({online_participants.length})</h3>
-                    {online_participants.map(({ _id, info }) => (
-                        <ParticipantCard
-                            key={_id}
-                            username={info.name}
-                            skin={info.skin}
-                            status={info.status}
-                            _id={_id}
-                        />
-                    ))}
-                    <h3 className="text-slate-200">Offline ({offline_participants.length})</h3>
-                    {offline_participants.map(({ _id, info }) => (
-                        <ParticipantCard
-                            key={_id}
-                            username={info.name}
-                            skin={info.skin}
-                            status={info.status}
-                            _id={_id}
-                        />
-                    ))}
+                <div className="flex flex-col gap-3 py-3">
+                    <ParticipantSection
+                        title="Online"
+                        participants_list={online_participants}
+                        default_is_open={true}
+                    />
+                    <ParticipantSection
+                        title="Offline"
+                        participants_list={offline_participants}
+                        default_is_open={false}
+                    />
                 </div>
             </ScrollArea>
         </div>
     );
 }
 
-type ParticipantCardProps = {
+interface ParticipantSectionProps
+{
+    title: "Online" | "Offline";
+    default_is_open: boolean;
+    participants_list: SocketDataPersisted[];
+}
+
+function ParticipantSection({
+    participants_list,
+    title,
+    default_is_open,
+}: ParticipantSectionProps)
+{
+    const [is_visible, set_is_visible] = useState(default_is_open);
+
+    return (
+        <div className="flex flex-col gap-3">
+            <div className="flex items-center justify-between">
+                <h3 className="text-slate-200">
+                    {title} ({participants_list.length})
+                </h3>
+                <button
+                    className="cursor-pointer text-slate-200"
+                    onClick={() => set_is_visible(!is_visible)}
+                >
+                    {is_visible ? <BiCaretUp size={24} /> : <BiCaretDown size={24} />}
+                </button>
+            </div>
+
+            <div
+                className={tm(
+                    "flex flex-col gap-2 overflow-hidden transition-all duration-300 ease-initial",
+                    is_visible ? "max-h-[100vh]" : "max-h-0",
+                )}
+            >
+                {participants_list.map(({ _id, info }) => (
+                    <ParticipantCard
+                        key={_id}
+                        username={info.name}
+                        skin={info.skin}
+                        status={info.status}
+                        _id={_id}
+                    />
+                ))}
+            </div>
+        </div>
+    );
+}
+
+interface ParticipantCardProps
+{
     _id: string;
     username: string;
     skin: string;
     status: SocketData["info"]["status"];
-};
+}
 
 function ParticipantCard({ _id, username, skin, status }: ParticipantCardProps)
 {
@@ -62,10 +118,9 @@ function ParticipantCard({ _id, username, skin, status }: ParticipantCardProps)
 
     function on_click()
     {
-        if (!ref) return;
+        if (!ref.current) return;
 
-        const rect = ref!.current!.getBoundingClientRect();
-
+        const rect = ref.current.getBoundingClientRect();
         show_player_card(_id, {
             x: rect.left,
             y: rect.top,
@@ -74,13 +129,17 @@ function ParticipantCard({ _id, username, skin, status }: ParticipantCardProps)
 
     return (
         <button
-            className="flex w-full cursor-pointer flex-col rounded-lg bg-gray-800 px-4 py-2"
+            className="flex w-full cursor-pointer gap-4 overflow-hidden rounded-lg bg-gray-800 px-4 py-2"
             onClick={() => on_click()}
             ref={ref}
         >
-            <h5 className="text-stone-100">{username}</h5>
-            <p className="text-stone-400">{status}</p>
-            <p className="text-stone-400">{skin}</p>
+            <div className="h-10 w-10 overflow-hidden rounded-full bg-red-500">{skin}</div>
+
+            <TextWithStatusTag
+                text_classname="text-stone-200 text-md"
+                text={username}
+                status={status}
+            />
         </button>
     );
 }

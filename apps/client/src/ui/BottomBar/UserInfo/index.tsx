@@ -7,7 +7,7 @@ import { Video, VideoLayout } from "~/ui/-components/Video";
 import ChangeUserInfoModal from "./ChangeUserInfoModal";
 import Modal from "~/ui/-components/Modal";
 import { tm } from "~/utils/tm";
-import { COLOR_MAP } from "~/constants";
+import TextWithStatusTag from "~/ui/-components/TextWithStatus";
 
 export default function UserInfo()
 {
@@ -33,14 +33,13 @@ export default function UserInfo()
                 )}
             </div>
             <div
-                className="flex cursor-pointer gap-1 py-1 pr-1 pl-4"
+                className="flex cursor-pointer pl-4"
                 onClick={() => set_is_userinfo_modal_visible(true)}
             >
-                <p className="text-sm text-white">{player_self_data.info.name}</p>
-                <div
-                    className="h-2 w-2 rounded-full"
-                    style={{ backgroundColor: COLOR_MAP[player_self_data.info.status] }}
-                ></div>
+                <TextWithStatusTag
+                    text={player_self_data.info.name}
+                    status={player_self_data.info.status}
+                />
             </div>
             <ChangeUserInfoModal
                 visible={is_userinfo_modal_visible}
