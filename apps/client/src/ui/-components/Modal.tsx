@@ -24,7 +24,7 @@ export default function Modal({ children, visible, onClickOutside, style, classN
 
     useEffect(() =>
     {
-        document.addEventListener("click", handleClickOutside, true);
+        setTimeout(() => document.addEventListener("click", handleClickOutside, true), 50);
         return () =>
         {
             document.removeEventListener("click", handleClickOutside, true);

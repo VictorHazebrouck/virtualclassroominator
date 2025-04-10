@@ -17,6 +17,8 @@ export default function PlayerCard({
 {
     const player_card = useStore($player_card);
 
+    console.log(player_card);
+
     if (!container_ref.current || !player_card) return <></>;
 
     const position = get_card_position_within_bounds(container_ref.current, player_card.position);

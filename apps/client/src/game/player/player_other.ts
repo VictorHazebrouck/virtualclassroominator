@@ -3,7 +3,8 @@ import { listenKeys } from "nanostores";
 import { Ticker } from "pixi.js";
 import { $players_other } from "../../store/players_other";
 import { Player } from "./player_base";
-import { animate_player } from "./utils";
+import { animate_player, PLAYER_HEIGHT_PX, PLAYER_WIDTH_PX } from "./utils";
+import { show_player_card } from "~/store/player_card";
 
 export class PlayerOther extends Player
 {
@@ -43,7 +44,11 @@ export class PlayerOther extends Player
 
         this.onclick = () =>
         {
-            console.log("hahahah");
+            const global = this.getGlobalPosition();
+            show_player_card(this.player_data._id, {
+                x: global.x + PLAYER_WIDTH_PX,
+                y: global.y + PLAYER_HEIGHT_PX,
+            });
         };
     }
 
