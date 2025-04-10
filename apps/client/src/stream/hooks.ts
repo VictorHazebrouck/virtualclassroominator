@@ -76,9 +76,13 @@ export function use_get_user_screenshare_by_id(user_id: string)
     useEffect(() =>
     {
         const participant = ParticipantsOther_S.get_participant_by_id(user_id);
-        if (!participant) return;
+        if (!participant)
+        {
+            console.warn("Participant not found");
+            return;
+        }
 
-        set_screenshare_track(participant.screenshare_track || null);
+        set_screenshare_track(participant.screenshare_track);
 
         return participant.on_screenshare_share((track) =>
         {
@@ -96,9 +100,13 @@ export function use_get_user_audio_by_id(user_id: string)
     useEffect(() =>
     {
         const participant = ParticipantsOther_S.get_participant_by_id(user_id);
-        if (!participant) return;
+        if (!participant)
+        {
+            console.warn("Participant not found");
+            return;
+        }
 
-        set_audio_track(participant.microphone_track || null);
+        set_audio_track(participant.microphone_track);
 
         return participant.on_microphone_share((track) =>
         {
@@ -116,9 +124,13 @@ export function use_get_user_video_by_id(user_id: string)
     useEffect(() =>
     {
         const participant = ParticipantsOther_S.get_participant_by_id(user_id);
-        if (!participant) return;
+        if (!participant)
+        {
+            console.warn("Participant not found");
+            return;
+        }
 
-        set_video_track(participant.webcam_track || null);
+        set_video_track(participant.webcam_track);
 
         return participant.on_webcam_share((track) =>
         {

@@ -1,4 +1,4 @@
-type CallbackToggleTrack = (track: MediaStreamTrack | null) => void;
+export type CallbackToggleTrack = (track: MediaStreamTrack | null) => void;
 
 export class Participant
 {
