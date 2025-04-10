@@ -13,6 +13,7 @@ export class PlayerOther extends Player
     {
         super(player_data, animate_player_other);
         this.cleanup_listeners = this.sub_to_store();
+        this.sub_to_click();
     }
 
     private sub_to_store()
@@ -33,6 +34,17 @@ export class PlayerOther extends Player
                 }
             },
         );
+    }
+
+    private sub_to_click()
+    {
+        this.interactive = true;
+        this.cursor = "pointer";
+
+        this.onclick = () =>
+        {
+            console.log("hahahah");
+        };
     }
 
     /**

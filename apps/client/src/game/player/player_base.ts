@@ -1,7 +1,7 @@
 import type { AvailableSkins, Direction, SocketData } from "@repo/shared-types/socket";
-import { AnimatedSprite, Container, Ticker } from "pixi.js";
+import { AnimatedSprite, Container, Rectangle, Ticker } from "pixi.js";
 import type { TickerCallback } from "pixi.js";
-import { create_username_label } from "./utils";
+import { create_username_label, PLAYER_HEIGHT_PX, PLAYER_WIDTH_PX } from "./utils";
 import { load_character_spritesheet, type SpriteSheetType } from "../assets/AssetsLoader";
 
 export class Player extends Container
@@ -17,6 +17,7 @@ export class Player extends Container
     {
         super({ position: player_data.spacial.postition });
         this.player_data = player_data;
+        this.hitArea = new Rectangle(0, 0, PLAYER_HEIGHT_PX, PLAYER_WIDTH_PX);
 
         this.set_username_label();
         this.set_skin();

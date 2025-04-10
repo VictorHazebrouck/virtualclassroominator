@@ -3,8 +3,6 @@ import type ParticipantSelf from "../ParticipantSelf";
 import { ParticipantsOther } from "../ParticipantOther";
 import type { TracksActive } from "../utils";
 
-console.log(import.meta.env);
-
 const URL_PEERJS = import.meta.env.VITE_PEER_BACKEND_URL;
 const PATH_PEERJS = import.meta.env.VITE_PEER_SERVER_PATH;
 const IS_SECURE_PEERJS = import.meta.env.VITE_PEER_SERVER_IS_SECURE == "true";

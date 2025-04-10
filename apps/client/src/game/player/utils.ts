@@ -3,6 +3,9 @@ import { Player } from "./player_base";
 import type { SocketData } from "@repo/shared-types/socket";
 import { COLOR_MAP } from "~/constants";
 
+export const PLAYER_HEIGHT_PX = 32;
+export const PLAYER_WIDTH_PX = 32;
+
 export function create_username_label(username: string, status: SocketData["info"]["status"])
 {
     const H_PADDING = 5;

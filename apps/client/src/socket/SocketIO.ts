@@ -4,8 +4,6 @@ import type { ServerToClientEvents, ClientToServerEvents } from "@repo/shared-ty
 const SOCKET_SERVER = import.meta.env.VITE_SOCKETIO_SERVER;
 const PATH_SOCKETIO = import.meta.env.VITE_SOCKETIO_SERVER_PATH;
 
-console.log(import.meta.env);
-
 const Socket: TSocket<ServerToClientEvents, ClientToServerEvents> = io(SOCKET_SERVER, {
     path: PATH_SOCKETIO,
 });
