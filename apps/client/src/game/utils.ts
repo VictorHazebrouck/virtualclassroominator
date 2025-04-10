@@ -22,7 +22,7 @@ const TickerSlow = {
     next()
     {
         this.listeners.forEach((cb) => cb());
-        setTimeout(() => this.next(), 1000);
+        setTimeout(() => this.next(), 333);
     },
 };
 TickerSlow.next();
