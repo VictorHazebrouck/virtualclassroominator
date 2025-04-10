@@ -54,6 +54,7 @@ export class P2P
 
             const on_receive_stream = (stream: MediaStream) =>
             {
+                console.log("receiving call from peer...");
                 this.participants_other
                     .add_or_set_participant_by_id(call.peer)
                     .set_tracks_from_stream(stream, call.metadata as TracksActive);
