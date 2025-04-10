@@ -24,9 +24,9 @@ class ConversationManagerClass
         this.p2p_client = new P2P(this.participant_self, this.participants_other);
     }
 
-    call_users_by_ids(new_user_ids: string[])
+    call_users_by_ids(new_user_ids: string[], old_user_ids: string[])
     {
-        const old_user_ids = this.participants_other.get_participants_ids();
+        // const old_user_ids = this.participants_other.get_participants_ids();
         for (const old_user_id of old_user_ids)
         {
             if (!new_user_ids.includes(old_user_id))
@@ -60,7 +60,7 @@ ParticipantSelf_S.on_screenshare_share((track) => player_self_toggle_screenshare
 ParticipantSelf_S.on_microphone_share((track) => player_self_toggle_microphone(Boolean(track)));
 ParticipantSelf_S.on_webcam_share((track) => player_self_toggle_webcam(Boolean(track)));
 
-$nearby_players_ids.subscribe((user_ids) =>
+$nearby_players_ids.subscribe((new_user_ids, old_user_ids = []) =>
 {
-    ConversationManager_S.call_users_by_ids(user_ids as string[]);
+    ConversationManager_S.call_users_by_ids(new_user_ids as string[], old_user_ids as string[]);
 });
