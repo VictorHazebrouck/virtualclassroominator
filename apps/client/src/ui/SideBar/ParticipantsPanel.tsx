@@ -1,15 +1,16 @@
 import { useStore } from "@nanostores/react";
 import type { SocketData } from "@repo/shared-types/socket";
 import { useRef, useState, type MouseEvent } from "react";
+import { BiChevronDown, BiChevronUp } from "react-icons/bi";
+import { camera_focus_player_by_id } from "~/store/nav";
+import type { SocketDataPersisted } from "~/store/persist_config";
 import { show_player_card } from "~/store/player_card";
 import { $players_other_persisted } from "~/store/players_other_persisted";
-import ScrollArea from "../-components/ScrollArea";
-import type { SocketDataPersisted } from "~/store/persist_config";
 import { tm } from "~/utils/tm";
-import { BiChevronDown, BiChevronUp } from "react-icons/bi";
-import TextWithStatusTag from "../-components/TextWithStatus";
+import ScrollArea from "../-components/ScrollArea";
 import TextInput from "../-components/TextInput";
-import { camera_focus_player_by_id } from "~/store/nav";
+import TextWithStatusTag from "../-components/TextWithStatus";
+import { PanelTitle } from "./-components";
 
 export default function ParticipantsPanel()
 {
@@ -30,7 +31,7 @@ export default function ParticipantsPanel()
 
     return (
         <div className="flex h-full flex-col gap-2">
-            <h2 className="h-10 text-slate-200">Participants</h2>
+            <PanelTitle title="Participants" />
 
             <TextInput
                 value={search_value}

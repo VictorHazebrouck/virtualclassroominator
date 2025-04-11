@@ -1,11 +1,13 @@
 import { useStore } from "@nanostores/react";
+import { useState } from "react";
+import { BiChevronLeft } from "react-icons/bi";
 import { $conversations_preview, new_message_from_self } from "~/store/conversations";
 import { $current_conversation, close_conversation, open_conversation } from "~/store/nav";
-import TextInput from "../-components/TextInput";
-import { useState } from "react";
 import { $player_self } from "~/store/player_self";
 import { tm } from "~/utils/tm";
+import TextInput from "../-components/TextInput";
 import TextWithStatusTag from "../-components/TextWithStatus";
+import { PanelTitle } from "./-components";
 
 export default function ChatPanel()
 {
@@ -20,6 +22,7 @@ function ConversationList()
 
     return (
         <div className="flex h-full w-full flex-col gap-6">
+            <PanelTitle title="Conversations" />
             {conversations_preview.map((e) => (
                 <button
                     key={e.participant?._id}
@@ -45,17 +48,18 @@ function Conversation()
 
     return (
         <div className="flex h-full w-full flex-col justify-end text-white">
-            <div className="mb-auto flex justify-between">
-                <div className="flex">
+            <div className="mb-auto -ml-2 flex w-full gap-4">
+                <button className="cursor-pointer" onClick={() => close_conversation()}>
+                    <BiChevronLeft size={28} className="text-white" />
+                </button>
+
+                <div className="flex w-full items-center justify-center">
                     <TextWithStatusTag
                         text_classname="text-lg font-medium"
                         text={receiver.info.name}
                         status={receiver.info.status}
                     />
                 </div>
-                <button onClick={() => close_conversation()}>
-                    <p>go back</p>
-                </button>
             </div>
 
             <div className="flex flex-col gap-2">
