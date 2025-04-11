@@ -1,6 +1,8 @@
 import { useStore } from "@nanostores/react";
 import { $conversations_preview, new_message_from_self } from "~/store/conversations";
 import { $current_conversation, close_conversation, open_conversation } from "~/store/nav";
+import TextInput from "../-components/TextInput";
+import { useState } from "react";
 
 export default function ChatPanel()
 {
@@ -32,12 +34,12 @@ function ConversationList()
 function Conversation()
 {
     const current_conversation = useStore($current_conversation);
+    const [message, set_message] = useState("");
+
     if (!current_conversation) return;
 
-    console.log("hahha", current_conversation);
-
     return (
-        <div className="flex h-full w-full flex-col text-white">
+        <div className="flex h-full w-full flex-col justify-end text-white">
             <div onClick={() => close_conversation()}>
                 <p>go back</p>
             </div>
@@ -47,12 +49,21 @@ function Conversation()
                     <p key={message._id}>{message.message}</p>
                 ))}
             </div>
-            <button
-                className="text-white"
-                onClick={() => new_message_from_self(current_conversation.receiver_id, "hahhaha")}
-            >
-                send message
-            </button>
+
+            <div className="flex w-fit">
+                <TextInput
+                    className="w-full"
+                    value={message}
+                    on_change_text={(e) => set_message(e)}
+                    placeholder="new username..."
+                />
+                <button
+                    className="cursor-pointer px-3 py-1 text-zinc-100"
+                    onClick={() => new_message_from_self(current_conversation.receiver_id, message)}
+                >
+                    send
+                </button>
+            </div>
         </div>
     );
 }

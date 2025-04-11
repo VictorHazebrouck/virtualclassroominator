@@ -3,8 +3,11 @@ export interface ServerToClientEvents
     "server:player-join": (data: SocketData) => void;
     "server:player-leave": (data: { player_id: string }) => void;
 
-    "server:chat:send-message-global": (data: { from_player_id: string; value: string }) => void;
-    "server:chat:send-message-to-player": (data: { from_player_id: string; value: string }) => void;
+    "server:chat:send-message-global": (data: { from_player_id: string; message: Message }) => void;
+    "server:chat:send-message-to-player": (data: {
+        from_player_id: string;
+        message: Message;
+    }) => void;
 
     "server:game:send-gamestate": (data: SocketData[]) => void;
     "server:game:broadcast-player-movement": (data: {
@@ -25,8 +28,11 @@ export interface ClientToServerEvents
 {
     "client:connect": (data: SocketData) => void;
 
-    "client:chat:send-message-global": (data: { value: string }) => void;
-    "client:chat:send-message-to-player": (data: { to_player_id: string; value: string }) => void;
+    "client:chat:send-message-global": (data: { message: Message }) => void;
+    "client:chat:send-message-to-player": (data: {
+        to_player_id: string;
+        message: Message;
+    }) => void;
 
     "client:game:player:movement": (data: SocketData["spacial"]) => void;
     "client:game:player:info": (data: SocketData["info"]) => void;
@@ -69,3 +75,9 @@ export type Postion = {
 export type AvailableSkins = "alex" | "anna" | "ardley" | "colt" | "ester" | "tom";
 
 export type PlayerStatus = "on" | "off" | "away" | "disconnected";
+
+export type Message = {
+    _id: string;
+    sender: string;
+    message: string;
+};

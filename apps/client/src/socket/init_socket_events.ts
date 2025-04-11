@@ -1,4 +1,5 @@
 // import { $player_self } from "../store/player_self";
+import { new_message_from_other_player } from "~/store/conversations";
 import Socket from "../socket/SocketIO";
 import {
     create_player_other,
@@ -43,5 +44,11 @@ Socket.on("connect", () =>
     Socket.on("server:game:broadcast-player-chat", ({ player_id, chat }) =>
     {
         set_player_other_chat(player_id, chat);
+    });
+
+    Socket.on("server:chat:send-message-to-player", ({ from_player_id, message }) =>
+    {
+        new_message_from_other_player(from_player_id, message);
+        console.log("recevied message !", message);
     });
 });

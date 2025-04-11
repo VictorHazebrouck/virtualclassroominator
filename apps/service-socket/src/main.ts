@@ -88,26 +88,25 @@ io.on("connection", async (socket) =>
         });
     });
 
-    socket.on("client:chat:send-message-global", ({ value }) =>
+    socket.on("client:chat:send-message-global", ({ message }) =>
     {
         socket.broadcast.emit("server:chat:send-message-global", {
             from_player_id: socket.data._id,
-            value: value,
+            message: message,
         });
     });
 
-    socket.on("client:chat:send-message-to-player", async ({ to_player_id, value }) =>
+    socket.on("client:chat:send-message-to-player", async ({ to_player_id, message }) =>
     {
         const sockets = await io.fetchSockets();
 
         const player_socket = sockets.find((s) => s.data._id == to_player_id);
-        if (player_socket)
-        {
-            player_socket.emit("server:chat:send-message-to-player", {
-                from_player_id: socket.data._id,
-                value: value,
-            });
-        }
+        if (!player_socket) return;
+
+        player_socket.emit("server:chat:send-message-to-player", {
+            from_player_id: socket.data._id,
+            message: message,
+        });
     });
 
     socket.on("disconnect", () =>
