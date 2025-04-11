@@ -1,6 +1,6 @@
 import { useStore } from "@nanostores/react";
 import type { SocketData } from "@repo/shared-types/socket";
-import { useRef, useState } from "react";
+import { useRef, useState, type MouseEvent } from "react";
 import { show_player_card } from "~/store/player_card";
 import { $players_other_persisted } from "~/store/players_other_persisted";
 import ScrollArea from "../-components/ScrollArea";
@@ -9,6 +9,7 @@ import { tm } from "~/utils/tm";
 import { BiChevronDown, BiChevronUp } from "react-icons/bi";
 import TextWithStatusTag from "../-components/TextWithStatus";
 import TextInput from "../-components/TextInput";
+import { camera_focus_player_by_id } from "~/store/nav";
 
 export default function ParticipantsPanel()
 {
@@ -117,7 +118,7 @@ function ParticipantCard({ _id, username, skin, status }: ParticipantCardProps)
     const ref = useRef<null | HTMLButtonElement>(null);
     const is_active = status !== "disconnected";
 
-    function on_click()
+    function on_click_card()
     {
         if (!ref.current || !is_active) return;
 
@@ -128,14 +129,25 @@ function ParticipantCard({ _id, username, skin, status }: ParticipantCardProps)
         });
     }
 
+    function on_click_avatar(e: MouseEvent)
+    {
+        camera_focus_player_by_id(_id);
+        e.stopPropagation();
+    }
+
     return (
         <button
             className={"flex w-full cursor-pointer overflow-hidden rounded-lg bg-gray-800"}
-            onClick={() => on_click()}
+            onClick={on_click_card}
             ref={ref}
         >
             <div className={tm("flex w-full gap-4 px-4 py-2", !is_active && "grayscale-75")}>
-                <div className="h-10 w-10 overflow-hidden rounded-full bg-red-500">{skin}</div>
+                <div
+                    className="h-10 w-10 overflow-hidden rounded-full bg-red-500 hover:bg-green-500"
+                    onClick={on_click_avatar}
+                >
+                    {skin}
+                </div>
 
                 <TextWithStatusTag
                     text_classname="text-stone-200 text-md"

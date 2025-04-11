@@ -1,6 +1,8 @@
 import { persistentAtom } from "@nanostores/persistent";
-import { atom, computed } from "nanostores";
-import { $conversations_persisted, type Conversation } from "./conversations";
+import { atom, computed, subscribeKeys } from "nanostores";
+import { $conversations_persisted } from "./conversations";
+import { $players_other } from "./players_other";
+import { $player_self } from "./player_self";
 
 export type Tab = "chat" | "participants" | "";
 export const $current_tab = persistentAtom<Tab | "">("nav-state", "");
@@ -45,3 +47,23 @@ export function close_conversation()
 {
     $current_conversation_user_id.set(null);
 }
+
+export const $camera_focused_player_id = atom<string | null>(null);
+
+export function camera_focus_player_by_id(player_id: string)
+{
+    const player_exists = $players_other.get()[player_id];
+    if (!player_exists) return;
+
+    $camera_focused_player_id.set(player_id);
+}
+
+export function camera_focus_self()
+{
+    $camera_focused_player_id.set(null);
+}
+
+subscribeKeys($player_self, ["spacial"], () =>
+{
+    camera_focus_self();
+});

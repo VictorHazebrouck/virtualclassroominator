@@ -1,5 +1,6 @@
 import { type Application, Container, Ticker } from "pixi.js";
 import { Layers } from "./layers/layers";
+import { $camera_focused_player_id } from "~/store/nav";
 
 export default class Camera extends Container
 {
@@ -23,12 +24,35 @@ export default class Camera extends Container
         zoom_manager.on_zoom_in(() => (this.zoom_state = "in"));
         zoom_manager.on_zoom_out(() => (this.zoom_state = "out"));
         zoom_manager.on_zoom_stop(() => (this.zoom_state = "stop"));
+
+        this.sub_to_camera_player_focus_change();
     }
 
-    private center_camera_around_obj = () =>
+    private sub_to_camera_player_focus_change()
     {
-        this.position.y = -this.obj_to_focus.y * this.scale.x + this.app.screen.height / 2;
-        this.position.x = -this.obj_to_focus.x * this.scale.y + this.app.screen.width / 2;
+        $camera_focused_player_id.subscribe((user_id) =>
+        {
+            if (user_id == null)
+            {
+                this.obj_to_focus = this.layers.players_layer.get_self();
+            }
+            else
+            {
+                const user_obj = this.layers.players_layer.get_player_by_id(user_id);
+                if (user_obj) this.obj_to_focus = user_obj;
+            }
+        });
+    }
+
+    private center_camera_around_obj = (e: Ticker) =>
+    {
+        const SMOOTH_SPEED = 1;
+
+        const target_y = -this.obj_to_focus.y * this.scale.x + this.app.screen.height / 2;
+        const target_x = -this.obj_to_focus.x * this.scale.y + this.app.screen.width / 2;
+
+        this.position.x += (target_x - this.position.x) * SMOOTH_SPEED * e.deltaTime;
+        this.position.y += (target_y - this.position.y) * SMOOTH_SPEED * e.deltaTime;
     };
 
     private zoom_camera = (e: Ticker) =>
@@ -51,7 +75,7 @@ export default class Camera extends Container
             this.scale.y -= SPEED * e.deltaTime;
         }
 
-        this.center_camera_around_obj();
+        this.center_camera_around_obj(e);
     };
 }
 
