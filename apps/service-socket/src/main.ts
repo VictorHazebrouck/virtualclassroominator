@@ -28,20 +28,35 @@ const io = new Server<ClientToServerEvents, ServerToClientEvents, InterServerEve
     },
 );
 
-io.on("connection", (socket) =>
+io.on("connection", async (socket) =>
 {
-    socket.on("client:connect", async (data) =>
+    const socket_data_str = socket.handshake.query.player_initial_data;
+
+    try
     {
-        //on connection, init the socket data for said player
-        socket.data = data;
+        const socket_data_obj = JSON.parse(socket_data_str as string);
+        socket.data = socket_data_obj;
+        socket.broadcast.emit("server:player-join", socket.data);
 
         const sockets = await io.fetchSockets();
-        const players_data = sockets.map((e) => e.data).filter((e) => e._id !== data._id);
 
-        // and send him current gamestate
-        socket.broadcast.emit("server:player-join", data);
+        const players_data = sockets.map((e) => e.data).filter((e) => e._id !== socket.data._id);
         socket.emit("server:game:send-gamestate", players_data);
-    });
+    }
+    catch (error)
+    {
+        console.error("COULDNT PARSE CONNECTION INFO", error);
+        socket.disconnect(true);
+    }
+
+    // might use this as a reconnect mechanism instead or somth
+    // socket.on("client:connect", async (data) =>
+    // {
+    //     // //on connection, init the socket data for said player
+    //     // socket.data = data;
+    //     // // and send him current gamestate
+    //     // socket.broadcast.emit("server:player-join", data);
+    // });
 
     socket.on("client:game:player:movement", (spacial_data) =>
     {
@@ -85,15 +100,13 @@ io.on("connection", (socket) =>
     {
         const sockets = await io.fetchSockets();
 
-        for (const player_socket of sockets)
+        const player_socket = sockets.find((s) => s.data._id == to_player_id);
+        if (player_socket)
         {
-            if (player_socket.data.player_id == to_player_id)
-            {
-                player_socket.emit("server:chat:send-message-to-player", {
-                    from_player_id: socket.data._id,
-                    value: value,
-                });
-            }
+            player_socket.emit("server:chat:send-message-to-player", {
+                from_player_id: socket.data._id,
+                value: value,
+            });
         }
     });
 

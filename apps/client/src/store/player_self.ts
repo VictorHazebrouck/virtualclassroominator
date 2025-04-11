@@ -21,8 +21,8 @@ export const $player_self = map<SocketData>({
     spacial: {
         direction: "down",
         postition: {
-            x: 0,
-            y: 0,
+            x: 1,
+            y: 1,
         },
         is_moving: false,
     },
