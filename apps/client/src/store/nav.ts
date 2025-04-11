@@ -3,6 +3,7 @@ import { atom, computed, subscribeKeys } from "nanostores";
 import { $conversations_persisted } from "./conversations";
 import { $players_other } from "./players_other";
 import { $player_self } from "./player_self";
+import { $players_other_persisted } from "./players_other_persisted";
 
 export type Tab = "chat" | "participants" | "";
 export const $current_tab = persistentAtom<Tab | "">("nav-state", "");
@@ -20,16 +21,22 @@ export function open_tab_panel(tab_name: Tab)
 const $current_conversation_user_id = atom<string | null>(null);
 
 export const $current_conversation = computed(
-    [$conversations_persisted, $current_conversation_user_id],
-    (conversations, user_id) =>
+    [$conversations_persisted, $current_conversation_user_id, $players_other_persisted],
+    (conversations, user_id, players_other) =>
     {
-        if (!user_id) return null;
+        const pop_user = players_other[user_id!];
+        if (!user_id || !pop_user) return null;
 
         const conversation = conversations.find((e) => e.receiver_id == user_id);
-        if (conversation) return conversation;
+        if (conversation)
+        {
+            const pop_conversation = { ...conversation, receiver: pop_user };
+            return pop_conversation;
+        }
 
         const temp_conversation = {
             receiver_id: user_id,
+            receiver: pop_user,
             messages: [],
         };
 

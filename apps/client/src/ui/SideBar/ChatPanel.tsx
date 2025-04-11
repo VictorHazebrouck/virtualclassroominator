@@ -3,6 +3,9 @@ import { $conversations_preview, new_message_from_self } from "~/store/conversat
 import { $current_conversation, close_conversation, open_conversation } from "~/store/nav";
 import TextInput from "../-components/TextInput";
 import { useState } from "react";
+import { $player_self } from "~/store/player_self";
+import { tm } from "~/utils/tm";
+import TextWithStatusTag from "../-components/TextWithStatus";
 
 export default function ChatPanel()
 {
@@ -35,18 +38,31 @@ function Conversation()
 {
     const current_conversation = useStore($current_conversation);
     const [message, set_message] = useState("");
+    const my_id = $player_self.get()._id;
 
     if (!current_conversation) return;
+    const { messages, receiver } = current_conversation;
 
     return (
         <div className="flex h-full w-full flex-col justify-end text-white">
-            <div onClick={() => close_conversation()}>
-                <p>go back</p>
+            <div className="mb-auto flex justify-between">
+                <div className="flex">
+                    <TextWithStatusTag
+                        text_classname="text-lg font-medium"
+                        text={receiver.info.name}
+                        status={receiver.info.status}
+                    />
+                </div>
+                <button onClick={() => close_conversation()}>
+                    <p>go back</p>
+                </button>
             </div>
 
             <div className="flex flex-col gap-2">
-                {current_conversation.messages.map((message) => (
-                    <p key={message._id}>{message.message}</p>
+                {messages.map(({ _id, sender, message }) => (
+                    <p key={_id} className={tm(sender == my_id ? "self-end" : "self-start")}>
+                        {message}
+                    </p>
                 ))}
             </div>
 
@@ -55,7 +71,7 @@ function Conversation()
                     className="w-full"
                     value={message}
                     on_change_text={(e) => set_message(e)}
-                    placeholder="new username..."
+                    placeholder="new message..."
                 />
                 <button
                     className="cursor-pointer px-3 py-1 text-zinc-100"

@@ -37,7 +37,8 @@ export const $conversations_preview = computed(
 
 export function new_message_from_self(receiver_id: string, message: string)
 {
-    if (!$players_other.get()[receiver_id]) alert("Player not connected.\nCannot send message.");
+    if (!$players_other.get()[receiver_id])
+        return alert("Player not connected.\nCannot send message.");
 
     const conversations_list = $conversations_persisted.get();
     const conversation = conversations_list.find((e) => e.receiver_id == receiver_id);
@@ -78,9 +79,7 @@ export function new_message_from_self(receiver_id: string, message: string)
 export function new_message_from_other_player(sender_id: string, new_message: Message)
 {
     if (!$players_other_persisted.get()[sender_id])
-    {
-        alert("Error receving message.\nCannot match sender_id.");
-    }
+        return alert("Error receving message.\nCannot match sender_id.");
 
     const conversations_list = $conversations_persisted.get();
     const conversation = conversations_list.find((e) => e.receiver_id == sender_id);
