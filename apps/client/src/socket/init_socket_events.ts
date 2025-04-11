@@ -1,4 +1,4 @@
-import { $player_self } from "../store/player_self";
+// import { $player_self } from "../store/player_self";
 import Socket from "../socket/SocketIO";
 import {
     create_player_other,
@@ -10,7 +10,7 @@ import {
 
 Socket.on("connect", () =>
 {
-    Socket.emit("client:connect", $player_self.get());
+    // Socket.emit("client:connect", $player_self.get());
 
     Socket.on("server:game:send-gamestate", (e) =>
     {
