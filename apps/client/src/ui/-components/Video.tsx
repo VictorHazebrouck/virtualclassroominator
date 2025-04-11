@@ -62,15 +62,17 @@ export interface VideoLayoutProps
 {
     className?: string;
     children?: React.ReactNode;
+    on_click?: () => void;
 }
-export function VideoLayout({ className, children }: VideoLayoutProps)
+export function VideoLayout({ className, children, on_click }: VideoLayoutProps)
 {
     return (
         <div
             className={tm(
-                "relative flex aspect-video w-62 flex-none items-center justify-center overflow-hidden rounded-lg bg-gray-800",
+                "relative flex aspect-video w-62 flex-none cursor-pointer items-center justify-center overflow-hidden rounded-lg bg-gray-800",
                 className,
             )}
+            onClick={on_click}
         >
             {children}
         </div>
@@ -100,11 +102,12 @@ export interface VideoScreenShareProps
 {
     label: string;
     video_track?: MediaStreamTrack | null;
+    on_click?: () => void;
 }
-export function VideoScreenShare({ label, video_track }: VideoScreenShareProps)
+export function VideoScreenShare({ label, video_track, on_click }: VideoScreenShareProps)
 {
     return (
-        <VideoLayout>
+        <VideoLayout on_click={on_click}>
             <VideoLayoutLabel>
                 <h6 className="-mt-[3px] text-white">{label}</h6>
             </VideoLayoutLabel>
