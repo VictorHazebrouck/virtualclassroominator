@@ -8,6 +8,7 @@ export async function request_screenshare_track()
 {
     const stream = await navigator.mediaDevices.getDisplayMedia({
         video: {
+            width: { ideal: 640 },
             frameRate: { ideal: 20 },
         },
         audio: false,
