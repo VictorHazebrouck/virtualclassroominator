@@ -7,7 +7,9 @@ export type TracksActive = {
 export async function request_screenshare_track()
 {
     const stream = await navigator.mediaDevices.getDisplayMedia({
-        video: true,
+        video: {
+            frameRate: { ideal: 20 },
+        },
         audio: false,
     });
     const screen_track = stream.getVideoTracks()[0]!;
