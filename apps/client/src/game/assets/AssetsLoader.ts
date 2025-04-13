@@ -1,11 +1,12 @@
 import animation_atlas from "./character_atlas_animated.json";
+import tiles_atlas from "./tiles_atlas.json";
 import manifest from "./manifest.json";
 import { Assets, Spritesheet } from "pixi.js";
 import type { AvailableSkins } from "@repo/shared-types/socket";
 
 Assets.init({ manifest: manifest, basePath: "/assets" });
 
-export type SpriteSheetType = Awaited<ReturnType<typeof load_character_spritesheet>>;
+export type CharacterSpriteSheetType = Awaited<ReturnType<typeof load_character_spritesheet>>;
 
 export async function load_character_spritesheet(character: AvailableSkins)
 {
@@ -18,7 +19,15 @@ export async function load_character_spritesheet(character: AvailableSkins)
     return spritesheet;
 }
 
-export async function load_tiles()
+export type TilesSpriteSheetType = Awaited<ReturnType<typeof load_tiles_spritesheet>>;
+
+export async function load_tiles_spritesheet()
 {
-    return await Assets.loadBundle("tiles");
+    const assets = await Assets.loadBundle("tiles");
+    const raw_frames = assets["base_tiles.png"];
+
+    const spritesheet = new Spritesheet(raw_frames, tiles_atlas);
+    await spritesheet.parse();
+
+    return spritesheet;
 }

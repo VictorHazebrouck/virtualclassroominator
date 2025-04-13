@@ -5,7 +5,7 @@
     "type": "module",
     "scripts": {
         "build-assets": "bunx assetpack",
-        "dev": "vite",
+        "dev": "bun run build-assets && vite",
         "build": "bun run build-assets && tsc -b && vite build",
         "lint": "eslint .",
         "format": "prettier --write .",

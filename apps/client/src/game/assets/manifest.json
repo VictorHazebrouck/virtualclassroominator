@@ -116,14 +116,14 @@
       "assets": [
         {
           "alias": [
-            "tiles/topDown_baseTiles.png",
-            "topDown_baseTiles.png"
+            "tiles/base_tiles.png",
+            "base_tiles.png"
           ],
           "src": [
-            "tiles/topDown_baseTiles-zCQxqw.webp",
-            "tiles/topDown_baseTiles-sTSN8Q.png",
-            "tiles/topDown_baseTiles-Mawc-A@0.5x.webp",
-            "tiles/topDown_baseTiles-7q6ilA@0.5x.png"
+            "tiles/base_tiles-zCQxqw.webp",
+            "tiles/base_tiles-sTSN8Q.png",
+            "tiles/base_tiles-Mawc-A@0.5x.webp",
+            "tiles/base_tiles-7q6ilA@0.5x.png"
           ],
           "data": {
             "tags": {

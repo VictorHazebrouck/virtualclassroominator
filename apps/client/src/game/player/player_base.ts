@@ -2,7 +2,7 @@ import type { AvailableSkins, Direction, SocketData } from "@repo/shared-types/s
 import { AnimatedSprite, Container, Rectangle, Ticker } from "pixi.js";
 import type { TickerCallback } from "pixi.js";
 import { create_username_label, PLAYER_HEIGHT_PX, PLAYER_WIDTH_PX } from "./utils";
-import { load_character_spritesheet, type SpriteSheetType } from "../assets/AssetsLoader";
+import { load_character_spritesheet, type CharacterSpriteSheetType } from "../assets/AssetsLoader";
 
 export class Player extends Container
 {
@@ -93,9 +93,9 @@ export class Player extends Container
 
 class PlayerSprite extends AnimatedSprite
 {
-    spritesheet: SpriteSheetType;
+    spritesheet: CharacterSpriteSheetType;
 
-    private constructor(spritesheet: SpriteSheetType)
+    private constructor(spritesheet: CharacterSpriteSheetType)
     {
         super(spritesheet.animations["idle"]);
         this.animationSpeed = 0.1;
