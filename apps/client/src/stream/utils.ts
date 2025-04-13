@@ -21,8 +21,8 @@ export async function request_webcam_track()
 {
     const stream = await navigator.mediaDevices.getUserMedia({
         video: {
-            width: { exact: 240 },
-            frameRate: { exact: 20 },
+            width: { ideal: 240 },
+            frameRate: { ideal: 20 },
         },
         audio: false,
     });
