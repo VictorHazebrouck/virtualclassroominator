@@ -99,7 +99,7 @@ class PlayerSprite extends AnimatedSprite
     {
         super(spritesheet.animations["idle"]);
         this.animationSpeed = 0.1;
-        this.scale = 1.5;
+        this.scale = 1;
         this.x += 2;
         this.spritesheet = spritesheet;
     }

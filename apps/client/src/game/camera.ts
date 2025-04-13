@@ -16,6 +16,7 @@ export default class Camera extends Container
         this.layers = new Layers();
         this.addChild(this.layers);
         this.obj_to_focus = this.layers.players_layer.get_self();
+        this.scale.set(3);
 
         Ticker.shared.add(this.center_camera_around_obj);
         Ticker.shared.add(this.zoom_camera);
@@ -75,7 +76,11 @@ export default class Camera extends Container
             this.scale.y -= SPEED * e.deltaTime;
         }
 
-        this.center_camera_around_obj(e);
+        const target_y = -this.obj_to_focus.y * this.scale.x + this.app.screen.height / 2;
+        const target_x = -this.obj_to_focus.x * this.scale.y + this.app.screen.width / 2;
+
+        this.position.x = target_x;
+        this.position.y = target_y;
     };
 }
 

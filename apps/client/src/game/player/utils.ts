@@ -8,8 +8,8 @@ export const PLAYER_WIDTH_PX = 24;
 
 export function create_username_label(username: string, status: SocketData["info"]["status"])
 {
-    const H_PADDING = 5;
-    const W_PADDING = 20;
+    const H_PADDING = 3;
+    const W_PADDING = 15;
 
     const text = new Text({
         style: {
@@ -19,7 +19,7 @@ export function create_username_label(username: string, status: SocketData["info
             letterSpacing: 1,
         },
     });
-    text.scale.set(0.5);
+    text.scale.set(0.25);
     text.text = username;
     text.x += W_PADDING / 2;
     text.y += H_PADDING / 2;
@@ -30,10 +30,13 @@ export function create_username_label(username: string, status: SocketData["info
     rounded_rect.alpha = 0.6;
 
     const container = new Container();
-    container.pivot = { x: rounded_rect.width / 2 - 15, y: 23 };
+    container.pivot = {
+        x: rounded_rect.width / 2 - PLAYER_WIDTH_PX / 2,
+        y: 15,
+    };
 
     const circle = create_status_circle(status);
-    circle.x = rounded_rect.width - 2;
+    circle.x = rounded_rect.width - 1.5;
     circle.y += 2;
 
     container.addChild(rounded_rect);
@@ -45,11 +48,11 @@ export function create_username_label(username: string, status: SocketData["info
 
 function create_status_circle(status: SocketData["info"]["status"])
 {
-    const CIRCLE_RAD = 8;
+    const CIRCLE_RAD = 6;
 
     const circle = new Graphics();
     circle.circle(0, 0, CIRCLE_RAD);
-    circle.setStrokeStyle({ width: 2, color: "#111111" });
+    circle.setStrokeStyle({ width: 1, color: "#111111" });
     circle.fill(COLOR_MAP[status]);
     circle.stroke();
     circle.scale.set(0.5);
