@@ -111,7 +111,6 @@ io.on("connection", async (socket) =>
 
     socket.on("disconnect", () =>
     {
-        console.log("leaving");
         io.emit("server:player-leave", { player_id: socket.data._id });
     });
 });
