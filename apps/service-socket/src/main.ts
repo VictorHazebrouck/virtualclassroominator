@@ -120,5 +120,6 @@ if (!PORT) throw new Error("No PORT found");
 
 server.listen(PORT, () =>
 {
+    //test
     console.log("Socket Service running on port " + PORT);
 });
