@@ -1,4 +1,4 @@
-import type { SocketData } from "@repo/shared-types/socket";
+import type { TPlayerData } from "@repo/shared-types/common";
 import { listenKeys } from "nanostores";
 import { Ticker } from "pixi.js";
 import { $players_other } from "../../store/players_other";
@@ -10,7 +10,7 @@ export class PlayerOther extends Player
 {
     private cleanup_listeners: () => void;
 
-    constructor(player_data: SocketData)
+    constructor(player_data: TPlayerData)
     {
         super(player_data, animate_player_other);
         this.cleanup_listeners = this.sub_to_store();

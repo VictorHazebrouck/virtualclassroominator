@@ -1,4 +1,4 @@
-import type { SocketData } from "@repo/shared-types/socket";
+import type { TPlayerData } from "@repo/shared-types/common";
 import { Container } from "pixi.js";
 import { $player_self } from "../../store/player_self";
 import { $players_other } from "../../store/players_other";
@@ -32,7 +32,7 @@ export default class PlayersLayer extends Container
         return this.player_self;
     }
 
-    private create_new_player(player_data: SocketData)
+    private create_new_player(player_data: TPlayerData)
     {
         const new_player = new PlayerOther(player_data);
         this.addChild(new_player);

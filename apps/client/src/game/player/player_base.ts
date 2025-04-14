@@ -1,4 +1,4 @@
-import type { AvailableSkins, Direction, SocketData } from "@repo/shared-types/socket";
+import type { TPlayerInfoSkin, TDirection, TPlayerData } from "@repo/shared-types/common";
 import { AnimatedSprite, Container, Rectangle, Ticker } from "pixi.js";
 import type { TickerCallback } from "pixi.js";
 import { create_username_label, PLAYER_HEIGHT_PX, PLAYER_WIDTH_PX } from "./utils";
@@ -6,14 +6,14 @@ import { load_character_spritesheet, type CharacterSpriteSheetType } from "../as
 
 export class Player extends Container
 {
-    player_data: SocketData;
+    player_data: TPlayerData;
 
     player_sprite?: PlayerSprite;
     username_label?: Container;
 
     _animate_fn: TickerCallback<Player>;
 
-    constructor(player_data: SocketData, animate_fn: TickerCallback<Player>)
+    constructor(player_data: TPlayerData, animate_fn: TickerCallback<Player>)
     {
         super({ position: player_data.spacial.postition });
         this.player_data = player_data;
@@ -26,7 +26,7 @@ export class Player extends Container
         Ticker.shared.add(this._animate_fn);
     }
 
-    public set_player_data(new_data: SocketData)
+    public set_player_data(new_data: TPlayerData)
     {
         const is_new_username = this.player_data.info.name !== new_data.info.name;
         const is_new_status = this.player_data.info.status !== new_data.info.status;
@@ -104,7 +104,7 @@ class PlayerSprite extends AnimatedSprite
         this.spritesheet = spritesheet;
     }
 
-    public set_animation(is_moving: boolean, direction: Direction)
+    public set_animation(is_moving: boolean, direction: TDirection)
     {
         if (!is_moving)
         {
@@ -121,7 +121,7 @@ class PlayerSprite extends AnimatedSprite
         this.play();
     }
 
-    static async create(skin: AvailableSkins)
+    static async create(skin: TPlayerInfoSkin)
     {
         const spritesheet = await load_character_spritesheet(skin);
         return new PlayerSprite(spritesheet);

@@ -1,4 +1,4 @@
-import type { Direction, Postion } from "@repo/shared-types/socket";
+import type { TDirection, TPosition } from "@repo/shared-types/common";
 
 interface C
 {
@@ -23,7 +23,7 @@ class CollisionValidator
         this.collidable_entities.push(entity);
     }
 
-    has_collided(position: Postion, direction: Direction)
+    has_collided(position: TPosition, direction: TDirection)
     {
         const MARGIN = 5;
 

@@ -1,6 +1,6 @@
-import type { Direction } from "@repo/shared-types/socket";
+import type { TDirection } from "@repo/shared-types/common";
 
-const default_movement_controls: Record<string, Direction> = {
+const default_movement_controls: Record<string, TDirection> = {
     ArrowUp: "top",
     ArrowDown: "down",
     ArrowLeft: "left",
@@ -9,10 +9,10 @@ const default_movement_controls: Record<string, Direction> = {
 
 export default class MovementInputControls
 {
-    private movement_input_queue: Direction[] = [];
-    private movement_controls: Record<string, Direction> = default_movement_controls;
+    private movement_input_queue: TDirection[] = [];
+    private movement_controls: Record<string, TDirection> = default_movement_controls;
 
-    private movement_start_listeners: ((direction: Direction) => void)[] = [];
+    private movement_start_listeners: ((direction: TDirection) => void)[] = [];
     private movement_stop_listeners: (() => void)[] = [];
 
     constructor(element: any)
@@ -21,7 +21,7 @@ export default class MovementInputControls
         element.addEventListener("keyup", this.keyup_fn);
     }
 
-    public on_move(fn: (direction: Direction) => void)
+    public on_move(fn: (direction: TDirection) => void)
     {
         this.movement_start_listeners.push(fn);
     }

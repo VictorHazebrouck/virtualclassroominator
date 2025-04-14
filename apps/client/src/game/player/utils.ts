@@ -1,12 +1,12 @@
 import { Container, Graphics, Text, Ticker } from "pixi.js";
 import { Player } from "./player_base";
-import type { SocketData } from "@repo/shared-types/socket";
+import type { TPlayerInfoStatus } from "@repo/shared-types/common";
 import { COLOR_MAP } from "~/constants";
 
 export const PLAYER_HEIGHT_PX = 32;
 export const PLAYER_WIDTH_PX = 24;
 
-export function create_username_label(username: string, status: SocketData["info"]["status"])
+export function create_username_label(username: string, status: TPlayerInfoStatus)
 {
     const H_PADDING = 3;
     const W_PADDING = 15;
@@ -46,7 +46,7 @@ export function create_username_label(username: string, status: SocketData["info
     return container;
 }
 
-function create_status_circle(status: SocketData["info"]["status"])
+function create_status_circle(status: TPlayerInfoStatus)
 {
     const CIRCLE_RAD = 6;
 

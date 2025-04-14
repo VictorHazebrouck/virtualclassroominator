@@ -1,4 +1,4 @@
-import type { SocketData } from "@repo/shared-types/socket";
+import type { TPlayerData } from "@repo/shared-types/common";
 import { Ticker, type TickerCallback } from "pixi.js";
 import { Player } from "./player_base";
 import CollisionValidator from "../CollisionValidator";
@@ -11,7 +11,7 @@ export class PlayerSelf extends Player
 {
     movement_input_controller = new MovementInputControls(document);
 
-    constructor(player_data: SocketData)
+    constructor(player_data: TPlayerData)
     {
         super(player_data, animate_with_collision_detection as TickerCallback<Player>);
         this.plug_inputs();
