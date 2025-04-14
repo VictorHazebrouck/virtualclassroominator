@@ -1,22 +1,22 @@
 import { persistentAtom } from "@nanostores/persistent";
-import type { Message } from "@repo/shared-types/socket";
+import type { TMessage } from "@repo/shared-types/common";
 import { computed } from "nanostores";
 import { v7 as uuidv7 } from "uuid";
 import Socket from "~/socket/SocketIO";
-import { persist_config } from "./persist_config";
+import { persist_config_json } from "./persist_config";
 import { $player_self } from "./player_self";
 import { $players_other } from "./players_other";
 import { $players_other_persisted } from "./players_other_persisted";
 
 export type Conversation = {
     receiver_id: string;
-    messages: Message[];
+    messages: TMessage[];
 };
 
 export const $conversations_persisted = persistentAtom<Conversation[]>(
     "conversations",
     [],
-    persist_config,
+    persist_config_json,
 );
 
 export const $conversations_preview = computed(
@@ -76,7 +76,7 @@ export function new_message_from_self(receiver_id: string, message: string)
     });
 }
 
-export function new_message_from_other_player(sender_id: string, new_message: Message)
+export function new_message_from_other_player(sender_id: string, new_message: TMessage)
 {
     if (!$players_other_persisted.get()[sender_id])
         return alert("Error receving message.\nCannot match sender_id.");

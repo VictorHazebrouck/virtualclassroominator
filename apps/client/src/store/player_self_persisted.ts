@@ -1,6 +1,6 @@
 import { v4 as uuidv4 } from "uuid";
-import type { SocketDataPersisted } from "./persist_config";
-import { persist_config } from "./persist_config";
+import type { PlayerDataPersisted } from "./persist_config";
+import { persist_config_json } from "./persist_config";
 import { persistentAtom } from "@nanostores/persistent";
 import { listenKeys } from "nanostores";
 import { $player_self } from "./player_self";
@@ -10,7 +10,7 @@ import { $player_self } from "./player_self";
  * have persistent and eventially consistent state across all players without having
  * to rely on any external db.
  */
-export const $player_self_persisted = persistentAtom<SocketDataPersisted>(
+export const $player_self_persisted = persistentAtom<PlayerDataPersisted>(
     "player_self",
     {
         _id: uuidv4(),
@@ -20,7 +20,7 @@ export const $player_self_persisted = persistentAtom<SocketDataPersisted>(
             skin: "alex",
         },
     },
-    persist_config,
+    persist_config_json,
 );
 
 export function sync_persisted_self_data(player_store: typeof $player_self)

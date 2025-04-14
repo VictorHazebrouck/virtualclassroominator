@@ -1,16 +1,16 @@
 import { persistentAtom } from "@nanostores/persistent";
-import type { SocketDataPersisted } from "./persist_config";
-import { persist_config } from "./persist_config";
+import type { PlayerDataPersisted } from "./persist_config";
+import { persist_config_json } from "./persist_config";
 import { $players_other } from "./players_other";
 
 /**
  * We store in local storage the "info"(_id,name,skin) of every other players ever encoutered.
  * We do this to populate data from disconnected players in the chat/participants area.
  */
-export const $players_other_persisted = persistentAtom<Record<string, SocketDataPersisted>>(
+export const $players_other_persisted = persistentAtom<Record<string, PlayerDataPersisted>>(
     "players_other",
     {},
-    persist_config,
+    persist_config_json,
 );
 
 /**
@@ -20,7 +20,7 @@ export const $players_other_persisted = persistentAtom<Record<string, SocketData
 (() =>
 {
     const players_persisted = $players_other_persisted.get();
-    const players_disconnected: Record<string, SocketDataPersisted> = {};
+    const players_disconnected: Record<string, PlayerDataPersisted> = {};
 
     for (const id in players_persisted)
     {

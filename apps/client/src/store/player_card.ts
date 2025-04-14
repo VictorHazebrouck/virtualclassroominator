@@ -1,15 +1,15 @@
-import type { Postion, SocketData } from "@repo/shared-types/socket";
+import type { TPosition, TPlayerInfo } from "@repo/shared-types/common";
 import { atom, subscribeKeys } from "nanostores";
 import { $players_other_persisted } from "./players_other_persisted";
 import { $player_self } from "./player_self";
 
 export const $player_card = atom<{
     _id: string;
-    info: SocketData["info"];
-    position: Postion;
+    info: TPlayerInfo;
+    position: TPosition;
 } | null>(null);
 
-export function show_player_card(id: string, position: Postion)
+export function show_player_card(id: string, position: TPosition)
 {
     $player_card.set({
         _id: id,

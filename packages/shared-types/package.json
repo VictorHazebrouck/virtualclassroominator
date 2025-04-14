@@ -8,7 +8,10 @@
         "format": "prettier --write ."
     },
     "exports": {
-        "./socket": "./src/socket.ts"
+        "./common": "./src/socket.common.ts",
+        "./client-events": "./src/socket.events.client.ts",
+        "./server-events": "./src/socket.events.server.ts",
+        "./interserver-events": "./src/socket.events.interserver.ts"
     },
     "devDependencies": {
         "@repo/config-eslint": "workspace:*",
@@ -19,6 +22,7 @@
         "typescript-eslint": "^8.24.0"
     },
     "dependencies": {
+        "@sinclair/typebox": "^0.34.33",
         "mongoose": "^8.10.1"
     }
 }

@@ -1,11 +1,11 @@
-import type { SocketData } from "@repo/shared-types/socket";
+import type { TPlayerInfo } from "@repo/shared-types/common";
 
-export const persist_config = {
+export const persist_config_json = {
     encode: JSON.stringify,
     decode: JSON.parse,
 } as const;
 
-export type SocketDataPersisted = {
+export type PlayerDataPersisted = {
     _id: string;
-    info: SocketData["info"];
+    info: TPlayerInfo;
 };
