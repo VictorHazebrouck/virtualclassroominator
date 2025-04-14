@@ -29,7 +29,7 @@ export function set_player_other_spacial(player_id: string, spacial: TPlayerSpac
     $players_other.setKey(`${player_id}.spacial`, spacial);
 }
 
-export function set_player_other_chat(player_id: string, chat: TPlayerStream)
+export function set_player_other_stream(player_id: string, chat: TPlayerStream)
 {
     $players_other.setKey(`${player_id}.stream`, chat);
 }

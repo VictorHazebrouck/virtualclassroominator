@@ -1,5 +1,11 @@
 import { Type as t } from "@sinclair/typebox";
-import { TBPlayerStream, TPlayerData, TMessage } from "./socket.common";
+import {
+    TBPlayerStream,
+    TPlayerData,
+    TMessage,
+    TBPlayerSpacial,
+    TBPlayerInfo,
+} from "./socket.common";
 
 export interface ServerToClientEvents
 {
@@ -24,13 +30,13 @@ type TServerGameBroadcastPlayerStream = typeof TBServerGameBroadcastPlayerStream
 
 export const TBServerGameBroadcastPlayerInfo = t.Object({
     player_id: t.String(),
-    stream: TBPlayerStream,
+    info: TBPlayerInfo,
 });
 type TServerGameBroadcastPlayerInfo = typeof TBServerGameBroadcastPlayerInfo.static;
 
 export const TBServerGameBroadcastPlayerMovement = t.Object({
     player_id: t.String(),
-    stream: TBPlayerStream,
+    spacial: TBPlayerSpacial,
 });
 type TServerGameBroadcastPlayerMovement = typeof TBServerGameBroadcastPlayerMovement.static;
 

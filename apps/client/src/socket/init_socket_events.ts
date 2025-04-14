@@ -4,7 +4,7 @@ import Socket from "../socket/SocketIO";
 import {
     create_player_other,
     remove_player_other,
-    set_player_other_chat,
+    set_player_other_stream,
     set_player_other_info,
     set_player_other_spacial,
 } from "~/store/players_other";
@@ -41,14 +41,14 @@ Socket.on("connect", () =>
         set_player_other_spacial(player_id, spacial);
     });
 
-    Socket.on("server:game:broadcast-player-chat", ({ player_id, chat }) =>
+    Socket.on("server:game:broadcast-player-stream", ({ player_id, stream }) =>
     {
-        set_player_other_chat(player_id, chat);
+        set_player_other_stream(player_id, stream);
     });
 
-    Socket.on("server:chat:send-message-to-player", ({ from_player_id, message }) =>
+    Socket.on("server:chat:send-message-to-player", (message) =>
     {
-        new_message_from_other_player(from_player_id, message);
+        new_message_from_other_player(message.sender, message);
         console.log("recevied message !", message);
     });
 });

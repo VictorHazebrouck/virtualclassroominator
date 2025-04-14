@@ -12,7 +12,7 @@ listenKeys($player_self, ["spacial"], (e) =>
     Socket.emit("client:game:player:movement", e.spacial);
 });
 
-listenKeys($player_self, ["chat"], (e) =>
+listenKeys($player_self, ["stream"], (e) =>
 {
-    Socket.emit("client:game:player:chat", e.chat);
+    Socket.emit("client:game:player:stream", e.stream);
 });

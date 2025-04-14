@@ -1,5 +1,6 @@
 import { io, Socket as TSocket } from "socket.io-client";
-import type { ServerToClientEvents, ClientToServerEvents } from "@repo/shared-types/socket";
+import type { ClientToServerEvents } from "@repo/shared-types/client-events";
+import type { ServerToClientEvents } from "@repo/shared-types/server-events";
 import { $player_self } from "~/store/player_self";
 
 const SOCKET_SERVER = import.meta.env.VITE_SOCKETIO_SERVER;

@@ -1,25 +1,23 @@
-import type {
-    ClientToServerEvents,
-    InterServerEvents,
-    ServerToClientEvents,
-    SocketData,
-} from "@repo/shared-types/socket";
-import { Server } from "socket.io";
+import {
+    TBClientChatSendMessageToPlayerValidator,
+    type ClientToServerEvents,
+} from "@repo/shared-types/client-events";
+import type { TPlayerData } from "@repo/shared-types/common";
+import {
+    TBMessageValidator,
+    TBPlayerDataValidator,
+    TBPlayerInfoValidator,
+    TBPlayerSpacialValidator,
+    TBPlayerStreamValidator,
+} from "@repo/shared-types/common";
+import type { InterServerEvents } from "@repo/shared-types/interserver-events";
+import type { ServerToClientEvents } from "@repo/shared-types/server-events";
 import http from "http";
-import cors from "cors";
-import express from "express";
+import { Server } from "socket.io";
 
-const app = express();
-app.use(cors);
+const server = http.createServer();
 
-app.get("/", (req, res) =>
-{
-    res.json({ test: "test" });
-});
-
-const server = http.createServer(app);
-
-const io = new Server<ClientToServerEvents, ServerToClientEvents, InterServerEvents, SocketData>(
+const io = new Server<ClientToServerEvents, ServerToClientEvents, InterServerEvents, TPlayerData>(
     server,
     {
         cors: {
@@ -30,18 +28,30 @@ const io = new Server<ClientToServerEvents, ServerToClientEvents, InterServerEve
 
 io.on("connection", async (socket) =>
 {
-    const socket_data_str = socket.handshake.query.player_initial_data;
-
     try
     {
-        const socket_data_obj = JSON.parse(socket_data_str as string);
-        socket.data = socket_data_obj;
-        socket.broadcast.emit("server:player-join", socket.data);
+        const socket_data_str = socket.handshake.query.player_initial_data;
+        const socket_data_obj = JSON.parse(socket_data_str as string) as TPlayerData;
 
-        const sockets = await io.fetchSockets();
+        const passes_validation = TBPlayerDataValidator.Check(socket_data_obj);
+        if (passes_validation)
+        {
+            socket.data = socket_data_obj;
+            socket.broadcast.emit("server:player-join", socket.data);
 
-        const players_data = sockets.map((e) => e.data).filter((e) => e._id !== socket.data._id);
-        socket.emit("server:game:send-gamestate", players_data);
+            const sockets = await io.fetchSockets();
+
+            const players_data = sockets
+                .map((e) => e.data)
+                .filter((e) => e._id !== socket.data._id);
+
+            socket.emit("server:game:send-gamestate", players_data);
+        }
+        else
+        {
+            console.error("CONNECTION DATA DOESNT PASS VALIDATION");
+            socket.disconnect(true);
+        }
     }
     catch (error)
     {
@@ -60,6 +70,9 @@ io.on("connection", async (socket) =>
 
     socket.on("client:game:player:movement", (spacial_data) =>
     {
+        const passes_validation = TBPlayerSpacialValidator.Check(spacial_data);
+        if (!passes_validation) return;
+
         socket.data.spacial = spacial_data;
 
         socket.broadcast.emit("server:game:broadcast-player-movement", {
@@ -70,6 +83,9 @@ io.on("connection", async (socket) =>
 
     socket.on("client:game:player:info", (info_data) =>
     {
+        const passes_validation = TBPlayerInfoValidator.Check(info_data);
+        if (!passes_validation) return;
+
         socket.data.info = info_data;
 
         socket.broadcast.emit("server:game:broadcast-player-info", {
@@ -78,35 +94,39 @@ io.on("connection", async (socket) =>
         });
     });
 
-    socket.on("client:game:player:chat", (chat_data) =>
+    socket.on("client:game:player:stream", (stream_data) =>
     {
-        socket.data.chat = chat_data;
+        const passes_validation = TBPlayerStreamValidator.Check(stream_data);
+        if (!passes_validation) return;
 
-        socket.broadcast.emit("server:game:broadcast-player-chat", {
+        socket.data.stream = stream_data;
+
+        socket.broadcast.emit("server:game:broadcast-player-stream", {
             player_id: socket.data._id,
-            chat: socket.data.chat,
+            stream: socket.data.stream,
         });
     });
 
-    socket.on("client:chat:send-message-global", ({ message }) =>
+    socket.on("client:chat:send-message-global", (message) =>
     {
-        socket.broadcast.emit("server:chat:send-message-global", {
-            from_player_id: socket.data._id,
-            message: message,
-        });
+        const passes_validation = TBMessageValidator.Check(message);
+        if (!passes_validation) return;
+
+        socket.broadcast.emit("server:chat:send-message-global", message);
     });
 
-    socket.on("client:chat:send-message-to-player", async ({ to_player_id, message }) =>
+    socket.on("client:chat:send-message-to-player", async (message_data) =>
     {
+        const passes_validation = TBClientChatSendMessageToPlayerValidator.Check(message_data);
+        if (!passes_validation) return;
+
+        const { to_player_id, message } = message_data;
         const sockets = await io.fetchSockets();
 
         const player_socket = sockets.find((s) => s.data._id == to_player_id);
         if (!player_socket) return;
 
-        player_socket.emit("server:chat:send-message-to-player", {
-            from_player_id: socket.data._id,
-            message: message,
-        });
+        player_socket.emit("server:chat:send-message-to-player", message);
     });
 
     socket.on("disconnect", () =>

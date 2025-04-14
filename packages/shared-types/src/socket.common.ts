@@ -1,4 +1,5 @@
 import { Type as t } from "@sinclair/typebox";
+import { TypeCompiler } from "@sinclair/typebox/compiler";
 
 export const TBPlayerInfoSkin = t.Union([
     t.Literal("alex"),
@@ -23,6 +24,7 @@ export const TBPlayerInfo = t.Object({
     skin: TBPlayerInfoSkin,
     status: TBPlayerInfoStatus,
 });
+export const TBPlayerInfoValidator = TypeCompiler.Compile(TBPlayerInfo);
 export type TPlayerInfo = typeof TBPlayerInfo.static;
 
 export const TBPlayerStream = t.Object({
@@ -31,6 +33,7 @@ export const TBPlayerStream = t.Object({
     is_screensharing: t.Boolean(),
     is_talking: t.Boolean(),
 });
+export const TBPlayerStreamValidator = TypeCompiler.Compile(TBPlayerStream);
 export type TPlayerStream = typeof TBPlayerStream.static;
 
 export const TBPosition = t.Object({
@@ -52,6 +55,7 @@ export const TBPlayerSpacial = t.Object({
     direction: TBDirection,
     is_moving: t.Boolean(),
 });
+export const TBPlayerSpacialValidator = TypeCompiler.Compile(TBPlayerSpacial);
 export type TPlayerSpacial = typeof TBPlayerSpacial.static;
 
 export const TBPlayerData = t.Object({
@@ -60,6 +64,7 @@ export const TBPlayerData = t.Object({
     spacial: TBPlayerSpacial,
     stream: TBPlayerStream,
 });
+export const TBPlayerDataValidator = TypeCompiler.Compile(TBPlayerData);
 export type TPlayerData = typeof TBPlayerData.static;
 
 export const TBMessage = t.Object({
@@ -67,4 +72,5 @@ export const TBMessage = t.Object({
     sender: t.String(),
     message: t.String(),
 });
+export const TBMessageValidator = TypeCompiler.Compile(TBMessage);
 export type TMessage = typeof TBMessage.static;
