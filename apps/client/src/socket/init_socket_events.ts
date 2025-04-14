@@ -1,4 +1,3 @@
-// import { $player_self } from "../store/player_self";
 import { new_message_from_other_player } from "~/store/conversations";
 import Socket from "../socket/SocketIO";
 import {
@@ -11,14 +10,9 @@ import {
 
 Socket.on("connect", () =>
 {
-    // Socket.emit("client:connect", $player_self.get());
-
-    Socket.on("server:game:send-gamestate", (e) =>
+    Socket.on("server:game:send-gamestate", (players_data) =>
     {
-        for (const socket_data of e)
-        {
-            create_player_other(socket_data);
-        }
+        players_data.forEach((player_data) => create_player_other(player_data));
     });
 
     Socket.on("server:player-leave", (e) =>
@@ -49,6 +43,5 @@ Socket.on("connect", () =>
     Socket.on("server:chat:send-message-to-player", (message) =>
     {
         new_message_from_other_player(message.sender, message);
-        console.log("recevied message !", message);
     });
 });
