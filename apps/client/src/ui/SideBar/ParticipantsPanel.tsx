@@ -1,9 +1,9 @@
 import { useStore } from "@nanostores/react";
-import type { SocketData } from "@repo/shared-types/socket";
+import type { TPlayerInfoStatus } from "@repo/shared-types/common";
 import { useRef, useState, type MouseEvent } from "react";
 import { BiChevronDown, BiChevronUp } from "react-icons/bi";
 import { camera_focus_player_by_id } from "~/store/nav";
-import type { SocketDataPersisted } from "~/store/persist_config";
+import type { PlayerDataPersisted } from "~/store/persist_config";
 import { show_player_card } from "~/store/player_card";
 import { $players_other_persisted } from "~/store/players_other_persisted";
 import { tm } from "~/utils/tm";
@@ -61,7 +61,7 @@ interface ParticipantSectionProps
 {
     title: "Online" | "Offline";
     default_is_open: boolean;
-    participants_list: SocketDataPersisted[];
+    participants_list: PlayerDataPersisted[];
 }
 
 function ParticipantSection({
@@ -111,7 +111,7 @@ interface ParticipantCardProps
     _id: string;
     username: string;
     skin: string;
-    status: SocketData["info"]["status"];
+    status: TPlayerInfoStatus;
 }
 
 function ParticipantCard({ _id, username, skin, status }: ParticipantCardProps)

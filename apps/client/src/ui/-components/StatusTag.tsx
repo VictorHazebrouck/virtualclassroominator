@@ -1,10 +1,9 @@
-import type { SocketData } from "@repo/shared-types/socket";
+import type { TPlayerInfoStatus } from "@repo/shared-types/common";
 import { COLOR_MAP } from "~/constants";
-type ConnectionStatus = SocketData["info"]["status"];
 
 export interface StatusTagProps
 {
-    status: ConnectionStatus;
+    status: TPlayerInfoStatus;
     size?: "small";
 }
 

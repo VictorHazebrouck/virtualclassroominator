@@ -2,7 +2,7 @@ import { useStore } from "@nanostores/react";
 import { type RefObject } from "react";
 import { $player_card } from "~/store/player_card";
 import Modal from "../-components/Modal";
-import type { Postion } from "@repo/shared-types/socket";
+import type { TPosition } from "@repo/shared-types/common";
 import TextWithStatusTag from "../-components/TextWithStatus";
 import { open_conversation } from "~/store/nav";
 
@@ -47,7 +47,7 @@ export default function PlayerCard({
     );
 }
 
-function get_card_position_within_bounds(container: HTMLElement, position: Postion)
+function get_card_position_within_bounds(container: HTMLElement, position: TPosition)
 {
     const rect = container.getBoundingClientRect();
 

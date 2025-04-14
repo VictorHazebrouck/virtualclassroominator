@@ -14,7 +14,7 @@ export default function UserInfo()
     const [is_userinfo_modal_visible, set_is_userinfo_modal_visible] = useState(false);
     const [is_video_enlarged_visible, set_is_video_enlarged_visible] = useState(false);
 
-    const player_self_data = useStore($player_self, { keys: ["info", "chat"] });
+    const player_self_data = useStore($player_self, { keys: ["info", "stream"] });
     const webcam_track = use_get_personal_video();
 
     return (

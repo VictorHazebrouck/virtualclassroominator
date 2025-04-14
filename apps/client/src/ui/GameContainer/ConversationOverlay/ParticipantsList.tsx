@@ -1,5 +1,5 @@
 import { useStore } from "@nanostores/react";
-import type { SocketData } from "@repo/shared-types/socket";
+import type { TPlayerData } from "@repo/shared-types/common";
 import { BiCameraOff, BiMicrophoneOff } from "react-icons/bi";
 import { $nearby_players } from "~/store/nearby_players";
 import {
@@ -42,12 +42,12 @@ function PlayerCam({
     playerData,
     on_select_video,
 }: {
-    playerData: SocketData;
+    playerData: TPlayerData;
     on_select_video: (user_id: string, type: "screenshare" | "video") => void;
 })
 {
     const { name } = playerData.info;
-    const { is_webcam_active, is_mike_active, is_screensharing } = playerData.chat;
+    const { is_webcam_active, is_mike_active, is_screensharing } = playerData.stream;
     const video_track = use_get_user_video_by_id(playerData._id);
     const audio_track = use_get_user_audio_by_id(playerData._id);
     const screenshare_track = use_get_user_screenshare_by_id(playerData._id);

@@ -10,8 +10,8 @@ import {
 
 export default function ChatControls()
 {
-    const { chat } = useStore($player_self, { keys: ["chat"] });
-    const { is_mike_active, is_webcam_active, is_screensharing } = chat;
+    const { stream } = useStore($player_self, { keys: ["stream"] });
+    const { is_mike_active, is_webcam_active, is_screensharing } = stream;
 
     const activate_screenshare = use_set_personal_screenshare();
     const activate_webcam = use_set_personal_webcam();

@@ -1,4 +1,4 @@
-import type { AvailableSkins, PlayerStatus } from "@repo/shared-types/socket";
+import type { TPlayerInfoSkin, TPlayerInfoStatus } from "@repo/shared-types/common";
 import React, { useState } from "react";
 import {
     player_self_change_name,
@@ -9,8 +9,8 @@ import Modal from "~/ui/-components/Modal";
 import TextInput from "~/ui/-components/TextInput";
 import TextWithStatusTag from "~/ui/-components/TextWithStatus";
 
-const AVAILABLE_SKINS: AvailableSkins[] = ["alex", "anna", "ardley", "colt", "ester", "tom"];
-const AVAILABLE_STATUSES: PlayerStatus[] = ["away", "on", "off"];
+const AVAILABLE_SKINS: TPlayerInfoSkin[] = ["alex", "anna", "ardley", "colt", "ester", "tom"];
+const AVAILABLE_STATUSES: TPlayerInfoStatus[] = ["away", "on", "off"];
 
 interface ChangeUserInfoModalProps
 {
@@ -29,12 +29,12 @@ export default function ChangeUserInfoModal({ visible, onClose }: ChangeUserInfo
         player_self_change_name(username);
     }
 
-    function handle_change_skin(skin: AvailableSkins)
+    function handle_change_skin(skin: TPlayerInfoSkin)
     {
         player_self_change_skin(skin);
     }
 
-    function handle_change_status(status: PlayerStatus)
+    function handle_change_status(status: TPlayerInfoStatus)
     {
         player_self_change_status(status);
     }
