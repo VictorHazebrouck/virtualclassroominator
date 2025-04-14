@@ -1,58 +1,53 @@
 import type { TDirection, TPosition } from "@repo/shared-types/common";
-
-interface C
-{
-    position: {
-        x: number;
-        y: number;
-    };
-    pivot: {
-        x: number;
-        y: number;
-    };
-    height: number;
-    width: number;
-}
+import { PLAYER_WIDTH_PX, PLAYER_HEIGHT_PX } from "./player/utils";
+import type { Container } from "pixi.js";
 
 class CollisionValidator
 {
-    collidable_entities: C[] = [];
+    collidable_entities: Container[] = [];
 
-    public add_entity(entity: C)
+    public add_entity(entity: Container)
     {
         this.collidable_entities.push(entity);
     }
 
-    has_collided(position: TPosition, direction: TDirection)
+    has_collided(position: TPosition, direction: TDirection): boolean
     {
-        const MARGIN = 5;
+        const MARGIN = 2;
 
-        const next_position = { x: position.x, y: position.y };
-        if (direction == "left") next_position.x -= MARGIN;
-        else if (direction == "right") next_position.x += MARGIN;
-        else if (direction == "top") next_position.y -= MARGIN;
-        else if (direction == "down") next_position.y += MARGIN;
+        const player_box = {
+            left: position.x,
+            right: position.x + PLAYER_WIDTH_PX,
+            top: position.y,
+            bottom: position.y + PLAYER_HEIGHT_PX,
+        };
 
-        for (const c_entity of this.collidable_entities)
+        if (direction === "top") player_box.bottom -= MARGIN;
+        else if (direction === "down") player_box.top += MARGIN;
+        else if (direction === "left") player_box.right -= MARGIN;
+        else if (direction === "right") player_box.left += MARGIN;
+
+        for (const object of this.collidable_entities)
         {
-            const { pivot, position, height, width } = c_entity;
+            const { x, y, width, height, pivot } = object;
 
-            const bounding_box = {
-                left: position.x - width * pivot.x,
-                right: position.x - width * pivot.x + width,
-                top: position.y - height * pivot.y,
-                down: position.y - height * pivot.y + height,
+            const object_box = {
+                left: x - width * pivot.x,
+                right: x - width * pivot.x + width,
+                top: y - height * pivot.y,
+                bottom: y - height * pivot.y + height,
             };
 
-            const is_next_position_colliding =
-                next_position.x > bounding_box.left &&
-                next_position.x < bounding_box.right &&
-                next_position.y > bounding_box.top &&
-                next_position.y < bounding_box.down;
+            const isColliding =
+                player_box.right > object_box.left &&
+                player_box.left < object_box.right &&
+                player_box.bottom > object_box.top &&
+                player_box.top < object_box.bottom;
 
-            if (is_next_position_colliding) return true;
-            else return false;
+            if (isColliding) return true;
         }
+
+        return false;
     }
 }
 
