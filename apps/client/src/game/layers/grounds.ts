@@ -1,6 +1,6 @@
 import { Container, Sprite } from "pixi.js";
 import { load_tiles_spritesheet, type TilesSpriteSheetType } from "../assets/AssetsLoader";
-import tile_map from "../assets/tile_map.json";
+import tile_map from "../assets/tile_map_background.json";
 
 export default class GroundsLayer extends Container
 {
@@ -11,7 +11,6 @@ export default class GroundsLayer extends Container
     {
         super();
         this.generate_background();
-        this.scale.set(0.2);
     }
 
     async generate_background()
