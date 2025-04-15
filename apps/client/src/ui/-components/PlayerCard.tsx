@@ -11,6 +11,7 @@ export interface PlayerCardProps
     player_info: PlayerDataPersisted;
     disabled?: boolean;
     className?: string;
+    classNameAvatar?: string;
 }
 
 export default function PlayerCard({
@@ -19,6 +20,7 @@ export default function PlayerCard({
     disabled = false,
     player_info,
     className,
+    classNameAvatar,
 }: PlayerCardProps)
 {
     const { name, skin, status } = player_info.info;
@@ -39,13 +41,13 @@ export default function PlayerCard({
     return (
         <button
             className={tm(
-                "flex w-full cursor-pointer gap-4 overflow-hidden rounded-lg bg-gray-800 px-4 py-2",
+                "flex w-full cursor-pointer items-center gap-3 overflow-hidden rounded-lg bg-gray-800 px-4 py-2",
                 className,
             )}
             onClick={handle_click_card}
         >
             <Avatar
-                className={disabled ? "grayscale-75" : ""}
+                className={tm(classNameAvatar, disabled && "grayscale-75")}
                 character={skin}
                 on_click={handle_click_avatar}
             />

@@ -7,7 +7,7 @@ import { Video, VideoLayout } from "~/ui/-components/Video";
 import ChangeUserInfoModal from "./ChangeUserInfoModal";
 import Modal from "~/ui/-components/Modal";
 import { tm } from "~/utils/tm";
-import TextWithStatusTag from "~/ui/-components/TextWithStatus";
+import PlayerCard from "~/ui/-components/PlayerCard";
 
 export default function UserInfo()
 {
@@ -18,7 +18,7 @@ export default function UserInfo()
     const webcam_track = use_get_personal_video();
 
     return (
-        <div className="relative flex h-9 rounded-sm bg-gray-800">
+        <div className="relative flex h-9 items-center rounded-sm bg-gray-800">
             <div
                 className={tm(
                     "flex h-9 w-20 items-center justify-center overflow-hidden rounded-l-sm border-r-2 border-r-gray-900",
@@ -32,15 +32,13 @@ export default function UserInfo()
                     <Video className="h-full w-full rounded-none" videotrack={webcam_track} />
                 )}
             </div>
-            <div
-                className="flex cursor-pointer px-4 py-1"
-                onClick={() => set_is_userinfo_modal_visible(true)}
-            >
-                <TextWithStatusTag
-                    text={player_self_data.info.name}
-                    status={player_self_data.info.status}
-                />
-            </div>
+
+            <PlayerCard
+                className="h-9 w-fit gap-3 py-0 pl-3"
+                player_info={player_self_data}
+                on_click_card={() => set_is_userinfo_modal_visible(true)}
+                on_click_avatar={() => set_is_userinfo_modal_visible(true)}
+            />
 
             <ChangeUserInfoModal
                 visible={is_userinfo_modal_visible}

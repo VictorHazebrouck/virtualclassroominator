@@ -1,5 +1,6 @@
 import type { TPlayerInfoSkin } from "@repo/shared-types/common";
-import type { MouseEvent } from "react";
+import { useEffect } from "react";
+import { useRef, useState, type MouseEvent } from "react";
 import manifest from "~/game/assets/manifest.json";
 import { tm } from "~/utils/tm";
 
@@ -21,15 +22,33 @@ export default function Avatar({ character, on_click, className }: AvatarProps)
     const character_asset = characters_list.find((c) => c.name == character);
     const character_asset_path = `/assets/${character_asset!.src}`;
 
+    const outer_ref = useRef<HTMLDivElement>(null);
+    const [scale, setScale] = useState(1.5);
+
+    useEffect(() =>
+    {
+        if (outer_ref.current)
+        {
+            const height = outer_ref.current.offsetHeight;
+            setScale((height / 32) * 1.2);
+        }
+    }, []);
+
     return (
         <div
             className={tm(
-                "flex h-10 w-10 items-center justify-center overflow-hidden rounded-full bg-red-500 hover:bg-green-500",
+                "flex aspect-square h-full items-center justify-center overflow-hidden rounded-full",
+                // "bg-red-500 hover:bg-green-500",
                 className,
             )}
             onClick={(e) => on_click?.(e)}
+            ref={outer_ref}
         >
-            <div className="relative -mt-1 h-[32px] w-[16px] scale-150 overflow-hidden">
+            {/* crop to get the front view of the character from the spritesheet */}
+            <div
+                className="relative h-[32px] w-[16px] scale-150 overflow-hidden"
+                style={{ scale: scale }}
+            >
                 <img
                     src={character_asset_path}
                     className="absolute top-0 left-0 h-auto w-auto max-w-none"
