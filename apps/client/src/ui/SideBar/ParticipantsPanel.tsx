@@ -1,5 +1,5 @@
 import { useStore } from "@nanostores/react";
-import type { TPlayerInfoStatus } from "@repo/shared-types/common";
+import type { TPlayerInfoSkin, TPlayerInfoStatus } from "@repo/shared-types/common";
 import { useRef, useState, type MouseEvent } from "react";
 import { BiChevronDown, BiChevronUp } from "react-icons/bi";
 import { camera_focus_player_by_id } from "~/store/nav";
@@ -11,6 +11,7 @@ import ScrollArea from "../-components/ScrollArea";
 import TextInput from "../-components/TextInput";
 import TextWithStatusTag from "../-components/TextWithStatus";
 import { PanelTitle } from "./-components";
+import Avatar from "../-components/Avatar";
 
 export default function ParticipantsPanel()
 {
@@ -110,7 +111,7 @@ interface ParticipantCardProps
 {
     _id: string;
     username: string;
-    skin: string;
+    skin: TPlayerInfoSkin;
     status: TPlayerInfoStatus;
 }
 
@@ -144,10 +145,10 @@ function ParticipantCard({ _id, username, skin, status }: ParticipantCardProps)
         >
             <div className={tm("flex w-full gap-4 px-4 py-2", !is_active && "grayscale-75")}>
                 <div
-                    className="h-10 w-10 overflow-hidden rounded-full bg-red-500 hover:bg-green-500"
+                    // className="h-10 w-10 overflow-hidden rounded-full bg-red-500 hover:bg-green-500"
                     onClick={on_click_avatar}
                 >
-                    {skin}
+                    <Avatar character={skin} />
                 </div>
 
                 <TextWithStatusTag
