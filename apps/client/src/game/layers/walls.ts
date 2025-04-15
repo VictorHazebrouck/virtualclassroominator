@@ -36,7 +36,7 @@ export default class WallsLayer extends Container
                 const sprite = new Sprite(texture);
                 sprite.position.set(j * TILE_SIZE, i * TILE_SIZE);
 
-                CollisionValidator.add_entity(sprite);
+                CollisionValidator.add_static_entity(sprite);
 
                 this.addChild(sprite);
             }
