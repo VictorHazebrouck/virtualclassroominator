@@ -4,7 +4,7 @@ import type { TPlayerInfoStatus } from "@repo/shared-types/common";
 import { COLOR_MAP } from "~/constants";
 
 export const PLAYER_HEIGHT_PX = 32;
-export const PLAYER_WIDTH_PX = 24;
+export const PLAYER_WIDTH_PX = 16;
 
 export function create_username_label(username: string, status: TPlayerInfoStatus)
 {
@@ -31,8 +31,8 @@ export function create_username_label(username: string, status: TPlayerInfoStatu
 
     const container = new Container();
     container.pivot = {
-        x: rounded_rect.width / 2 - PLAYER_WIDTH_PX / 2,
-        y: 15,
+        x: rounded_rect.width / 2 - PLAYER_WIDTH_PX * 0.5 - 2,
+        y: 10,
     };
 
     const circle = create_status_circle(status);

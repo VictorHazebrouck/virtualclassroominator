@@ -19,10 +19,10 @@ export default function Avatar({ character }: AvatarProps)
 
     return (
         <div className="flex h-10 w-10 items-center justify-center overflow-hidden rounded-full bg-red-500 hover:bg-green-500">
-            <div className="relative h-[21px] w-[16px] scale-150 overflow-hidden">
+            <div className="relative -mt-1 h-[32px] w-[16px] scale-150 overflow-hidden">
                 <img
                     src={character_asset_path}
-                    className="absolute top-[-8px] left-0 h-auto w-auto max-w-none"
+                    className="absolute top-0 left-0 h-auto w-auto max-w-none"
                 />
             </div>
         </div>
