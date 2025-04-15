@@ -10,6 +10,7 @@ export interface PlayerCardProps
     on_click_avatar?: (e: MouseEvent) => void;
     player_info: PlayerDataPersisted;
     disabled?: boolean;
+    className?: string;
 }
 
 export default function PlayerCard({
@@ -17,6 +18,7 @@ export default function PlayerCard({
     on_click_avatar,
     disabled = false,
     player_info,
+    className,
 }: PlayerCardProps)
 {
     const { name, skin, status } = player_info.info;
@@ -36,20 +38,19 @@ export default function PlayerCard({
 
     return (
         <button
-            className={"flex w-full cursor-pointer overflow-hidden rounded-lg bg-gray-800"}
+            className={tm(
+                "flex w-full cursor-pointer gap-4 overflow-hidden rounded-lg bg-gray-800 px-4 py-2",
+                className,
+            )}
             onClick={handle_click_card}
         >
-            <div className={tm("flex w-full gap-4 px-4 py-2", disabled && "grayscale-75")}>
-                <div onClick={handle_click_avatar}>
-                    <Avatar character={skin} />
-                </div>
+            <Avatar
+                className={disabled ? "grayscale-75" : ""}
+                character={skin}
+                on_click={handle_click_avatar}
+            />
 
-                <TextWithStatusTag
-                    text_classname="text-stone-200 text-md"
-                    text={name}
-                    status={status}
-                />
-            </div>
+            <TextWithStatusTag text_classname="text-md" text={name} status={status} />
         </button>
     );
 }

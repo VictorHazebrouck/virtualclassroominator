@@ -33,7 +33,7 @@ export default function UserInfo()
                 )}
             </div>
             <div
-                className="flex cursor-pointer px-4"
+                className="flex cursor-pointer px-4 py-1"
                 onClick={() => set_is_userinfo_modal_visible(true)}
             >
                 <TextWithStatusTag
@@ -41,6 +41,7 @@ export default function UserInfo()
                     status={player_self_data.info.status}
                 />
             </div>
+
             <ChangeUserInfoModal
                 visible={is_userinfo_modal_visible}
                 onClose={() => set_is_userinfo_modal_visible(false)}

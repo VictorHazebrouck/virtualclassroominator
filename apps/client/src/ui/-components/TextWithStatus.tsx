@@ -15,7 +15,7 @@ export default function TextWithStatusTag({
 }: TextWithStatusTagProps)
 {
     return (
-        <div className="flex gap-1 py-1">
+        <div className="flex gap-1">
             <p className={tm("pt-[1px] text-sm text-slate-200", text_classname)}>{text}</p>
             <StatusTag {...props} />
         </div>
