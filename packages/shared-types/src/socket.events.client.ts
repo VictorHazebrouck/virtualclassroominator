@@ -1,13 +1,13 @@
-import {
-    TPlayerData,
-    TPlayerSpacial,
-    TPlayerInfo,
-    TPlayerStream,
-    TBMessage,
-    TMessage,
-} from "./socket.common";
 import { Type as t } from "@sinclair/typebox";
 import { TypeCompiler } from "@sinclair/typebox/compiler";
+import type {
+    TMessage,
+    TPlayerData,
+    TPlayerInfo,
+    TPlayerSpacial,
+    TPlayerStream,
+} from "./socket.common";
+import { TBMessage } from "./socket.common";
 
 export interface ClientToServerEvents
 {
