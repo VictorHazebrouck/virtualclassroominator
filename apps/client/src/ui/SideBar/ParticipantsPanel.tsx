@@ -1,6 +1,5 @@
 import { useStore } from "@nanostores/react";
-import type { TPlayerInfoSkin, TPlayerInfoStatus } from "@repo/shared-types/common";
-import { useRef, useState, type MouseEvent } from "react";
+import { useState, type MouseEvent } from "react";
 import { BiChevronDown, BiChevronUp } from "react-icons/bi";
 import { camera_focus_player_by_id } from "~/store/nav";
 import type { PlayerDataPersisted } from "~/store/persist_config";
@@ -9,9 +8,8 @@ import { $players_other_persisted } from "~/store/players_other_persisted";
 import { tm } from "~/utils/tm";
 import ScrollArea from "../-components/ScrollArea";
 import TextInput from "../-components/TextInput";
-import TextWithStatusTag from "../-components/TextWithStatus";
 import { PanelTitle } from "./-components";
-import Avatar from "../-components/Avatar";
+import PlayerCard from "../-components/PlayerCard";
 
 export default function ParticipantsPanel()
 {
@@ -73,6 +71,20 @@ function ParticipantSection({
 {
     const [is_visible, set_is_visible] = useState(default_is_open);
 
+    function handle_click_card(e: MouseEvent, player_id: string)
+    {
+        const rect = e.currentTarget.getBoundingClientRect();
+        show_player_card(player_id, {
+            x: rect.left,
+            y: rect.top,
+        });
+    }
+
+    function handle_click_avatar(player_id: string)
+    {
+        camera_focus_player_by_id(player_id);
+    }
+
     return (
         <div className="flex flex-col gap-3">
             <div className="flex items-center justify-between">
@@ -93,70 +105,16 @@ function ParticipantSection({
                     is_visible ? "max-h-[100vh]" : "max-h-0",
                 )}
             >
-                {participants_list.map(({ _id, info }) => (
-                    <ParticipantCard
-                        key={_id}
-                        username={info.name}
-                        skin={info.skin}
-                        status={info.status}
-                        _id={_id}
+                {participants_list.map((p) => (
+                    <PlayerCard
+                        key={p._id}
+                        player_info={p}
+                        on_click_card={(e) => handle_click_card(e, p._id)}
+                        on_click_avatar={() => handle_click_avatar(p._id)}
+                        disabled={title == "Offline"}
                     />
                 ))}
             </div>
         </div>
-    );
-}
-
-interface ParticipantCardProps
-{
-    _id: string;
-    username: string;
-    skin: TPlayerInfoSkin;
-    status: TPlayerInfoStatus;
-}
-
-function ParticipantCard({ _id, username, skin, status }: ParticipantCardProps)
-{
-    const ref = useRef<null | HTMLButtonElement>(null);
-    const is_active = status !== "disconnected";
-
-    function on_click_card()
-    {
-        if (!ref.current || !is_active) return;
-
-        const rect = ref.current.getBoundingClientRect();
-        show_player_card(_id, {
-            x: rect.left,
-            y: rect.top,
-        });
-    }
-
-    function on_click_avatar(e: MouseEvent)
-    {
-        camera_focus_player_by_id(_id);
-        e.stopPropagation();
-    }
-
-    return (
-        <button
-            className={"flex w-full cursor-pointer overflow-hidden rounded-lg bg-gray-800"}
-            onClick={on_click_card}
-            ref={ref}
-        >
-            <div className={tm("flex w-full gap-4 px-4 py-2", !is_active && "grayscale-75")}>
-                <div
-                    // className="h-10 w-10 overflow-hidden rounded-full bg-red-500 hover:bg-green-500"
-                    onClick={on_click_avatar}
-                >
-                    <Avatar character={skin} />
-                </div>
-
-                <TextWithStatusTag
-                    text_classname="text-stone-200 text-md"
-                    text={username}
-                    status={status}
-                />
-            </div>
-        </button>
     );
 }
