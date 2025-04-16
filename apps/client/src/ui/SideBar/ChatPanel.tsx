@@ -15,6 +15,7 @@ import TextWithStatusTag from "../-components/TextWithStatus";
 import { PanelTitle } from "./-components";
 import PlayerCard from "../-components/PlayerCard";
 import ScrollArea from "../-components/ScrollArea";
+import { get_display_date_from_uuidv7 } from "~/utils/date";
 
 export default function ChatPanel()
 {
@@ -80,9 +81,13 @@ function Conversation()
 
             <div className="flex flex-col gap-2">
                 {messages.map(({ _id, sender, message }) => (
-                    <p key={_id} className={tm(sender == my_id ? "self-end" : "self-start")}>
-                        {message}
-                    </p>
+                    <Message
+                        key={_id}
+                        _id={_id}
+                        is_from_self={sender == my_id}
+                        message={message}
+                        sender={sender}
+                    />
                 ))}
             </div>
 
@@ -104,11 +109,21 @@ function Conversation()
     );
 }
 
-// function Message()
-// {
-//     return (
-//         <div>
-//             <h5></h5>
-//         </div>
-//     );
-// }
+interface MessageProps
+{
+    _id: string;
+    message: string;
+    sender: string;
+    is_from_self: boolean;
+}
+function Message({ _id, is_from_self, message }: MessageProps)
+{
+    const date = get_display_date_from_uuidv7(_id);
+
+    return (
+        <div className={tm("flex flex-col", is_from_self ? "self-end" : "self-start")}>
+            <p>{date}</p>
+            <p>{message}</p>
+        </div>
+    );
+}
