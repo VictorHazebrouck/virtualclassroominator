@@ -2,12 +2,19 @@ import { useStore } from "@nanostores/react";
 import { useState } from "react";
 import { BiChevronLeft } from "react-icons/bi";
 import { $conversations_preview, new_message_from_self } from "~/store/conversations";
-import { $current_conversation, close_conversation, open_conversation } from "~/store/nav";
+import {
+    $current_conversation,
+    camera_focus_player_by_id,
+    close_conversation,
+    open_conversation,
+} from "~/store/nav";
 import { $player_self } from "~/store/player_self";
 import { tm } from "~/utils/tm";
 import TextInput from "../-components/TextInput";
 import TextWithStatusTag from "../-components/TextWithStatus";
 import { PanelTitle } from "./-components";
+import PlayerCard from "../-components/PlayerCard";
+import ScrollArea from "../-components/ScrollArea";
 
 export default function ChatPanel()
 {
@@ -20,19 +27,28 @@ function ConversationList()
 {
     const conversations_preview = useStore($conversations_preview);
 
+    function handle_click_avatar(player_id: string)
+    {
+        camera_focus_player_by_id(player_id);
+    }
+
     return (
-        <div className="flex h-full w-full flex-col gap-6">
+        <div className="flex h-full w-full flex-col gap-2">
             <PanelTitle title="Conversations" />
-            {conversations_preview.map((e) => (
-                <button
-                    key={e.participant?._id}
-                    className="flex w-full cursor-pointer flex-col rounded-lg bg-gray-800 px-4 py-2"
-                    onClick={() => open_conversation(e.participant!._id)}
-                >
-                    <h6 className="text-stone-100">{e.participant?.info.name || "unknown"}</h6>
-                    <p className="text-stone-400">{e.last_message?.message}</p>
-                </button>
-            ))}
+            <ScrollArea>
+                <div className="flex flex-col gap-2">
+                    {conversations_preview.map(({ participant, last_message }) => (
+                        <PlayerCard
+                            key={participant!._id}
+                            player_info={participant!}
+                            on_click_card={() => open_conversation(participant!._id)}
+                            on_click_avatar={() => handle_click_avatar(participant!._id)}
+                        >
+                            <p className="text-stone-400">{last_message?.message}</p>
+                        </PlayerCard>
+                    ))}
+                </div>
+            </ScrollArea>
         </div>
     );
 }

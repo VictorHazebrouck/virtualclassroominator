@@ -112,7 +112,6 @@ function ParticipantSection({
                         on_click_card={(e) => handle_click_card(e, p._id)}
                         on_click_avatar={() => handle_click_avatar(p._id)}
                         disabled={title == "Offline"}
-                        classNameAvatar="h-11 hover:bg-stone-700"
                     />
                 ))}
             </div>

@@ -11,7 +11,7 @@ export interface PlayerCardProps
     player_info: PlayerDataPersisted;
     disabled?: boolean;
     className?: string;
-    classNameAvatar?: string;
+    children?: React.ReactNode;
 }
 
 export default function PlayerCard({
@@ -20,7 +20,7 @@ export default function PlayerCard({
     disabled = false,
     player_info,
     className,
-    classNameAvatar,
+    children,
 }: PlayerCardProps)
 {
     const { name, skin, status } = player_info.info;
@@ -47,12 +47,14 @@ export default function PlayerCard({
             onClick={handle_click_card}
         >
             <Avatar
-                className={tm(classNameAvatar, disabled && "grayscale-75")}
+                className={tm("h-11", disabled ? "grayscale-75" : "hover:bg-stone-700")}
                 character={skin}
                 on_click={handle_click_avatar}
             />
-
-            <TextWithStatusTag text_classname="text-md" text={name} status={status} />
+            <div className="flex h-fit flex-col items-start overflow-x-hidden">
+                <TextWithStatusTag text_classname="text-md" text={name} status={status} />
+                {children}
+            </div>
         </button>
     );
 }
