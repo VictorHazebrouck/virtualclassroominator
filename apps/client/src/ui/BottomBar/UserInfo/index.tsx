@@ -28,14 +28,14 @@ export default function UserInfo()
                 onMouseLeave={() => set_is_video_enlarged_visible(false)}
             >
                 {(!webcam_track || is_video_enlarged_visible) && (
-                    <Avatar character={player_self_data.info.skin} className="h-9" />
+                    <Avatar character={player_self_data.info.skin} className="-mt-1 h-9" />
                 )}
                 {webcam_track && !is_video_enlarged_visible && (
                     <Video className="h-full w-full rounded-none" videotrack={webcam_track} />
                 )}
             </div>
             <div
-                className="flex cursor-pointer px-4"
+                className="flex cursor-pointer px-4 py-1"
                 onClick={() => set_is_userinfo_modal_visible(true)}
             >
                 <TextWithStatusTag
