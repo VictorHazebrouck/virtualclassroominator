@@ -22,6 +22,7 @@ export default function Conversation()
     function handle_click_send_message()
     {
         new_message_from_self(current_conversation!.receiver_id, message);
+        set_message("");
     }
 
     return (
@@ -40,7 +41,7 @@ export default function Conversation()
                 </div>
             </div>
 
-            <ScrollArea>
+            <ScrollArea scrollContainerClassName="h-full">
                 <div className="flex flex-col justify-end">
                     {messages.map(({ _id, sender, message }) => (
                         <Message
@@ -59,7 +60,7 @@ export default function Conversation()
                 on_change_text={(e) => set_message(e)}
                 placeholder="new message..."
                 button_content="send"
-                on_click={handle_click_send_message}
+                on_validate={handle_click_send_message}
             />
         </div>
     );
