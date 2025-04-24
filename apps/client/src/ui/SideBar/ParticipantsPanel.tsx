@@ -13,19 +13,18 @@ import PlayerCard from "../-components/PlayerCard";
 
 export default function ParticipantsPanel()
 {
-    const user_data_persisted = useStore($players_other_persisted);
+    const players_other_map = useStore($players_other_persisted);
     const [search_value, set_search_value] = useState("");
+    const participants = Object.values(players_other_map);
 
-    const online_participants = Object.values(user_data_persisted).filter(
-        (e) =>
-            e.info.status !== "disconnected" &&
-            e.info.name.toLowerCase().includes(search_value.toLowerCase()),
+    const filtered_participants = participants.filter((e) =>
+        e.info.name.toLowerCase().includes(search_value.toLowerCase()),
     );
-
-    const offline_participants = Object.values(user_data_persisted).filter(
-        (e) =>
-            e.info.status === "disconnected" &&
-            e.info.name.toLowerCase().includes(search_value.toLowerCase()),
+    const online_participants = filtered_participants.filter(
+        (e) => e.info.status !== "disconnected",
+    );
+    const offline_participants = filtered_participants.filter(
+        (e) => e.info.status === "disconnected",
     );
 
     return (
