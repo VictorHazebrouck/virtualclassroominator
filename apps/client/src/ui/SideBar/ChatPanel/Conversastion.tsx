@@ -26,7 +26,7 @@ export default function Conversation()
     }
 
     return (
-        <div className="flex h-full w-full max-w-full flex-col justify-end gap-4 text-white">
+        <div className="flex h-full w-full max-w-full flex-col justify-end gap-6 text-white">
             <div className="mb-auto -ml-2 flex w-full gap-4">
                 <button className="cursor-pointer" onClick={() => close_conversation()}>
                     <BiChevronLeft size={28} className="text-white" />
