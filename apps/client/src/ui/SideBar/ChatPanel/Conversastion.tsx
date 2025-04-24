@@ -4,6 +4,7 @@ import { BiChevronLeft } from "react-icons/bi";
 import { new_message_from_self } from "~/store/conversations";
 import { $current_conversation, close_conversation } from "~/store/nav";
 import { $player_self } from "~/store/player_self";
+import ScrollArea from "~/ui/-components/ScrollArea";
 import TextInputWithButton from "~/ui/-components/TextInputWithButton";
 import TextWithStatusTag from "~/ui/-components/TextWithStatus";
 import { get_display_date_from_uuidv7 } from "~/utils/date";
@@ -39,17 +40,19 @@ export default function Conversation()
                 </div>
             </div>
 
-            <div className="flex flex-col gap-2">
-                {messages.map(({ _id, sender, message }) => (
-                    <Message
-                        key={_id}
-                        _id={_id}
-                        is_from_self={sender == my_id}
-                        message={message}
-                        sender={sender}
-                    />
-                ))}
-            </div>
+            <ScrollArea>
+                <div className="flex flex-col justify-end">
+                    {messages.map(({ _id, sender, message }) => (
+                        <Message
+                            key={_id}
+                            _id={_id}
+                            is_from_self={sender == my_id}
+                            message={message}
+                            sender={sender}
+                        />
+                    ))}
+                </div>
+            </ScrollArea>
 
             <TextInputWithButton
                 value={message}
@@ -74,7 +77,12 @@ function Message({ _id, is_from_self, message }: MessageProps)
     const date = get_display_date_from_uuidv7(_id);
 
     return (
-        <div className={tm("flex flex-col gap-1", is_from_self ? "self-end" : "self-start")}>
+        <div
+            className={tm(
+                "flex flex-col gap-1",
+                is_from_self ? "items-end self-end" : "items-start self-start",
+            )}
+        >
             <p className="text-sm text-slate-500">{date}</p>
             <p
                 className={tm(

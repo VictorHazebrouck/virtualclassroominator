@@ -18,7 +18,8 @@ export default function ConversationList()
         <div className="flex h-full w-full flex-col gap-2">
             <PanelTitle title="Conversations" />
             <ScrollArea>
-                <div className="flex flex-col gap-2">
+                <div className="shrink-0"></div>
+                <div className="flex flex-col-reverse gap-2">
                     {conversations_preview.map(({ participant, last_message }) => (
                         <PlayerCard
                             key={participant!._id}
@@ -26,7 +27,9 @@ export default function ConversationList()
                             on_click_card={() => open_conversation(participant!._id)}
                             on_click_avatar={() => handle_click_avatar(participant!._id)}
                         >
-                            <p className="text-stone-400">{last_message?.message}</p>
+                            <p className="mr-2 w-full overflow-hidden text-start text-nowrap text-stone-400">
+                                {last_message?.message}
+                            </p>
                         </PlayerCard>
                     ))}
                 </div>
