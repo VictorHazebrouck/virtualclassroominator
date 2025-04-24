@@ -1,6 +1,6 @@
 import { tm } from "~/utils/tm";
 
-interface TextInputProps
+export interface TextInputProps
 {
     value: string;
     on_change_text: (text: string) => void;
@@ -16,7 +16,7 @@ export default function TextInput({
 {
     return (
         <input
-            className={tm("rounded-md px-3 py-1 text-zinc-400", className)}
+            className={tm("w-48 rounded-md px-3 py-1 text-zinc-400", className)}
             value={value}
             onChange={(e) => on_change_text(e.target.value)}
             placeholder={placeholder}
