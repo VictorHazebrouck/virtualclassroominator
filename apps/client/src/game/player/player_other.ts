@@ -1,6 +1,6 @@
 import type { TPlayerData } from "@repo/shared-types/common";
 import { listenKeys } from "nanostores";
-import { Ticker } from "pixi.js";
+import { Rectangle, Ticker } from "pixi.js";
 import { $players_other } from "../../store/players_other";
 import { Player } from "./player_base";
 import { animate_player, PLAYER_HEIGHT_PX, PLAYER_WIDTH_PX } from "./utils";
@@ -41,6 +41,7 @@ export class PlayerOther extends Player
     {
         this.interactive = true;
         this.cursor = "pointer";
+        this.hitArea = new Rectangle(0, 0, PLAYER_WIDTH_PX, PLAYER_HEIGHT_PX);
 
         this.onclick = () =>
         {
