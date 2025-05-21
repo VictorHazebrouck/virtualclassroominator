@@ -30,7 +30,7 @@ connection with one another.
 
 As we can see from the above schema, p2p seems great because once our setup is done, each user communicates
 directly with one another, so almost no server resources are required on our part. However this advantage
-might also bocome our downfall if not careful, indeed managing this direct `mesh` network becomes increasingly
+might also become our downfall if not careful, indeed managing this direct `mesh` network becomes increasingly
 complex as the number of users grow, and most importantly, the amount of outgoing stream per user also grows
 linearly, even tho this outgoing stream is always the same.
 
