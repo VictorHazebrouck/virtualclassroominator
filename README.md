@@ -17,7 +17,7 @@ The main premise and challenge of the project is to be able to share webcam/audi
 users somewhat efficiently, whether in a large group (in a classroom) or in a small one (outside
 at a desk or something).
 
-In order to try and tackle this challenge, I believe it is important to know about the two main options
+Before we try and tackle this challenge, I believe it is important to know about the two main options
 that we have: `SFU` and `P2P`. Tho a third one exists but is out of the question for this purpose.
 
 We'll start with the `Peer to Peer` option. The below schema shows the end "state" of intercommunication.
