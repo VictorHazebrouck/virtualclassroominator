@@ -152,4 +152,4 @@ the participant, if he joins with a new username, the list gets updated).
 
 Anyways, it's been some time since the last schema and I need to get my money's worth from my Excalidraw subcription:
 
-![overall-architecture-schema](./_github/overall_architecture_schema.png)
+![overall-architecture-schema](./_github/overall_architecture.png)
