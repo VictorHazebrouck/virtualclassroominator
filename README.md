@@ -124,7 +124,10 @@ at which exact position.
 
 The server can't be that "stateless" tho, one issue we might have noticed here is how can someone who just joined know
 about the postion of each other players and their ids ? He simply cannot with the current setup. It's also part of the
-reason we send the `x`&`y` in each message despites each client being able to extrapolate one's position without it.
+reason we send the `x`&`y` in each message (despites each client being able to extrapolate one's position without it once
+connected). Our server keeps track of each connected client, and to each of those "connections", associates a position
+object, which is updated on each message. When a new user connects, it just gets all those position objects to get the initial
+gamestate.
 
 ### Overall architecture:
 
