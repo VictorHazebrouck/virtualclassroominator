@@ -176,3 +176,9 @@ Socket.io: easy to use, battle tested, client library.
 Most people have aleady used it. Very good typescript support with shared typed front/back.
 
 #### Frontend Server
+
+Vite: More details below.
+
+### Frontend architecture:
+
+![front-architecture-schema](./_github/frontend_architecture.png)
