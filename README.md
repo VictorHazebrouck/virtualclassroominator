@@ -73,6 +73,15 @@ So all of this just to say well use an hybrid approach, SFU for rooms, P2P outsi
 The other premise of the project is that to make the whole experence a bit more lively than a zoom call, users
 control a character and can move it around in a 2D space.
 
+We'll argue the technology chosen in a later section, here we will focus on the more general topic of Server vs
+Client authority.
+
+For context, when building real time games, we need to decide whether we give power to the `Client`, or to the
+`Server`. Games tend to always prefer the latter, giving complete authority to the server, each client input sends a
+request to the server, which validates it, and then dispatches it to other client if the input makes sense.
+
+At first glance it might seem obvious
+
 ### Overall architecture:
 
 Now that we've solved the main challenge, I can try to justify my
