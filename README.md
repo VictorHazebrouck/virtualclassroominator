@@ -67,6 +67,8 @@ this purpose, see:
 
 So all of this just to say well use an hybrid approach, SFU for rooms, P2P outside of rooms.
 
+### Moving our character around and syncing with other users.
+
 ### Overall architecture:
 
 Now that we've solved the main challenge, I can try to justify my
