@@ -130,7 +130,7 @@ object, which is updated on each message. When a new user connects, it just gets
 gamestate.
 
 There are other parts to keep in sync: Username, status, appearance, etc..., but they all follow the exact same principle,
-they are in they own objects, when they change just the relevant object is being sent along with a user_id, they are
+they are in their own object, when they change just the relevant object is being sent along with a user_id, they are
 updated on the server, and dispatched to other users.
 
 ### Overall architecture:
