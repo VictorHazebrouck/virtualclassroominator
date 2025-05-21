@@ -142,7 +142,7 @@ One interesting thing tho is since it's a portfolio project, I don't want the us
 use the app. But we still want our conversations to be persisted, and to be able to continue them (not open
 a new one even if talking ot the same person).
 
-To solve the later, the idea it to generate a `user_id` and store it in localstorage on first app connection. On second
+To solve the later, the idea is to generate a `user_id` and store it in localstorage on first app connection. On second
 app connection, reuse the already created one. This enables having persisted conversations which can be continued even
 after both have quit and rejoined the app by indexing them by `user_id` in localstorage. Another cool thing it enables
 is an eventually consistent list of participants, also in localstorage (you get the username from the last time you saw
@@ -150,6 +150,9 @@ the participant, if he joins with a new username, the list gets updated).
 
 ### Overall architecture:
 
-Anyways, it's been some time since the last schema and I need to get my money's worth from my Excalidraw subcription:
+Anyways, it's been some time since the last schema and I need to get my money's worth from my Excalidraw subcription
+so:
 
 ![overall-architecture-schema](./_github/overall_architecture.png)
+
+We go for a microservice architecture.
