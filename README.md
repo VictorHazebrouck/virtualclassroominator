@@ -104,6 +104,16 @@ Now that we know the client is always right, one question now remains: How do we
 The laziest option would be for each player to send his data (position) at 30-60fps and call it a day. This approach
 is fine but will end up wasting our resouces. We can surely do better considering our constraints: 2D strict x|y movement.
 
+The approach I chose is to represent a user's position as follows:
+
+```ts
+{
+    position: {x: number, y:number},
+    direction: "left" | "right" | "top" | "bottom",
+    is_moving: boolean
+}
+```
+
 ### Overall architecture:
 
 Now that we've solved the main challenge, I can try to justify my
