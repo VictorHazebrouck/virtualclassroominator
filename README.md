@@ -186,4 +186,18 @@ directory, and the main apps are under `apps`.
 
 ### Frontend architecture:
 
+All of the backend services are somewhat straighforward, most of the complexity is handled by the libraries, we just follow the
+docs and turns out all works fine.
+
+The real complexity lies in how to interract with all those services in a our frontend app without making too much of a mess.
+Indeed, we have a game part to display players and handle the physics, we have a socket part which takes care of sharing our
+moves and messages to other players, a p2p | sfu part which gives us access to users camera/audio, and a general ui to place
+around to game.
+
+My original plan was to have a "top level" EventBus, separate each part of the into their own "islands", and do some dependency
+injection to pass in the EventBus down to every sub-part that might require it. It worked fine, but it resulted in sometimes having
+duplicate "states" (i.e: the username both in the game & ui part) which didn't cause any bugs yet but I guess might eventually lead
+to our downfall. And the dependency injection was really annoying and i ended up just passing in the EventBus directly anyways, and
+the question is would we ever re-use one of those "islands" in another project ? And the answer is no for all but the Sfu/p2p part.
+
 ![front-architecture-schema](./_github/frontend_architecture.png)
