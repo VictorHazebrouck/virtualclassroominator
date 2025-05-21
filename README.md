@@ -78,9 +78,14 @@ Client authority.
 
 For context, when building real time games, we need to decide whether we give power to the `Client`, or to the
 `Server`. Games tend to always prefer the latter, giving complete authority to the server, each client input sends a
-request to the server, which validates it, and then dispatches it to other client if the input makes sense.
+request to the server, which validates it, and then dispatches it to other client if the input makes sense. This
+prevents players from sending fraudulous inputs & cheating.
 
-At first glance it might seem obvious
+At first glance it might seem obvious we should do the same. This part of the app is just like any other game after all.
+But like anything, this "safety" comes at a cost: we need to run the whole physics of the game both on the client
+and the server. Even tho our physics is basic (collison, player positions & walls postions), it still needs to run at
+30-60fps, be kept in sync with the client physics, and feel snappy. And what if we ever need to distrbute our system ?
+We can't just duplicate our server and call it a day.
 
 ### Overall architecture:
 
