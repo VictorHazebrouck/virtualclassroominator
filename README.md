@@ -17,10 +17,8 @@ The main premise and challenge of the project is to be able to share webcam/audi
 users somewhat efficiently, whether in a large group (in a classroom) or in a small one (outside
 at a desk or something).
 
-#### SFU VS P2P
-
-Before we try and tackle this challenge, I believe it is important to know about the two main options
-that we have: `SFU` and `P2P`. Tho a third one exists but is out of the question for this purpose.
+So before we even try and tackle this challenge, I believe it is important to know about the two main
+options that we have: `SFU` and `P2P`. Tho a third one exists but is out of the question for this purpose.
 
 We'll start with the `Peer to Peer` option. The below schema shows the end "state" of intercommunication.
 Before getting there, there is some setup to do which I won't get in too much details about but basically,
@@ -64,3 +62,9 @@ for this pet project in which at most me and myself will ever join at once. P2P 
 this purpose, see:
 
 ![p2p-proximity-schema](./_github/p2p_proximity_schema.png)
+
+So all of this just to say well use an hybrid approach, SFU for rooms, P2P outside of rooms.
+
+### Overall architecture:
+
+Now that we've solved the main challenge, I can try to justify my
