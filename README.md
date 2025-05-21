@@ -101,7 +101,8 @@ is still checked before dispatch.
 
 Now that we know the client is always right, one question now remains: How do we keep each client in sync ?
 
-The lasiest option would be for each player to send his data (position) at 30-60fps and call it a day.
+The laziest option would be for each player to send his data (position) at 30-60fps and call it a day. This approach
+is fine but will end up wasting our resouces. We can surely do better considering our constraints: 2D strict x|y movement.
 
 ### Overall architecture:
 
