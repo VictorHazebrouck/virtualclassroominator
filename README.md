@@ -36,6 +36,6 @@ linearly, even tho this outgoing stream is always the same.
 
 Which leads us to the second option, a `Selective Forwarding Unit`. The below schema, just like previously, shows
 the "end" state of communication. Getting there is very similar to the p2p way, but instead of establishing a
-connection with users, the connection is established to a server.
+connection with many users, the connection is established to a single server.
 
 ![sfu-schema](./_github/sfu_schema.png)
