@@ -73,6 +73,8 @@ So all of this just to say well use an hybrid approach, SFU for rooms, P2P outsi
 The other premise of the project is that to make the whole experence a bit more lively than a zoom call, users
 control a character and can move it around in a 2D space.
 
+#### Client vs Server autority
+
 We'll argue the technology chosen in a later section, here we will focus on the more general topic of Server vs
 Client authority.
 
@@ -95,9 +97,11 @@ The approach chosen here is thus full client authority, whatever the client says
 just be to `dispatch` inputs from a player to the others. The client can't send gibberish tho, the shape of each message
 is still checked before dispatch.
 
+#### Keeping users in sync
+
 Now that we know the client is always right, one question now remains: How do we keep each client in sync ?
 
-The lasiest option would be for each player to send his data at 30-60fps.
+The lasiest option would be for each player to send his data (position) at 30-60fps and call it a day.
 
 ### Overall architecture:
 
