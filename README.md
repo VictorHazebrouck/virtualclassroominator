@@ -17,6 +17,8 @@ The main premise and challenge of the project is to be able to share webcam/audi
 users somewhat efficiently, whether in a large group (in a classroom) or in a small one (outside
 at a desk or something).
 
+#### SFU VS P2P
+
 Before we try and tackle this challenge, I believe it is important to know about the two main options
 that we have: `SFU` and `P2P`. Tho a third one exists but is out of the question for this purpose.
 
@@ -44,3 +46,10 @@ As we can see from the above schema, a SFU solves most of our problems, at the c
 Managing the network is much easier, one connection per user. And our outgoing stream is not being sent as duplicate,
 no matter the amount of participants, effectively dividing by 2 in+out nework usage. (tho there must be a nice
 Mathematical term to properly describe it)
+
+##### With that in mind, which one should we choose then ?
+
+When in a room, the choice is somewhat obvious, we'll use SFU.
+
+Outside of a room however, the choice is not so simple, see:
+![sfu-schema](./_github/proximity_schema.png)
