@@ -155,4 +155,23 @@ so:
 
 ![overall-architecture-schema](./_github/overall_architecture.png)
 
-We go for a microservice architecture.
+Basically we have a microservices architecture. Each service is Dockerized individually, composed via a docker compose.
+Hosted on a single vps, requests are routed by Caddy. With a little help from Coolify ^^.
+
+We could pack it all into a single Docker container, which would have been much easier, but having everything Dockerized
+individually is much more flexible, we could spawn multiple instances of a critical service with few changes, switch from
+docker compose to Kubernetes if necessary etc...
+
+#### SFU
+
+TODO
+
+#### Signaling Server
+
+PeerJS: easy to use, battle tested, client library.
+
+#### Socket Server
+
+Socket.io: easy to use, battle tested, client library.
+
+#### Frontend Server
