@@ -133,6 +133,21 @@ There are other parts to keep in sync: Username, status, appearance, etc..., but
 they are in their own object, when they change just the relevant object is being sent along with a user_id, they are
 updated on the server, and dispatched to other users.
 
+### Text Chat
+
+Last premise is the chat part. Which after all we previously said is quite obvious to figure out. We'll just
+send a message to a server, the server will dispatch it to another target client.
+
+One interesting thing tho is since it's a portfolio project, I don't want the user to have to connect to
+use the app. But we still want our conversations to be persisted, and to be able to continue them (not open
+a new one even if talking ot the same person).
+
+To solve the later, the idea it to generate a `user_id` and store it in localstorage on first app connection. On second
+app connection, reuse the already created one. This enables having persisted conversations which can be continued even
+after both have quit and rejoined the app by indexing them by `user_id` in localstorage. Another cool thing it enables
+is an eventually consistent list of participants, also in localstorage (you get the username from the last time you saw
+the participant, if he joins with a new username, it is then updated as he joins in your "version").
+
 ### Overall architecture:
 
 Now that we've solved the main challenge, I can try to justify my
