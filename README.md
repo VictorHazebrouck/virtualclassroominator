@@ -11,8 +11,24 @@ Browser based virtual classroom with text-chat, proximity audio, video & screenc
 IMPORTANT: If you wish to open the website twice to test all the features, make sure you open
 the second one either in another browser or in an incognito tab.
 
-## Project structure:
+## Project Design:
 
-### apps:
+The main premise and challenge of the project is to be able to share webcam/audio/video amongst
+users somewhat efficiently, whether in a large group (in a classroom) or in a small one (outside
+at a desk or something).
 
-### packages:
+In order to try and tackle this challenge, I believe it is important to know about the two main options
+that we have: `SFU` and `P2P`. Tho a third one exists but is out of the question for this purpose.
+
+We'll start with the `Peer to Peer` option. The below schema shows the end "state" of intercommunication.
+Before gettng there, there is some setup to do which I won't get in too much details about but basically,
+we need a "signaling" server to orchestrate this, when one user want to join the conversation, the server
+gives the user's ip(ish) to all other connected users and vise-versa, allowing them to establish a direct
+connection with one another.
+
+![p2p-schema](./_github/p2p_schema.png)
+
+As we can see from the abose schema, p2p seems great because once our setup is done, each user communicates
+directly with one another, so almost no server resources are required on our part.
+
+![sfu-schema](./_github/sfu_schema.png)
