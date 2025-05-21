@@ -39,3 +39,8 @@ the "end" state of communication. Getting there is very similar to the p2p way, 
 connection with many users, the connection is established to a single server.
 
 ![sfu-schema](./_github/sfu_schema.png)
+
+As we can see from the above schema, a SFU solves most of our problems, at the cost of server resources.
+Managing the network is much easier, one connection per user. And our outgoing stream is not being sent as duplicate,
+no matter the amount of participants, effectively dividing by 2 in+out nework usage. (tho there must be a nice
+Mathematical term to properly describe it)
