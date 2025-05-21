@@ -13,6 +13,8 @@ the second one either in another browser or in an incognito tab.
 
 ## Project Design:
 
+### Sharing video, screen and audio.
+
 The main premise and challenge of the project is to be able to share webcam/audio/video amongst
 users somewhat efficiently, whether in a large group (in a classroom) or in a small one (outside
 at a desk or something).
@@ -45,7 +47,7 @@ Managing the network is much easier, one connection per user. And our outgoing s
 no matter the amount of participants, effectively dividing by 2 in+out nework usage. (tho there must be a nice
 Mathematical term to properly describe it)
 
-### SFU or P2P ?
+#### SFU or P2P ?
 
 When in a room, the choice is somewhat obvious, we'll use SFU. Indeed, this mechanism is perfect for "room" based
 communication, each user shares the same room, thus all should receive the exact same stream from the exact same
