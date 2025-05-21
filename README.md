@@ -21,14 +21,21 @@ In order to try and tackle this challenge, I believe it is important to know abo
 that we have: `SFU` and `P2P`. Tho a third one exists but is out of the question for this purpose.
 
 We'll start with the `Peer to Peer` option. The below schema shows the end "state" of intercommunication.
-Before gettng there, there is some setup to do which I won't get in too much details about but basically,
+Before getting there, there is some setup to do which I won't get in too much details about but basically,
 we need a "signaling" server to orchestrate this, when one user want to join the conversation, the server
 gives the user's ip(ish) to all other connected users and vise-versa, allowing them to establish a direct
 connection with one another.
 
 ![p2p-schema](./_github/p2p_schema.png)
 
-As we can see from the abose schema, p2p seems great because once our setup is done, each user communicates
-directly with one another, so almost no server resources are required on our part.
+As we can see from the above schema, p2p seems great because once our setup is done, each user communicates
+directly with one another, so almost no server resources are required on our part. However this advantage
+might also bocome our downfall if not careful, indeed managing this direct `mesh` network becomes increasingly
+complex as the number of users grow, and most importantly, the amount of outgoing stream per user also grows
+linearly, even tho this outgoing stream is always the same.
+
+Which leads us to the second option, a `Selective Forwarding Unit`. The below schema, just like previously, shows
+the "end" state of communication. Getting there is very similar to the p2p way, but instead of establishing a
+connection with users, the connection is established to a server.
 
 ![sfu-schema](./_github/sfu_schema.png)
