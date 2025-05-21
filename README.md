@@ -116,9 +116,9 @@ The approach I chose is to represent a user's position as follows:
 ```
 
 When and only when the `is_moving` field changes for a user, the whole position object is sent to the server and then
-dispatched to each other client. He himself receives nothing, he start animating his character right away at speed S in
-direction X. Other players receive the message, and since we pass in a `user_id` along with the message, they can animate
-the right character. The positions are naturally kept in sync because the animation speed is the same for each client.
+dispatched to each other client. He himself receives nothing, he start animating his character right away at speed `S`.
+Other players receive the message, and since we pass in a `user_id` along with the message, they can animate the right
+character. The positions are naturally kept in sync because the animation speed `S` is the same for each client.
 When the user stops, same process, the message is dispatched to other clients who know whose charater to stop, and
 at which exact position.
 
@@ -128,6 +128,10 @@ reason we send the `x`&`y` in each message (despites each client being able to e
 connected). Our server keeps track of each connected client, and to each of those "connections", associates a position
 object, which is updated on each message. When a new user connects, it just gets all those position objects to get the initial
 gamestate.
+
+There are other parts to keep in sync: Username, status, appearance, etc..., but they all follow the exact same principle,
+they are in they own objects, when they change just the relevant object is being sent along with a user_id, they are
+updated on the server, and dispatched to other users.
 
 ### Overall architecture:
 
