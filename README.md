@@ -95,6 +95,10 @@ The approach chosen here is thus full client authority, whatever the client says
 just be to `dispatch` inputs from a player to the others. The client can't send gibberish tho, the shape of each message
 is still checked before dispatch.
 
+Now that we know the client is always right, one question now remains: How do we keep each client in sync ?
+
+The lasiest option would be for each player to send his data at 30-60fps.
+
 ### Overall architecture:
 
 Now that we've solved the main challenge, I can try to justify my
