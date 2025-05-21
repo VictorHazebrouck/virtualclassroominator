@@ -177,7 +177,12 @@ shared typed front/back.
 
 #### Frontend Server
 
-Vite: More details below.
+More details later.
+
+To make everything simpler we use a monorepo. Since it is all written in TypeScript, this enables us to share lint, ts
+& formatter configs accross the whole project. Most importantly it allows us to share code between our client and servers.
+In this case mostly types: socket events shared by the socket-server and clients. Those types / configs are under the `packages`
+directory, and the main apps are under `apps`.
 
 ### Frontend architecture:
 
