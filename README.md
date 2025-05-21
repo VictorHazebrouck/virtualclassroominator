@@ -2,7 +2,7 @@
 
 Browser based virtual classroom with text-chat, proximity audio, video & screencast.
 
-![Demo-image](./_github/virtualclassroominator.png)
+![Demo-image](_github/virtualclassroominator.png)
 
 ## See it in action:
 
