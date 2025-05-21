@@ -118,7 +118,8 @@ The approach I chose is to represent a user's position as follows:
 When and only when the `is_moving` field changes for a user, the whole position object is sent to the server and then
 dispatched to each other client. He himself receives nothing, he start animating his character right away at speed S in
 direction X. Other players receive the message, and since we pass in a `user_id` along with the message, they can animate
-the right character.
+the right character. The positions are naturally kept in sync because the animation speed is the same for each client.
+When the user stops, same process, the message is dispatched to other clients who know whose charater to stop.
 
 ### Overall architecture:
 
