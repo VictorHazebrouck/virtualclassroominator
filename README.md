@@ -172,8 +172,8 @@ PeerJS: easy to use, battle tested, client library.
 
 #### Socket Server
 
-Socket.io: easy to use, battle tested, client library.
-Most people have aleady used it. Very good typescript support with shared typed front/back.
+Socket.io: easy to use, battle tested, client library, most people have aleady used it, very good typescript support with
+shared typed front/back.
 
 #### Frontend Server
 
