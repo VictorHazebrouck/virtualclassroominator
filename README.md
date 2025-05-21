@@ -87,6 +87,14 @@ and the server. Even tho our physics is basic (collison, player positions & wall
 30-60fps, be kept in sync with the client physics, and feel snappy. And what if we ever need to distrbute our system ?
 With the physics running in our server, we can't just duplicate it, glue the two with Redis and call it a day.
 
+I feel like the amount of complexity brought by having to correclty implement server authority while keeping the user
+experience snappy (which is much harder than I probably made it seem), largely outweight the benefits. If a smart one
+manages to go out of map then so be it.
+
+The approach chosen here is thus full client authority, whatever the client says is right, the role of the server will
+just be to `dispatch` inputs from a player to the others. The client can't send gibbeish tho, the shape of each message
+is still checked before dispatch.
+
 ### Overall architecture:
 
 Now that we've solved the main challenge, I can try to justify my
