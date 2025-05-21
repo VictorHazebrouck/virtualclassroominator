@@ -64,7 +64,7 @@ for this pet project in which at most me and myself will ever join at once. P2P 
 this purpose, see:
 
 ![p2p-proximity-schema](./_github/p2p_proximity_schema.png)
-(note: in real use case probably choose sfu as well or at least fallback to it if too many nearby users )
+_(note: in real use case probably choose sfu as well or at least fallback to it if too many nearby users )_
 
 So all of this just to say well use an hybrid approach, SFU for rooms, P2P outside of rooms.
 
