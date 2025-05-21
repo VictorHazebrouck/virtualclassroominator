@@ -85,7 +85,7 @@ At first glance it might seem obvious we should do the same. This part of the ap
 But like anything, this "safety" comes at a cost: we need to run the whole physics of the game both on the client
 and the server. Even tho our physics is basic (collison, player positions & walls postions), it still needs to run at
 30-60fps, be kept in sync with the client physics, and feel snappy. And what if we ever need to distrbute our system ?
-We can't just duplicate our server and call it a day.
+With the physics running in our server, we can't just duplicate it, glue the two with Redis and call it a day.
 
 ### Overall architecture:
 
