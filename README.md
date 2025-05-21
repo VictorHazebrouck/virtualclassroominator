@@ -49,7 +49,9 @@ Mathematical term to properly describe it)
 
 ##### With that in mind, which one should we choose then ?
 
-When in a room, the choice is somewhat obvious, we'll use SFU.
+When in a room, the choice is somewhat obvious, we'll use SFU. Indeed, this mechanism is perfect for "room" based
+communication, each user shares the same room, thus all should receive the exact same stream from the exact same
+people.
 
 Outside of a room however, the choice is not so simple, see:
 ![sfu-schema](./_github/proximity_schema.png)
