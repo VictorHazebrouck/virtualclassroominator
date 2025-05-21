@@ -57,7 +57,7 @@ Outside of a room however, when in "proximity" mode, the choice is not so simple
 
 `B` should connect with `A` and `B`, but `A` & `C` should only connect with `B`. This can be done with an SFU,
 but it's not common enough of an issue to be supported by default by any of the "clé en main" ones like LiveKit.
-We'd need to write a bunch of custom logic ourserves with somehting like mediasoup which is too much of a hasle
+We'd need to write a bunch of custom logic ourserves with something like mediasoup which is too much of a hasle
 for this pet project in which at most me and myself will ever join at once. P2P on the other hand is perfect for
 this purpose, see:
 
