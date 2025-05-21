@@ -1,5 +1,9 @@
 # VirtualClassroomInator
 
+Browser based virtual classroom with text-chat, proximity audio, video & screencast.
+
+![Demo-image](./_github/virtualclassroominator.png)
+
 ## See it in action:
 
 [Deployment here](https://virtualclassroominator.un-indien-dans-la-ville.store/)
