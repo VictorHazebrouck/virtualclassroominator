@@ -108,11 +108,17 @@ The approach I chose is to represent a user's position as follows:
 
 ```ts
 {
+    user_id: string,
     position: {x: number, y:number},
     direction: "left" | "right" | "top" | "bottom",
     is_moving: boolean
 }
 ```
+
+When and only when the `is_moving` field changes for a user, the whole position object is sent to the server and then
+dispatched to each other client. He himself receives nothing, he start animating his character right away at speed S in
+direction X. Other players receive the message, and since we pass in a `user_id` along with the message, they can animate
+the right character.
 
 ### Overall architecture:
 
