@@ -59,15 +59,19 @@ Outside of a room however, when in "proximity" mode, the choice is not so simple
 
 `B` should connect with `A` and `B`, but `A` & `C` should only connect with `B`. This can be done with an SFU,
 but it's not common enough of an issue to be supported by default by any of the "clé en main" ones like LiveKit.
-We'd need to write a bunch of custom logic ourserves with something like mediasoup which is too much of a hasle
+We'd need to write a bunch of custom logic ourserves with something like mediasoup which is too much of a hassle
 for this pet project in which at most me and myself will ever join at once. P2P on the other hand is perfect for
 this purpose, see:
 
 ![p2p-proximity-schema](./_github/p2p_proximity_schema.png)
+(note: in real use case probably choose sfu as well or at least fallback to it if too many nearby users )
 
 So all of this just to say well use an hybrid approach, SFU for rooms, P2P outside of rooms.
 
 ### Moving our character around and syncing with other users.
+
+The other premise of the project is that to make the whole experence a bit more lively than a zoom call, users
+control a character and can move it around in a 2D space.
 
 ### Overall architecture:
 
