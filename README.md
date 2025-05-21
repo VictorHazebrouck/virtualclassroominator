@@ -92,7 +92,7 @@ experience snappy (which is much harder than I probably made it seem), largely o
 manages to go out of map then so be it.
 
 The approach chosen here is thus full client authority, whatever the client says is right, the role of the server will
-just be to `dispatch` inputs from a player to the others. The client can't send gibbeish tho, the shape of each message
+just be to `dispatch` inputs from a player to the others. The client can't send gibberish tho, the shape of each message
 is still checked before dispatch.
 
 ### Overall architecture:
