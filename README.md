@@ -119,7 +119,12 @@ When and only when the `is_moving` field changes for a user, the whole position 
 dispatched to each other client. He himself receives nothing, he start animating his character right away at speed S in
 direction X. Other players receive the message, and since we pass in a `user_id` along with the message, they can animate
 the right character. The positions are naturally kept in sync because the animation speed is the same for each client.
-When the user stops, same process, the message is dispatched to other clients who know whose charater to stop.
+When the user stops, same process, the message is dispatched to other clients who know whose charater to stop, and
+at which exact position.
+
+The server can't be that "stateless" tho, one issue we might have noticed here is how can someone who just joined know
+about the postion of each other players and their ids ? He simply cannot with the current setup. It's also part of the
+reason we send the `x`&`y` in each message despites each client being able to extrapolate one's position without it.
 
 ### Overall architecture:
 
