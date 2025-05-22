@@ -221,7 +221,7 @@ And the answer is no.
 
 Then, in between two italian brainrot youtube shorts, I came to discover the "Elm" language and the `MVU` pattern. Which I thought
 was really interesting for our usecase. You have a single "top-level" `Model`, the whole `View` is just a pure function derived from
-this model, you have `Update` functions to update the Model and rerun the View. When the Model is updated you can then run side-effects.
+this model, you have `Update` functions to update the Model and rerun the View. When the Model is updated `Effects` are run.
 
 ![mvu-schema](./_github/mvu_schema.png)
 
