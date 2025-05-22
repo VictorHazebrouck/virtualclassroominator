@@ -225,4 +225,8 @@ this model, you have `Update` functions to update the Model and rerun the View. 
 
 ![mvu-schema](./_github/mvu_schema.png)
 
+And here all of our pieces do fit somewhat nicely in here:
+
+![mvu-adapted-schema](./_github/mvu_adapted.png)
+
 ![front-architecture-schema](./_github/frontend_architecture.png)
