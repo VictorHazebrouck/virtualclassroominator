@@ -210,9 +210,13 @@ moves and messages to other players, a p2p | sfu part which gives us access to u
 around to game. All of them will have to communicate with one another.
 
 My original plan was to have a "top level" EventBus, separate each part of the into their own "islands", and do some dependency
-injection to pass in the EventBus down to every sub-part that might require it. It worked fine, but it resulted in sometimes having
-duplicate "states" (i.e: the username both in the game & ui part) which didn't cause any bugs yet but I guess might eventually lead
-to our downfall. And the dependency injection was really annoying and i ended up just passing in the EventBus directly anyways, and
-the question is would we ever re-use one of those "islands" in another project ? And the answer is no for all but the Sfu/p2p part.
+injection to pass in the EventBus down to every sub-part that might require it:
+
+![event-bus-version-schema](./_github/event_bus_version.png)
+
+It worked fine, but it resulted in sometimes having duplicate "states" (i.e: the username both in the game & ui part) which didn't
+cause any bugs yet but I guess might eventually lead to our downfall. And the dependency injection was really annoying and i ended
+up just passing in the EventBus directly anyways, and the question is would we ever re-use one of those "islands" in another project?
+And the answer is no for all but the Sfu/p2p part.
 
 ![front-architecture-schema](./_github/frontend_architecture.png)
