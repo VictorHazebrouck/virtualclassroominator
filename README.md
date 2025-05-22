@@ -15,7 +15,7 @@ the second one either in another browser or in an incognito tab.
 
 [1. Sharing video, screen and audio](#sharing-video-screen-and-audio)
 
-[2. Moving our character around and syncing with other users](#moving-our-charactor-around-and-syncing-with-other-users)
+[2. Moving our character around and syncing with other users](#moving-our-character-around-and-syncing-with-other-users)
 
 [3. Text chat](#text-chat)
 
