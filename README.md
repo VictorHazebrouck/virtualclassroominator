@@ -13,6 +13,16 @@ the second one either in another browser or in an incognito tab.
 
 ## Project Design:
 
+[Sharing video, screen and audio](#sharing-video-screen-and-audio)
+
+[Moving our character around and syncing with other users](#moving-our-charactor-around-and-syncing-with-other-users)
+
+[Text chat](#text-chat)
+
+[Overall architecture](#overall-architecture)
+
+[Frontend architecture](#frontend-architecture)
+
 ### Sharing video, screen and audio.
 
 The main premise and challenge of the project is to be able to share webcam/audio/video amongst
