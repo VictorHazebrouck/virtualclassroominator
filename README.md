@@ -165,25 +165,18 @@ so:
 
 ![overall-architecture-schema](./_github/overall_architecture.png)
 
-Basically we have a microservices architecture. Each service is Dockerized individually, composed via a docker compose.
-Hosted on a single vps, requests are routed by Caddy. With a little help from Coolify ^^.
-
-We could pack it all into a single Docker container, which would have been much easier, but having everything Dockerized
-individually is much more flexible, we could spawn multiple instances of a critical service with few changes, switch from
-docker compose to Kubernetes if necessary etc...
-
-#### SFU
+#### SFU: LikveKit
 
 TODO
 
-#### Signaling Server
+#### Signaling Server: PeerJS
 
-PeerJS: easy to use, battle tested, client library.
+Easy to use, battle tested, has a client library to interract with it.
 
-#### Socket Server
+#### Socket Server: Socket.io
 
-Socket.io: easy to use, battle tested, client library, most people have aleady used it, very good typescript support with
-shared typed front/back.
+Easy to use, battle tested, has a client library to interract with it, most people have aleady used it, very good
+typescript support with shared typed front/back.
 
 #### Frontend Server
 
@@ -193,6 +186,18 @@ To make everything simpler we use a monorepo. Since it is all written in TypeScr
 & formatter configs accross the whole project. Most importantly it allows us to share code between our client and servers.
 In this case mostly types: socket events shared by the socket-server and clients. Those types/configs are under the `packages`
 directory, and the main apps are under `apps`.
+
+So basically we have a microservices architecture. Each service is Dockerized individually, composed via a docker compose.
+Hosted on a single vps, requests are routed by Caddy. With a little help from Coolify ^^.
+
+We could pack it all into a single Docker container, which would have been much easier, but having everything Dockerized
+individually is much more flexible, we could spawn multiple instances of a critical service with few changes, switch from
+docker compose to Kubernetes if necessary etc...
+
+In dev, for a snappier experience, we don't use docker compose directly, we make use of the Turborepo tool. It basically
+just runs `npm run dev` on each of the apps at once, and aggregates the logs in a custom terminal which separates each log
+into their own "tab". Once it runs we can try to run docker compose up to see if all works fine with docker as well before
+commiting.
 
 ### Frontend architecture:
 
