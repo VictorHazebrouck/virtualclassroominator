@@ -11,7 +11,7 @@ Browser based virtual classroom with text-chat, proximity audio, video & screenc
 IMPORTANT: If you wish to open the website twice to test all the features, make sure you open
 the second one either in another browser or in an incognito tab.
 
-## Project Design:
+## Project design choices:
 
 [1. Sharing video, screen and audio](#sharing-video-screen-and-audio)
 
