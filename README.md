@@ -217,6 +217,12 @@ injection to pass in the EventBus down to every sub-part that might require it:
 It worked fine, but it resulted in sometimes having duplicate "states" (i.e: the username both in the game & ui part) which didn't
 cause any bugs yet but I guess might eventually lead to our downfall. And the dependency injection was really annoying and i ended
 up just passing in the EventBus directly anyways, and the question is would we ever re-use one of those "islands" in another project?
-And the answer is no for all but the Sfu/p2p part.
+And the answer is no.
+
+Then, in between two italian brainrot youtube shorts, I came to discover the "Elm" language and the `MVU` pattern. Which I thought
+was really interesting for our usecase. You have a single "top-level" `Model`, the whole `View` is just a pure function derived from
+this model, you have `Update` functions to update the Model and rerun the View. When the Model is updated you can then run side-effects.
+
+![mvu-schema](./_github/mvu_schema.png)
 
 ![front-architecture-schema](./_github/frontend_architecture.png)
