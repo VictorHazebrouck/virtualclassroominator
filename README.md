@@ -13,15 +13,15 @@ the second one either in another browser or in an incognito tab.
 
 ## Project Design:
 
-[Sharing video, screen and audio](#sharing-video-screen-and-audio)
+[1. Sharing video, screen and audio](#sharing-video-screen-and-audio)
 
-[Moving our character around and syncing with other users](#moving-our-charactor-around-and-syncing-with-other-users)
+[2. Moving our character around and syncing with other users](#moving-our-charactor-around-and-syncing-with-other-users)
 
-[Text chat](#text-chat)
+[3. Text chat](#text-chat)
 
-[Overall architecture](#overall-architecture)
+[4. Overall architecture](#overall-architecture)
 
-[Frontend architecture](#frontend-architecture)
+[5. Frontend architecture](#frontend-architecture)
 
 ### Sharing video, screen and audio.
 
