@@ -206,8 +206,8 @@ docs and turns out all works fine.
 
 The real complexity lies in how to interract with all those services in a our frontend app without making too much of a mess.
 Indeed, we have a game part to display players and handle the physics, we have a socket part which takes care of sharing our
-moves and messages to other players, a p2p | sfu part which gives us access to users camera/audio, and a general ui to place
-around to game. All of them will have to communicate with one another.
+moves and messages to other players, a p2p | sfu part which gives us access to users camera/audio, and a general ui to display
+it all. All of them will have to communicate with one another.
 
 My original plan was to have a "top level" EventBus, separate each part of the into their own "islands", and do some dependency
 injection to pass in the EventBus down to every sub-part that might require it:
