@@ -250,5 +250,5 @@ and we want ot take adavante of the TS monorepo structure and tooling. We only b
 ![front-architecture-schema](./_github/frontend_architecture.png)
 
 Here's how it ends up looking, we colocate the `Model` and `Update` part in our store, and in our `View`(ui/game), subscribe to
-store changes and call Update functions. The Stream and SocketClient can also either call Update functions and subscribe to
+store changes and call Update functions. The Stream and SocketClient can also call Update functions and subscribe to
 Model change. (all this talk just to justify good old Redux...)
