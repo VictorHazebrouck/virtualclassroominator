@@ -229,4 +229,19 @@ And here all of our pieces do fit somewhat nicely in here:
 
 ![mvu-adapted-schema](./_github/mvu_adapted.png)
 
+Example flow for Player movement:
+
+![movement-flow-schema](./_github/movement_flow.png)
+
+As you can see, the flow is fairly simple:
+
+- you press a key which updates the model
+- the game starts moving the character accordingly,
+- you trigger and effect which broadcasts the position change to the server.
+
+Everything comes at a cost tho, we become somewhat "vendor-locked" with the chosen the Model implementation, and everything becomes
+slightly more entangled. Yet, I believe it is much more straightforwad, easy to navigate, and less error-prone than the pub-sub
+option (tho it is most likely a skill issue on my part). We end up having no state duplication, we can inspect the whole state in a
+central place, persist parts of the state directly in the browser, etc...
+
 ![front-architecture-schema](./_github/frontend_architecture.png)
