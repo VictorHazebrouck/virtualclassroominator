@@ -156,7 +156,7 @@ To solve the later, the idea is to generate a `user_id` and store it in localsto
 app connection, reuse the already created one. This enables having persisted conversations which can be continued even
 after both have quit and rejoined the app by indexing them by `user_id` in localstorage. Another cool thing it enables
 is an eventually consistent list of participants, also in localstorage (you get the username from the last time you saw
-the participant, if he joins with a new username, the list gets updated).
+the participant, if he joins with a new username, the list gets updated instead of adding a new entry).
 
 ### Overall architecture:
 
