@@ -244,4 +244,11 @@ slightly more entangled. Yet, I believe it is much more straightforwad, easy to 
 option (tho it is most likely a skill issue on my part). We end up having no state duplication, we can inspect the whole state in a
 central place, persist parts of the state directly in the browser, etc...
 
+We won't use Elm tho, as great as it sounds, is remains somewhat of a niche language, all libs have great TS support nowadays,
+and we want ot take adavante of the TS monorepo structure and tooling. We only borrow its MVU idea for handling application state.
+
 ![front-architecture-schema](./_github/frontend_architecture.png)
+
+Here's how it ends up looking, we colocate the `Model` and `Update` part in our store, and in our `View`(ui/game), subscribe to
+store changes and call Update functions. The Stream and SocketClient can also either call Update functions and subscribe to
+Model change. (all this talk just to justify good old Redux...)
