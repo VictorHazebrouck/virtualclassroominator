@@ -237,7 +237,7 @@ As you can see, the flow is fairly simple:
 
 - you press a key which updates the model
 - the game starts moving the character accordingly,
-- you trigger and effect which broadcasts the position change to the server.
+- at the same time you trigger an Effect which broadcasts the position change to the server.
 
 Everything comes at a cost tho, we become somewhat "vendor-locked" with the chosen the Model implementation, and everything becomes
 slightly more entangled. Yet, I believe it is much more straightforwad, easy to navigate, and less error-prone than the pub-sub
