@@ -57,7 +57,7 @@ Managing the network is much easier, one connection per user. And our outgoing s
 no matter the amount of participants, effectively dividing by 2 in+out nework usage. (tho there must be a nice
 Mathematical term to properly describe it)
 
-#### So, should we user SFU or P2P ?
+#### So, should we use SFU or P2P ?
 
 When in a room, the choice is somewhat obvious, we'll use SFU. Indeed, this mechanism is perfect for "room" based
 communication, each user shares the same room, thus all should receive the exact same stream from the exact same
