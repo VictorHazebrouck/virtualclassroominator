@@ -252,3 +252,23 @@ and we want ot take adavante of the TS monorepo structure and tooling. We only b
 Here's how it ends up looking, we colocate the `Model` and `Update` part in our store, and in our `View`(ui/game), subscribe to
 store changes and call Update functions. The Stream and SocketClient can also call Update functions and subscribe to
 Model change. (all this talk just to justify good old Redux...)
+
+We don't use Redux tho, despites its best efforts, it remains somewhat tied to the React ecosystem. What we want is a reactive
+store which is simple, agnostic of any framework, and idealy with built in persist support. I ended up leaning towards
+NanoStores, which ticks all the boxes, plus adapter extensions to integrate seamlessly in any mainstream ui framework.
+
+For the UI, in theory we should probably use something in the likes of Svelte, which compiles directly to optimized js rather
+than packing a whole Reactivity engine/Virtual DOM and whatnot. Indeed, we have only one page, and no other one will get
+sent to us so packing such Runtime, which is typically loaded once and reused accross page loads in a typical SPA navigation,
+don't seem to make much sense here. In practice, the idea is to have something anyone could understand and maintain, so
+we stick to good old React here.
+
+For the Game, we use PIXI.js, it's a really easy to use and minimal rendering library with some nicities, like assets management,
+built in support for loading Spritesheets, Animated Sprites, etc... It doesn't have built in physics, camera, scene management,
+inputs and whatnot, which we don't really need since the physics is limited to x|y movement and most of the state/logic is delegated
+to the store anyways.
+
+For the Socket we use the Socket.io official client, and pass in our shared types for type safety.
+
+For the SFU & P2P we have a Stream adapter, which provides a common interface for initiating/receiving calls, sharing
+Webcam | Audio | Screen, as well as getting other users's video and audio streams.
