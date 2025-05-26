@@ -1,3 +1,5 @@
+# for debbugging individual docker builds
+
 .PHONY: \
 	build-client run-client clean-client \
 	build-service-socket run-service-socket clean-service-socket \
