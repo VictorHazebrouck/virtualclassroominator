@@ -16,7 +16,7 @@ export const $player_self_persisted = persistentAtom<PlayerDataPersisted>(
         _id: uuidv4(),
         info: {
             status: "on",
-            name: "This is myself",
+            name: "New player",
             skin: "alex",
         },
     },
