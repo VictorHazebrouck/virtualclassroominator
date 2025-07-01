@@ -10,7 +10,7 @@ export default function Main()
     const is_first_connection = useStore($is_first_connection);
 
     return (
-        <div className="flex h-screen w-screen flex-col">
+        <div className="flex h-[100dvh] w-[100dvw] flex-col">
             {is_first_connection == "true" && <FirstLauch />}
             {is_first_connection == "false" && (
                 <>
