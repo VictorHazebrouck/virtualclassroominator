@@ -36,7 +36,7 @@ class CollisionValidator
 
     public has_collided(position: TPosition, direction: TDirection): boolean
     {
-        const MARGIN = 1;
+        const MARGIN = 4;
 
         const player_box: ObjectBox = {
             left: position.x + MARGIN,
